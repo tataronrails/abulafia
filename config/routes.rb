@@ -1,8 +1,12 @@
 EOffice::Application.routes.draw do
-  resources :discussions
+  resources :discussions, :has_many => :comments
+
+  match "/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
 
 
-  resources :projects
+
+
+  resources :projects, :has_many => :comments
 
 
   devise_for :users

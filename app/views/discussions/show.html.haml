@@ -1,12 +1,21 @@
 %p#notice= notice
 
 %p
-  %b Title:
-  = @discussion.title
-%p
-  %b Project:
-  = @discussion.project
+  %h2 Discussion: #{@discussion.title}
 
-= link_to 'Edit', edit_discussion_path(@discussion)
-\|
-= link_to 'Back', discussions_path
+
+=form_tag add_new_comment_to_discussion_path do |f|
+  =hidden_field_tag "id", @discussion.id
+  =text_area_tag "discussion[comment]"
+  %p
+    =submit_tag "Discussion Comment"
+
+
+
+- if @discussion.comments.count > 0
+  -#.bs-docs-example
+
+  -@discussion.comments.each do |c|
+    - if c.comment.present?
+      .alone_comment= c.comment
+

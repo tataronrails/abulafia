@@ -29,3 +29,9 @@
 .light_yellow_back {
     background-color: #ffffe0;
 }
+
+
+.alone_comment{
+    border-bottom: 1px solid #DDD;
+    padding: 15px 0 15px 0;
+}

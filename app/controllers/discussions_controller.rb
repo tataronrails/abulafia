@@ -10,10 +10,19 @@ class DiscussionsController < ApplicationController
     end
   end
 
+
+  def add_new_comment
+    discussion = Discussion.find(params[:id])
+    comment = params[:discussion][:comment]
+    discussion.comments.create(:comment => comment)
+    redirect_to :back
+  end
+
   # GET /discussions/1
   # GET /discussions/1.json
   def show
     @discussion = Discussion.find(params[:id])
+    @comment = @discussion.comments.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,7 +53,7 @@ class DiscussionsController < ApplicationController
 
     respond_to do |format|
       if @discussion.save
-        format.html { redirect_to :back, notice: 'Discussion was successfully created.' }
+        format.html { redirect_to @discussion, notice: 'Discussion was successfully created.' }
         format.json { render json: @discussion, status: :created, location: @discussion }
       else
         format.html { render action: "new" }
