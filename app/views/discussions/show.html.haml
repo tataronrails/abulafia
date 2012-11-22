@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @discussion.title
+%p
+  %b Project:
+  = @discussion.project
+
+= link_to 'Edit', edit_discussion_path(@discussion)
+\|
+= link_to 'Back', discussions_path

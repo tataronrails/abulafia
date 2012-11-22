@@ -1,0 +1,23 @@
+%p
+  %h3
+    = link_to '+ New Project', new_project_path
+
+
+%table.table.table-hover
+  %tr
+    %th Name
+    %th Desc
+    -#%th
+    -#%th
+
+  - @projects.each do |project|
+    %tr
+      %td= link_to project.name, project
+      %td= project.desc
+      -#%td= link_to 'Show', project
+      -#%td= link_to   'Edit', edit_project_path(project)
+      -#%td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+

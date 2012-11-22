@@ -1,0 +1,41 @@
+%p#notice= notice
+
+%p
+  %h2= @project.name
+  %small= @project.desc
+
+.bs-docs-example
+  -if @project.discussions.exists?
+    %h3 Discussions:
+    %table.table
+      - @project.discussions.each do |d|
+        -if d.id
+          %tr
+            %td
+              = link_to d.title, discussion_path(d.id)
+
+
+.discussion.bs-docs-example.light_yellow_back
+  = form_for @discussion do |f|
+    - if @discussion.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
+        %ul
+          - @discussion.errors.full_messages.each do |msg|
+            %li= msg
+
+    .field
+      %p
+        %h3 What are you want to Discuss about?
+      = f.text_field :title
+      -#= f.label :project
+      = f.hidden_field :project_id, :value => @project.id
+      -#= f.submit 'Save'
+
+
+%hr
+%h3
+  =link_to "+ Add Discusssion", "#"
+-#= link_to 'Edit', edit_project_path(@project)
+-#\|
+-#= link_to 'Back', projects_path

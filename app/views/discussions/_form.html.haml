@@ -1,0 +1,16 @@
+= form_for @discussion do |f|
+  - if @discussion.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
+      %ul
+        - @discussion.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :project
+    = f.text_field :project
+  .actions
+    = f.submit 'Save'
