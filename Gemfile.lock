@@ -41,6 +41,7 @@ GEM
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
+    cancan (1.6.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -55,10 +56,14 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    devise-russian (2.0.1.1)
+      devise
     devise_invitable (1.1.2)
       actionmailer (~> 3.0)
       devise (>= 2.1.0)
       railties (~> 3.0)
+    enumerize (0.5.0)
+      activesupport (>= 3.2)
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -119,6 +124,8 @@ GEM
       json (~> 1.4)
     ruby_parser (3.0.1)
       sexp_processor (~> 4.1)
+    russian (0.6.0)
+      i18n (>= 0.5.0)
     sass (3.2.3)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -156,15 +163,19 @@ PLATFORMS
 DEPENDENCIES
   acts_as_commentable (= 3.0.1)
   bootstrapped!
+  cancan
   coffee-rails (~> 3.2.1)
   devise
+  devise-russian
   devise_invitable
+  enumerize
   haml
   haml-rails
   jquery-rails
   mysql2
   rails (= 3.2.9)
   ruby_parser
+  russian
   sass-rails (~> 3.2.3)
   select2-rails
   thin

@@ -1,4 +1,6 @@
 class DiscussionsController < ApplicationController
+  load_and_authorize_resource
+  load_and_authorize_resource :through => :project
   # GET /discussions
   # GET /discussions.json
   def index
@@ -14,7 +16,7 @@ class DiscussionsController < ApplicationController
   def add_new_comment
     discussion = Discussion.find(params[:id])
     comment = params[:discussion][:comment]
-    discussion.comments.create(:comment => comment)
+    discussion.comments.create(:comment => comment, :user => current_user)
     redirect_to :back
   end
 
@@ -53,7 +55,7 @@ class DiscussionsController < ApplicationController
 
     respond_to do |format|
       if @discussion.save
-        format.html { redirect_to @discussion, notice: 'Discussion was successfully created.' }
+        format.html { redirect_to :back, notice: 'Discussion was successfully created.' }
         format.json { render json: @discussion, status: :created, location: @discussion }
       else
         format.html { render action: "new" }

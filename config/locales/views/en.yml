@@ -1,0 +1,8 @@
+en:
+  home:
+    index:
+      enter: Sign in
+      header: 'Welcome, %{user_name}'
+      please: Please sign in, or sign up
+      sign_up: Sign up
+      welcome: Welcome!

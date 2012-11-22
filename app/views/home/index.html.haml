@@ -1,0 +1,12 @@
+.hero-unit
+  - if signed_in?
+    %h2
+      = t '.header', :user_name => current_user.email
+  - else
+    %h2
+      = t '.welcome'
+    %p
+      = t '.please'
+    %p
+      = link_to t('.enter'), new_user_session_path, :class => "btn btn-primary btn-large"
+      = link_to t('.sign_up'), new_user_registration_path, :class => "btn btn-primary btn-large"

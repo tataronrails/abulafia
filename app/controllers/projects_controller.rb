@@ -1,8 +1,9 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = current_user.projects
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,10 +42,11 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(params[:project])
-
+    projects_factory = ProjectsFactory.new( user: current_user, project: Project.new(params[:project]) )
+    projects_factory.create_project!
+    @project = projects_factory.project
     respond_to do |format|
-      if @project.save
+      if projects_factory.project_saved?
         format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else

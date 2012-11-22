@@ -17,11 +17,10 @@ gem 'haml-rails'
 gem 'ruby_parser'
 gem 'thin'
 
-
-
-
-
-
+gem 'cancan'
+gem 'enumerize'
+gem 'devise-russian'
+gem 'russian'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

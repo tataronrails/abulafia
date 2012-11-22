@@ -3,3 +3,10 @@
 
 en:
   hello: "Hello world"
+
+  enumerize:
+    project_membership:
+      role:
+        admin: "Administrator"
+        member: "Member"
+        guest: "Guest"

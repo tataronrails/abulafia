@@ -12,11 +12,11 @@
         -if d.id
           %tr
             %td
-              = link_to d.title, discussion_path(d.id)
+              = link_to d.title, [@project, d]
 
 
 .discussion.bs-docs-example.light_yellow_back
-  = form_for @discussion do |f|
+  = form_for [@project, @discussion] do |f|
     - if @discussion.errors.any?
       #error_explanation
         %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
@@ -30,7 +30,7 @@
       = f.text_field :title
       -#= f.label :project
       = f.hidden_field :project_id, :value => @project.id
-      -#= f.submit 'Save'
+      = f.submit 'Save'
 
 
 %hr
