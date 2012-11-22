@@ -18,8 +18,10 @@ rails generate devise:install
 rails generate devise users
 rails generate devise:views
 
-Only for ubuntu users
+
 -------
+Only for ubuntu users
+
 For whatever reason, Ubuntu puts the mysql.sock file in a different place than most Linux distros, confusing Rails. In order to point it to the correct place, create the following symlink:
 
 ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
