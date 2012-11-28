@@ -1,12 +1,11 @@
 EOffice::Application.routes.draw do
-  resources :discussions, :has_many => :comments
+  # resources :discussions, :has_many => :comments
 
-  match "/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
+  match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
 
-
-
-
-  resources :projects, :has_many => :comments
+  resources :projects do
+    resources :discussions, :has_many => :comments
+  end
 
 
   devise_for :users
@@ -60,7 +59,7 @@ EOffice::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'projects#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 

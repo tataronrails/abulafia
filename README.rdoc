@@ -1,3 +1,10 @@
+== Get Started
+
+Create file /config/database.yml
+
+rake db:create
+rake db:migrate
+
 rails g bootstrapped:install static
 
 rails g bootstrapped:layout --haml
@@ -11,6 +18,14 @@ rails generate devise:install
 rails generate devise users
 rails generate devise:views
 
+
+-------
+Only for ubuntu users
+
+For whatever reason, Ubuntu puts the mysql.sock file in a different place than most Linux distros, confusing Rails. In order to point it to the correct place, create the following symlink:
+
+ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
+-------
 
 == Welcome to Rails
 

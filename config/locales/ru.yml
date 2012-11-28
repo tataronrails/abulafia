@@ -1,0 +1,7 @@
+ru:
+  enumerize:
+    project_membership:
+      role:
+        admin: "Администратор"
+        member: "Участник"
+        guest: "Гость"

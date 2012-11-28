@@ -1,4 +1,6 @@
 class DiscussionsController < ApplicationController
+  load_and_authorize_resource
+  load_and_authorize_resource :through => :project
   # GET /discussions
   # GET /discussions.json
   def index

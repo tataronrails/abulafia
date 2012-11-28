@@ -42,10 +42,10 @@
 
               - if controller.controller_name == "projects"
                 %li.active
-                  = link_to "Projects", projects_path
+                  = link_to t( :projects), projects_path
               - else
                 %li
-                  = link_to "Projects", projects_path
+                  = link_to t( :projects), projects_path
 
 
               %li= link_to "About", "#about"
