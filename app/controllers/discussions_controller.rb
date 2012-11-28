@@ -24,7 +24,6 @@ class DiscussionsController < ApplicationController
       format.html { redirect_to :back }
       format.js {
         render :partial => "comments", :locals => {:comments => discussion.comments}
-
       }
     end
 
