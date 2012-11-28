@@ -1,7 +1,9 @@
 $.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader "Accept", "text/javascript"
 
 $ ->
-  $("form")
+  $(".discussion_show form textarea").focus().select()
+
+  $(".discussion_show form")
     .bind "ajax:complete", (xhr, data, status) ->
       $("#discussion_comment").val("")
 

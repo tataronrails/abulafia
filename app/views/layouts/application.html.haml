@@ -60,13 +60,8 @@
                 = link_to "Sign in", new_user_session_path
     .container
       .row
-        .span3
-          .well.sidebar-nav
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Link", "#"
-              %li= link_to "Link", "#"
-              %li= link_to "Link", "#"
+        .span2
+
         .span9
           - if flash[:alert] || flash[:notice]
             .alert
