@@ -13,6 +13,23 @@
  *= require_tree .
  */
 
+
+.avatar img{
+    border-radius: 100px 100px 100px 100px;
+    width: 40px;
+    float: left;
+    margin: 0 10px 0 0;
+    vertical-align: bottom;
+
+}
+
+textarea {
+    vertical-align: top;
+    transition: height 0.2s;
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+}
+
 .bs-docs-example {
     position: relative;
     margin: 7px 0 20px 0;
@@ -30,8 +47,9 @@
     background-color: #ffffe0;
 }
 
-
-.alone_comment{
+.alone_comment {
     border-bottom: 1px solid #DDD;
-    padding: 15px 0 15px 0;
+    padding: 10px 0 20px 7px;
+    margin-bottom: 10px;
+    /*border:1px solid red;*/
 }

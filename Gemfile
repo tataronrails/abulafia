@@ -16,10 +16,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'ruby_parser'
 gem 'thin'
-
-
-
-
+gem 'gravatar_image_tag'
 
 
 # Gems used only for assets and not required

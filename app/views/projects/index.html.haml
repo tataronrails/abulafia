@@ -14,9 +14,17 @@
     %tr
       %td= link_to project.name, project
       %td= project.desc
+      %td
+        - begin
+          = truncate(project.discussions.first.comments.first.comment, :length => 12)
+        - rescue
       -#%td= link_to 'Show', project
       -#%td= link_to   'Edit', edit_project_path(project)
-      -#%td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+      %td
+        = link_to project, method: :delete, data: { confirm: 'Are you sure?' } do |l|
+          %i.icon-remove
+
+
 
 %br
 

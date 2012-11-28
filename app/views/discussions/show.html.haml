@@ -1,21 +1,26 @@
-%p#notice= notice
+%ul.breadcrumb
+  %li
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    = link_to @discussion.project.name, project_path(@discussion.project)
+    %span.divider /
+  %li
+    .active
+      =link_to "Discussion", "#"
 
-%p
-  %h2 Discussion: #{@discussion.title}
+.bs-docs-example.discussion_show
+  %h3 Discussion: #{@discussion.title}
+
+  =form_tag add_new_comment_to_discussion_path, :remote => true, :update => { :success => "#comments_line"} do |f|
+    =hidden_field_tag "user_id", current_user.id
+    =hidden_field_tag "id", @discussion.id
+    =text_area_tag "discussion[comment]"
+    %p
+      =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
 
 
-=form_tag add_new_comment_to_discussion_path do |f|
-  =hidden_field_tag "id", @discussion.id
-  =text_area_tag "discussion[comment]"
-  %p
-    =submit_tag "Discussion Comment"
 
-
-
-- if @discussion.comments.count > 0
-  -#.bs-docs-example
-
-  -@discussion.comments.each do |c|
-    - if c.comment.present?
-      .alone_comment= c.comment
+#comments_line
+  = render :partial => "comments", :locals => {:comments => @discussion.comments}
 

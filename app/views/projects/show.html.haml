@@ -1,7 +1,12 @@
-%p#notice= notice
-
+%ul.breadcrumb
+  %li
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    .active
+      = link_to @project.name, "#"
 %p
-  %h2= @project.name
+  %h3= @project.name
   %small= @project.desc
 
 .bs-docs-example
@@ -13,7 +18,8 @@
           %tr
             %td
               = link_to d.title, discussion_path(d.id)
-
+            %td
+              =truncate(d.comments.first.comment) if d.comments.present?
 
 .discussion.bs-docs-example.light_yellow_back
   = form_for @discussion do |f|
@@ -27,15 +33,12 @@
     .field
       %p
         %h3 What are you want to Discuss about?
-      = f.text_field :title
-      -#= f.label :project
-      = f.hidden_field :project_id, :value => @project.id
-      -#= f.submit 'Save'
+      .span5
+        = f.text_field :title
+        = f.hidden_field :project_id, :value => @project.id
+      = f.submit 'Create', :class => "btn"
 
 
-%hr
-%h3
-  =link_to "+ Add Discusssion", "#"
 -#= link_to 'Edit', edit_project_path(@project)
 -#\|
 -#= link_to 'Back', projects_path

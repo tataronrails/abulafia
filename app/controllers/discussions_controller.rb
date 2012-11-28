@@ -14,8 +14,18 @@ class DiscussionsController < ApplicationController
   def add_new_comment
     discussion = Discussion.find(params[:id])
     comment = params[:discussion][:comment]
-    discussion.comments.create(:comment => comment)
-    redirect_to :back
+    user = params[:user_id]
+
+    discussion.comments.create(:comment => comment, :user_id => user)
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {
+        render :partial => "comments", :locals => {:comments => discussion.comments}
+
+      }
+    end
+
   end
 
   # GET /discussions/1

@@ -6,6 +6,9 @@ class Discussion < ActiveRecord::Base
 
   acts_as_commentable
 
+  default_scope order('created_at DESC')
+
+
 
   validates :title, :presence => true, :length => { :minimum => 5 }
 end

@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap-transition.js
 //= require bootstrap-alert.js
 //= require bootstrap-modal.js
@@ -25,4 +26,12 @@
 //= require bootstrap-carousel.js
 //= require bootstrap-typeahead.js
 //= require bootstrap
+//= require jquery.autosize
 //= require_tree .
+
+$(document).ready(function () {
+    $('textarea').autosize({append: "\n"});
+});
+
+
+

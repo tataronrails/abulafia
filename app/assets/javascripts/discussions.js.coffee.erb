@@ -1,0 +1,20 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+$.ajaxSetup beforeSend: (xhr) -> xhr.setRequestHeader "Accept", "text/javascript"
+
+$ ->
+  $("form")
+    .bind "ajax:complete", (xhr, data, status) ->
+      $("#discussion_comment").val("")
+
+      $("#comments_line").html(data.responseText)
+      object = $(".alone_comment").first()
+      $(object).hide();
+      $(object).show("highlight", {}, 1300);
+
+
+
+
+
