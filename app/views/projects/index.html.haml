@@ -1,6 +1,23 @@
 %p
-  %h3
-    = link_to '+ New Project', new_project_path
+  %h4.add_project_block
+    = link_to '+ New Project', ""
+  .add_new_project_field.h
+    = form_for Project.new do |f|
+      - if Project.new.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+          %ul
+            - @project.errors.full_messages.each do |msg|
+              %li= msg
+
+
+      .field
+        = f.text_field :name, :placeholder => "Create new project"
+      .field
+        = f.text_area :desc, :placeholder => "About project here"
+      .actions
+        = f.button 'Save', :class => "btn"
+
 
 
 %table.table.table-hover
@@ -12,14 +29,24 @@
 
   - @projects.each do |project|
     %tr
-      %td= link_to project.name, project
-      %td= project.desc
+      %td
+        %i.icon-leaf
+        = link_to project.name, project
+      %td
+        = project.desc
       %td
         - begin
           = truncate(project.discussions.first.comments.first.comment, :length => 12)
         - rescue
       -#%td= link_to 'Show', project
       -#%td= link_to   'Edit', edit_project_path(project)
+      %td
+        - if project.discussions.count > 0
+          = link_to(project_path(project, :anchor => "comments")) do |l|
+            .badge
+              =project.discussions.count
+
+
       %td
         = link_to project, method: :delete, data: { confirm: 'Are you sure?' } do |l|
           %i.icon-remove

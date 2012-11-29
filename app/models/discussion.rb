@@ -2,7 +2,7 @@ class Discussion < ActiveRecord::Base
 
 
   belongs_to :project
-  attr_accessible :title, :project_id
+  attr_accessible :title, :project_id, :desc
 
   acts_as_commentable
 

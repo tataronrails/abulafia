@@ -13,7 +13,9 @@
  *= require_tree .
  */
 
-
+.h{
+    display:none;
+}
 .avatar img{
     border-radius: 100px 100px 100px 100px;
     width: 40px;

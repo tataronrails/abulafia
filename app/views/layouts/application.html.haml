@@ -61,6 +61,14 @@
     .container
       .row
         .span2
+          -#.well
+          -#  .nav.nav-list
+          -#    %li.nav-header
+          -#      Sidebar
+          -#    %li.active
+          -#      here
+          -#    %li
+          -#      =link_to "Another place", "#"
 
         .span9
           - if flash[:alert] || flash[:notice]
@@ -69,11 +77,9 @@
               =flash[:notice] if flash[:notice]
           = content_tag :h1, yield(:title) if show_title
           = yield
-      %hr
 
-      %footer
-        %p
-          = app_name
-          Copyright &copy;  2012. All Rights Reserved.
+      %footer.navbar-fixed-bottom
+        = app_name
+        Copyright &copy;  2012. All Rights Reserved.
 
     = javascript_include_tag "application"

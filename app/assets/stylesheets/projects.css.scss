@@ -6,3 +6,16 @@
   width: 357px;
   height: 20px !important;
 }
+
+textarea {
+  width: 357px;
+  height: 40px;
+}
+
+
+.add_new_project_field{
+  input[type=text],textarea{
+    width: 357px;
+  }
+
+}

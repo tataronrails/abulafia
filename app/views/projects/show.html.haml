@@ -5,38 +5,61 @@
   %li
     .active
       = link_to @project.name, "#"
-%p
-  %h3= @project.name
-  %small= @project.desc
+.page-header
+  %h3
+    = @project.name
+    %small= @project.desc
 
-.bs-docs-example
+-#.bs-docs-example
+
+#accordion2.accordion
+  .accordion-group
+    .accordion-heading
+      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
+        %i.icon-plus
+        Create new discussion
+    #collapseOne.accordion-body.collapse
+      .accordion-inner
+        = form_for @discussion do |f|
+          - if @discussion.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
+              %ul
+                - @discussion.errors.full_messages.each do |msg|
+                  %li= msg
+          = f.text_field :title, :placeholder => "Enter topic for discussion and press Enter", :autocomplete =>  "off"
+          .desc_of_descussion
+            = f.text_area :desc, :placeholder => "Enter description", :autocomplete =>  "off"
+          = f.hidden_field :project_id, :value => @project.id
+
+          = f.submit 'Create discussion', :class => "btn"
+
   -if @project.discussions.exists?
-    %h3 Discussions:
-    %table.table
-      - @project.discussions.each do |d|
-        -if d.id
-          %tr
-            %td
-              = link_to d.title, discussion_path(d.id)
-            %td
-              =truncate(d.comments.first.comment) if d.comments.present?
+    .accordion-group.existed_discussions
+      .accordion-heading
+        %a(class="accordion-toggle add_new_discussion_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
+          %i.icon-list-alt
+          List of discussions
+          .badge.badge-info
+            =@project.discussions.count
+            comments
+      #collapseTwo.accordion-body.collapse
+        .accordion-inner
+          %table.table.table-striped
+            - @project.discussions.each do |d|
+              -if d.id
+                %tr
+                  %td.avatar
+                    = gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
+                  %td
+                    = link_to d.title, discussion_path(d.id)
+                  %td
+                    =truncate(d.comments.first.comment) if d.comments.present?
+                  %td
+                    %i.icon-remove
 
-.discussion.bs-docs-example.light_yellow_back
-  = form_for @discussion do |f|
-    - if @discussion.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
-        %ul
-          - @discussion.errors.full_messages.each do |msg|
-            %li= msg
 
-    .field
-      %p
-        %h3 What are you want to Discuss about?
-      .span5
-        = f.text_field :title
-        = f.hidden_field :project_id, :value => @project.id
-      = f.submit 'Create', :class => "btn"
+
 
 
 -#= link_to 'Edit', edit_project_path(@project)
