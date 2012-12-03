@@ -34,7 +34,12 @@
 
   -@users.each do |u|
     .alone_comment_cube
+
       .row-fluid
+        =unless u == current_user
+          .pull-right
+            =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
+              %i.icon.icon-remove
         .span3
           .avatar
             =gravatar_image_tag(u.email)

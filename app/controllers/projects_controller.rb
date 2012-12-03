@@ -2,6 +2,17 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
 
+  def kick_out_users
+    user = User.find(params[:user_id])
+    project = Project.find(params[:project_id])
+    #ProjectMembership.where(:user => user, :project => project).delete_all
+
+    project.users.find(params[:user_id]).delete
+
+    redirect_to :back, :notice => "User was kicked out from project!"
+
+  end
+
   def users_page
     @project = Project.find(params[:project_id])
     @users = @project.users
