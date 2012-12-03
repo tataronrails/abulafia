@@ -12,10 +12,29 @@ textarea {
   height: 40px;
 }
 
-
-.add_new_project_field{
-  input[type=text],textarea{
+.add_new_project_field {
+  input[type=text], textarea {
     width: 357px;
   }
 
+}
+
+.alone_comment_cube {
+  border-bottom: 1px solid #DDD;
+  padding: 10px 0 20px 7px;
+  margin: 0 10px 10px 0;
+  //border: 1px solid red;
+  width: 210px;
+  float: left;
+  -moz-box-shadow: 3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+
+.setting_of_project{
+  font-size: 24px;
+  //marhin-left: -20px;
+  width: 140px;
+  border:1px solid red;
 }

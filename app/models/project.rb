@@ -6,10 +6,11 @@ class Project < ActiveRecord::Base
   #default_scope order('created_at DESC')
 
   has_many :discussions
+  has_many :tasks
   has_many :project_memberships
   has_many :users, :through => :project_memberships
 
-  validates :name, :presence => true, :length => { :minimum => 5 }
+  validates :name, :presence => true, :length => { :minimum => 3 }
 
   acts_as_commentable
 

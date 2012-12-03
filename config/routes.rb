@@ -1,14 +1,22 @@
 EOffice::Application.routes.draw do
+  resources :tasks
+
+
   # resources :discussions, :has_many => :comments
 
   match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
 
   resources :discussions, :has_many => :comments
 
-  resources :projects, :has_many => :comments
+  resources :projects, :has_many => :comments do
+    post 'invite_user'
+    #resource 'users'
+  end
 
 
-  devise_for :users
+  devise_for :users do
+    get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,6 +11,7 @@ gem 'devise_invitable'
 gem 'acts_as_commentable', '3.0.1'
 gem "select2-rails"
 gem "bootstrapped", :git => 'https://github.com/entropillc/bootstrapped.git'
+gem 'font-awesome-rails'
 
 gem 'haml'
 gem 'haml-rails'

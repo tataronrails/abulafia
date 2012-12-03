@@ -5,19 +5,27 @@
   %li
     .active
       = link_to @project.name, "#"
-.page-header
-  %h3
-    = @project.name
-    %small= @project.desc
+.row-fluid
+  .span4
+    %h3
+      = @project.name
+      %small= @project.desc
+  .pull-right
+    .span7
+      =link_to users_list_path(@project) do |u|
+        .badge
+          Users [
+          = @project.users.count
+          ]
 
--#.bs-docs-example
-
+.lead
+  Discussions
 #accordion2.accordion
   .accordion-group
     .accordion-heading
       %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
         %i.icon-plus
-        Create new discussion
+        Create
     #collapseOne.accordion-body.collapse
       .accordion-inner
         = form_for @discussion do |f|
@@ -39,10 +47,7 @@
       .accordion-heading
         %a(class="accordion-toggle add_new_discussion_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
           %i.icon-list-alt
-          List of discussions
-          .badge.badge-info
-            =@project.discussions.count
-            comments
+          =pluralize(@project.discussions.count, "discussion")
       #collapseTwo.accordion-body.collapse
         .accordion-inner
           %table.table.table-striped
@@ -57,10 +62,49 @@
                     =truncate(d.comments.first.comment) if d.comments.present?
                   %td
                     %i.icon-remove
+.lead
+  Tasks
+#accordion3.accordion
+  .accordion-group
+    .accordion-heading
+      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne1")
+        %i.icon-plus
+        Create
+    #collapseOne1.accordion-body.collapse
+      .accordion-inner
+        = form_for @task do |f|
+          - if @task.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
+              %ul
+                - @task.errors.full_messages.each do |msg|
+                  %li= msg
+          = f.text_field :title, :placeholder => "Enter task title and press Enter", :autocomplete =>  "off"
+          = f.hidden_field :project_id, :value => @project.id
 
+  -if @project.tasks.exists?
+    .accordion-group.existed_discussions
+      .accordion-heading
+        %a(class="accordion-toggle add_new_discussion_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo2")
+          %i.icon-list-alt
+          =pluralize(@project.tasks.count, 'task')
 
-
-
+      #collapseTwo2.accordion-body.collapse
+        .accordion-inner
+          %table.table.table-striped
+            - @project.tasks.each do |d|
+              -if d.id
+                %tr
+                  %td.avatar
+                    -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
+                    %span.label.label-success
+                      =d.status_via_works
+                  %td
+                    = link_to d.title, discussion_path(d.id)
+                  %td
+                    -#=truncate(d.comments.first.comment) if d.comments.present?
+                  %td
+                    %i.icon-remove
 
 -#= link_to 'Edit', edit_project_path(@project)
 -#\|

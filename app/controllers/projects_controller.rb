@@ -1,5 +1,53 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
+
+
+  def users_page
+    @project = Project.find(params[:project_id])
+    @users = @project.users
+
+    @list_of_roles = ProjectMembership.role.values
+    list_of_all_users_emails = User.all.map(&:email)
+    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| u == current_user.email }
+
+    @invitation_accepted_list = User.invitation_accepted.map(&:email)
+
+
+    #raise params.to_json
+  end
+
+  def invite_user
+
+
+    email = params[:invitation][:email]
+    role = params[:role]
+    project = Project.find(params[:project_id])
+
+
+    #pm = ProjectMembership.new(:user => User.find_by_email
+
+    #find user with email
+
+
+    if User.where(:email => email).exists?
+      pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)
+
+      if pm.save
+        flash[:notice] = "User now can see current project"
+      end
+
+    else
+      User.invite!(:email => email)
+      flash[:notice] = "User was invited to project"
+
+      ProjectMembership.create(:user => User.where(:email => email).first, :project => project, :role => role)
+
+    end
+
+    redirect_to :back
+
+  end
+
   # GET /projects
   # GET /projects.json
   def index
@@ -16,6 +64,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @discussion = @project.discussions.new
+    @task = @project.tasks.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,12 +91,12 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    projects_factory = ProjectsFactory.new( user: current_user, project: Project.new(params[:project]) )
+    projects_factory = ProjectsFactory.new(user: current_user, project: Project.new(params[:project]))
     projects_factory.create_project!
     @project = projects_factory.project
     respond_to do |format|
       if projects_factory.project_saved?
-        format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
+        format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
         format.html { render action: "new" }
