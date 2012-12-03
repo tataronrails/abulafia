@@ -39,7 +39,6 @@
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
               %li= link_to "Home", root_path
-
               - if controller.controller_name == "projects"
                 %li.active
                   = link_to t( :projects), projects_path
@@ -60,7 +59,7 @@
                 = link_to "Sign in", new_user_session_path
     .container
       .row
-        .span2
+        -#.span2
           -#.well
           -#  .nav.nav-list
           -#    %li.nav-header
@@ -77,6 +76,8 @@
               =flash[:notice] if flash[:notice]
           = content_tag :h1, yield(:title) if show_title
           = yield
+        .span3
+          %h3 Pivotal here
 
       %footer.navbar-fixed-bottom
         = app_name
