@@ -1,4 +1,52 @@
+-#=link_to "#myModal" , "#myModal", :data => {:toggle => "modal"}
+
+#task_modal.modal.hide.fade
+  .modal-header
+    %h3 Modal header
+  .modal-body
+    %ol
+      %li
+        %p
+          Estimate:
+
+        -["0","1","2","3","5","8"].each do |a|
+          =image_tag "select_"+a+"pt_fibonacci.gif"
+
+  .modal-footer
+    =link_to "Close", "#", :class =>"btn", :data => {:dismiss=>"modal"}, :aria => {:hidden=>"true"}
+
 -content_for :user_stories do
+  .accordion{:id => "accordion_id"}
+    -@project.tasks.each do |t|
+      - if t.title.present?
+        .accordion-group{:data => {:taskid => t.id}}
+          .accordion-heading
+            .row-fluid
+              .span12
+                .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}"}
+                  - if t.estimate.present?
+                    - estimate_of_task =  t.estimate
+                  - else
+                    - estimate_of_task = 0
+                  =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
+
+                .pull-right
+                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s}
+                    =t.status_via_words
+                  %span.estimates{:class =>"estimates_"+t.id.to_s}
+                    -["0","1","2","3","5","8"].each do |a|
+                      =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+                .story_1{:id => t.id.to_s+"_around",  :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}}
+                  =link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
+                  -if t.estimate
+                    %small
+                      #{t.estimate} h
+
+
+
+
+
+-content_for :user_stories_icebox do
   .accordion{:id => "accordion_id"}
     -@project.tasks.each do |t|
       .accordion-group
@@ -9,7 +57,7 @@
             .row-right
               =link_to("#story_1", :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}) do |s|
                 .label
-                  =t.status_via_works
+                  =t.status_via_words
 
 
 
@@ -106,7 +154,7 @@
           %i.icon-list-alt
           =pluralize(@project.tasks.count, 'task')
 
-      #collapseTwo2.accordion-body.collapse.in
+      #collapseTwo2.accordion-body.collapse
         .accordion-inner
           %table.table.table-striped
             - @project.tasks.each do |t|
@@ -115,7 +163,7 @@
                   %td.avatar
                     -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
                     %span.label.label-success
-                      =t.status_via_works
+                      =t.status_via_words
                   %td
                     = link_to t.title, task_path(t)
                   %td

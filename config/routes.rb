@@ -1,6 +1,7 @@
 EOffice::Application.routes.draw do
   resources :tasks, :has_many => :comments do
     post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+    post "update_points" => "tasks#update_points", :as => "update_points"
   end
 
 

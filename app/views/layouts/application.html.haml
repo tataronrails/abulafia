@@ -85,6 +85,10 @@
               %li
                 Backlog
             = yield :user_stories
+            %ul.breadcrumb
+              %li
+                Icebox
+            = yield :user_stories_icebox
 
       %footer.navbar-fixed-bottom
         = app_name

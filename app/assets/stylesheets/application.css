@@ -60,3 +60,17 @@ textarea {
     margin-bottom: 10px;
     /*border:1px solid red;*/
 }
+
+
+
+.accordion-group{
+    background-color: #fff;
+}
+
+.h{
+    display:none;
+}
+
+.estimates{
+    display:none;
+}
