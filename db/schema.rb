@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129203724) do
+ActiveRecord::Schema.define(:version => 20121204044503) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20121129203724) do
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
     t.integer  "project_id"
+    t.integer  "estimate"
   end
 
   create_table "users", :force => true do |t|
@@ -86,6 +87,12 @@ ActiveRecord::Schema.define(:version => 20121129203724) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.string   "initials"
+    t.string   "first_name",                                           :null => false
+    t.string   "second_name"
+    t.string   "cell"
+    t.string   "im"
+    t.text     "desc"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

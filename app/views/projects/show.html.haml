@@ -1,3 +1,19 @@
+-content_for :user_stories do
+  .accordion{:id => "accordion_id"}
+    -@project.tasks.each do |t|
+      .accordion-group
+        .accordion-heading
+          .row-fluid
+            .span10
+              =link_to t.title, "#story_1", :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}
+            .row-right
+              =link_to("#story_1", :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}) do |s|
+                .label
+                  =t.status_via_works
+
+
+
+
 %ul.breadcrumb
   %li
     =link_to "Home", root_path
@@ -103,7 +119,7 @@
                   %td
                     = link_to t.title, task_path(t)
                   %td
-                    -#=truncate(d.comments.first.comment) if d.comments.present?
+                    =truncate(t.comments.first.comment) if t.comments.present?
                   %td
                     %i.icon-comment
                     - if t.comments.present?

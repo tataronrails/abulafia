@@ -20,13 +20,25 @@
           %span.add-on
             %i.icon-envelope
           =email_field :invitation, :email,:placeholder => "Invite by Email",  :requered => 'requered', :autocomplete => "off", :data => {:provide => "typeahead", :source => @list_of_all_users_emails}
-          .control-group
+    .control-group
       .controls
         .input-prepend
           %span.add-on
             %i.icon-eye-open
           =select_tag(:role,  options_for_select(@list_of_roles))
-    =button_tag(:submit, :class => "btn .pull-right")
+    .control-group
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-user
+          =text_field(:invitation,:first_name, :placeholder => "First name")
+    .control-group
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-user
+          =text_field(:invitation,:second_name, :placeholder => "Second name")
+    =submit_tag(:submit, :value => "Invite", :class => "btn .pull-right")
 
 
 
