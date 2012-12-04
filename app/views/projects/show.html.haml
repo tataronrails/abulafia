@@ -90,20 +90,26 @@
           %i.icon-list-alt
           =pluralize(@project.tasks.count, 'task')
 
-      #collapseTwo2.accordion-body.collapse
+      #collapseTwo2.accordion-body.collapse.in
         .accordion-inner
           %table.table.table-striped
-            - @project.tasks.each do |d|
-              -if d.id
+            - @project.tasks.each do |t|
+              -if t.id
                 %tr
                   %td.avatar
                     -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
                     %span.label.label-success
-                      =d.status_via_works
+                      =t.status_via_works
                   %td
-                    = link_to d.title, discussion_path(d.id)
+                    = link_to t.title, task_path(t)
                   %td
                     -#=truncate(d.comments.first.comment) if d.comments.present?
+                  %td
+                    %i.icon-comment
+                    - if t.comments.present?
+                      =link_to task_path(t) do |task|
+                        .badge.badge-info
+                          =t.comments.count
                   %td
                     %i.icon-remove
 

@@ -12,4 +12,10 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :project_memberships
 
 
+
+  def role_in_project project_id
+    self.project_memberships.where(:project_id => project_id).first.role.text
+  end
+
+
 end

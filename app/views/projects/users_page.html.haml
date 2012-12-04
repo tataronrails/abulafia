@@ -19,7 +19,7 @@
         .input-prepend
           %span.add-on
             %i.icon-envelope
-          =email_field :invitation, :email,:placeholder => "Invite by Email", :requered => 'requered', :data => {:provide => "typeahead", :source => @list_of_all_users_emails}
+          =email_field :invitation, :email,:placeholder => "Invite by Email",  :requered => 'requered', :autocomplete => "off", :data => {:provide => "typeahead", :source => @list_of_all_users_emails}
           .control-group
       .controls
         .input-prepend
@@ -34,20 +34,19 @@
 
   -@users.each do |u|
     .alone_comment_cube
-
       .row-fluid
-        =unless u == current_user
-          .pull-right
+        .pull-right.span1
+          -unless u == current_user
             =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
               %i.icon.icon-remove
-        .span3
+        .span2
           .avatar
             =gravatar_image_tag(u.email)
-
         .span9
           =u.email
           %br
           Role:
+          =u.role_in_project(@project)
           %br
           Name:
           %br

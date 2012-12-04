@@ -1,7 +1,9 @@
 class Discussion < ActiveRecord::Base
 
 
+
   belongs_to :project
+  belongs_to :task
   attr_accessible :title, :project_id, :desc
 
   acts_as_commentable

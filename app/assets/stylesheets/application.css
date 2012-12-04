@@ -14,6 +14,10 @@
  *= require_tree .
  */
 
+body{
+    background: url("/assets/012-subtle-light-patterns.jpg")
+}
+
 .h{
     display:none;
 }

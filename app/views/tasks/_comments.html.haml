@@ -1,0 +1,9 @@
+- if comments.count > 0
+  -comments.each do |c|
+    - if c.comment.present?
+      .alone_comment
+        .avatar
+          = gravatar_image_tag(c.user.email)
+        = c.comment
+        .datetime
+          %small= distance_of_time_in_words_to_now(c.created_at)

@@ -3,14 +3,8 @@ class ProjectsController < ApplicationController
 
 
   def kick_out_users
-    user = User.find(params[:user_id])
-    project = Project.find(params[:project_id])
-    #ProjectMembership.where(:user => user, :project => project).delete_all
-
-    project.users.find(params[:user_id]).delete
-
+    ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
     redirect_to :back, :notice => "User was kicked out from project!"
-
   end
 
   def users_page
@@ -19,26 +13,20 @@ class ProjectsController < ApplicationController
 
     @list_of_roles = ProjectMembership.role.values
     list_of_all_users_emails = User.all.map(&:email)
-    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| u == current_user.email }
 
+    users_still_in_project = @project.users.map(&:email)
+    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| users_still_in_project.include?(u)}
     @invitation_accepted_list = User.invitation_accepted.map(&:email)
-
-
-    #raise params.to_json
   end
 
   def invite_user
-
+    if params[:invitation][:email].blank?
+      redirect_to :back, :notice => "Email field can not be blank!" and return
+    end
 
     email = params[:invitation][:email]
     role = params[:role]
     project = Project.find(params[:project_id])
-
-
-    #pm = ProjectMembership.new(:user => User.find_by_email
-
-    #find user with email
-
 
     if User.where(:email => email).exists?
       pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)

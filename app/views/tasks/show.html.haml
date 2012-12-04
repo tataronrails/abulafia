@@ -1,0 +1,29 @@
+%ul.breadcrumb
+  %li
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    = link_to @task.project.name, project_path(@task.project)
+    %span.divider /
+  %li
+    .active
+      =link_to "Tasks", "#"
+
+.page-header
+  %h3
+    = @task.project.name
+    %small= @task.project.desc
+
+-#.bs-docs-example.discussion_show
+%p.lead #{@task.title}
+
+=form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
+  =hidden_field_tag "user_id", current_user.id
+  =hidden_field_tag "id", @task.id
+  =text_area_tag "task[comment]"
+  %p
+    =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
+
+#comments_line
+  = render :partial => "comments", :locals => {:comments => @task.comments}
+
