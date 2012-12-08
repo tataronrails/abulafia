@@ -11,6 +11,7 @@
  *= require_self
  *= require twitter/bootstrap/static/bootstrap
  *= require 'font-awesome'
+ *= require gritter
  *= require_tree .
  */
 

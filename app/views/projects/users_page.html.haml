@@ -26,18 +26,18 @@
           %span.add-on
             %i.icon-eye-open
           =select_tag(:role,  options_for_select(@list_of_roles))
-    .control-group
-      .controls
-        .input-prepend
-          %span.add-on
-            %i.icon-user
-          =text_field(:invitation,:first_name, :placeholder => "First name")
-    .control-group
-      .controls
-        .input-prepend
-          %span.add-on
-            %i.icon-user
-          =text_field(:invitation,:second_name, :placeholder => "Second name")
+    -#.control-group
+    -#  .controls
+    -#    .input-prepend
+    -#      %span.add-on
+    -#        %i.icon-user
+    -#      =text_field(:invitation,:first_name, :placeholder => "First name")
+    -#.control-group
+    -#  .controls
+    -#    .input-prepend
+    -#      %span.add-on
+    -#        %i.icon-user
+    -#      =text_field(:invitation,:second_name, :placeholder => "Second name")
     =submit_tag(:submit, :value => "Invite", :class => "btn .pull-right")
 
 
@@ -58,7 +58,12 @@
           Role:
           =u.role_in_project(@project)
           %br
-          Name:
+          first name:
+          =u.first_name
+          %br/
+          second_name:
+          =u.second_name
+          =u.fio
           %br
           Phone:
           %hr

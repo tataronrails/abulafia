@@ -16,7 +16,11 @@ window.open_task_modal = (title_of_task) ->
   $('#task_modal').modal('show')
   $('#task_modal .modal-header h3').html(title_of_task)
 
-window.update_me = (id_of_task) ->
+send_form_on_select_assigned_to = () ->
+  $("#task_assigned_to").change ->
+    $(this).parent("form").submit()
+
+#window.update_me = (id_of_task) ->
   #  alert(id_of_task)
 
 labels_click_bind = () ->
@@ -55,25 +59,24 @@ $(document).ajaxComplete (xhr, data, status) ->
   #  console.log data.responseText
 
   if status.url.indexOf("tasks") > 0
-    $("#accordion_id").html(data.responseText)
+    $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
 
 
   if status.url.indexOf("/update_points") > 0
     task_id = status.url.split("/")[2]
 
-    $("#accordion_id").html(" 333")
+    $("#accordion_id").html("its test static message here:  333")
     $("#accordion_id").html(data.responseText)
+
+
+
 
 #    alert(data.resonseText())
 
 
 $ ->
   labels_click_bind()
-
-  #  $(document)
-  #    .bind "ajax:complete", (xhr, data, status) ->
-  #      alert "12"
-
+  send_form_on_select_assigned_to()
 
   $('span.estimates img').live 'click', (e) ->
     points = $(this).attr("rel")
@@ -111,8 +114,9 @@ $ ->
     $(".add_new_project_field").slideToggle("fast", -> $("#project_name").focus().select())
     e.preventDefault()
 
-  $("#collapseOne").on "shown", ->
-    $("#discussion_title").focus().select()
+  $(".accordion-body").on "shown", ->
+    f = $(this).parents(".accordion").find("input[type=text]").focus().select()
+#    $("#discussion_title").focus().select()
 
   if location.hash == "#comments"
     $(".accordion-group.existed_discussions #collapseTwo").collapse('show')

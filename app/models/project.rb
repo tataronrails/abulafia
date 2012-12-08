@@ -21,5 +21,16 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def my_work user
+    self.tasks.where(:assigned_to => user.id)
+  end
+
+  def icebox
+    self.tasks.where(:place => 0)
+  end
+
+  def backlog
+    self.tasks.where(:place => 1)
+  end
 
 end

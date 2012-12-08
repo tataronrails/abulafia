@@ -1,0 +1,16 @@
+-#=js add_gritter(flash[:notice], :title => "Task", :image => "/assets/rails.png")
+=gflash
+-if project
+  - if project.my_work(current_user).present?
+    .lead
+      My work
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user)}
+
+  - if project.backlog.present?
+    .lead
+      Backlog
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog}
+  - if project.icebox.present?
+    .lead
+      Icebox
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.icebox}

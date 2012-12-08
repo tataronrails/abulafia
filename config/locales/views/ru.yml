@@ -2,6 +2,10 @@ ru:
 
   projects: Проекты
 
+  gflash:
+    titles:
+      success: Порядок!
+    content: 'Task successfully assigned to %{user_name}'
   home:
     index:
       enter: Войти

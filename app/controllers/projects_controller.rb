@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
     redirect_to :back, :notice => "User was kicked out from project!"
   end
 
+
   def users_page
     @project = Project.find(params[:project_id])
     @users = @project.users
@@ -15,7 +16,7 @@ class ProjectsController < ApplicationController
     list_of_all_users_emails = User.all.map(&:email)
 
     users_still_in_project = @project.users.map(&:email)
-    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| users_still_in_project.include?(u)}
+    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| users_still_in_project.include?(u) }
     @invitation_accepted_list = User.invitation_accepted.map(&:email)
   end
 
@@ -25,11 +26,15 @@ class ProjectsController < ApplicationController
     end
 
     email = params[:invitation][:email]
+    #first_name = params[:invitation][:first_name]
+    #second_name = params[:invitation][:second_name]
     role = params[:role]
+    user =User.where(:email => email).first
+
     project = Project.find(params[:project_id])
 
     if User.where(:email => email).exists?
-      pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)
+      pm = ProjectMembership.new(:user => user, :project => project, :role => role)
 
       if pm.save
         flash[:notice] = "User now can see current project"
@@ -37,11 +42,26 @@ class ProjectsController < ApplicationController
 
     else
       User.invite!(:email => email)
-      flash[:notice] = "User was invited to project"
 
-      ProjectMembership.create(:user => User.where(:email => email).first, :project => project, :role => role)
-
+      pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)
+      if pm.save
+        flash[:notice] = "User was invited to project"
+      end
     end
+
+    #raise params.to_json
+
+    #user.update_attributes(:first_name => "222")
+    #
+    #begin
+    #  user.first_name = first_name
+    #  user.second_name = second_name
+    #  user.save
+    #rescue
+    #end
+
+    #user.update_attributes(:first_name => first_name, :second_name => second_name)
+
 
     redirect_to :back
 
@@ -61,9 +81,12 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+
+
     @project = Project.find(params[:id])
     @discussion = @project.discussions.new
     @task = @project.tasks.new
+    @project_users = @project.users.delete_if{|u| u==current_user}
 
     respond_to do |format|
       format.html # show.html.erb
@@ -131,4 +154,5 @@ class ProjectsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end
