@@ -78,21 +78,32 @@
       .accordion-heading
         %a(class="accordion-toggle add_new_task_link" data-toggle="collapse" data-parent="#accordion3" href="#collapseTaskCreateField")
           %i.icon-list-alt
-          =pluralize(@project.discussions.count, "discussion")
+          =pluralize(@project.tasks.count, "task")
       #collapseTaskCreateField.accordion-body.collapse
         .accordion-inner
+
           %table.table.table-striped
-            - @project.discussions.each do |d|
-              -if d.id
+            - @project.tasks.each do |t|
+              -if t.id
                 %tr
                   %td.avatar
-                    = gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
+                    -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
+                    %span.label.label-success
+                      =t.status_via_words
                   %td
-                    = link_to d.title, discussion_path(d.id)
+                    = link_to t.title, task_path(t)
                   %td
-                    =truncate(d.comments.first.comment) if d.comments.present?
+                    =truncate(t.comments.first.comment) if t.comments.present?
+                  %td
+                    %i.icon-comment
+                    - if t.comments.present?
+                      =link_to task_path(t) do |task|
+                        .badge.badge-info
+                          =t.comments.count
                   %td
                     %i.icon-remove
+
+
 .lead
   Discussions
 #accordion2.accordion

@@ -60,7 +60,7 @@ $(document).ajaxComplete (xhr, data, status) ->
   #  console.log data
   #  console.log data.responseText
 
-  if status.url.indexOf("tasks") > 0
+  if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
     $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
 
 
