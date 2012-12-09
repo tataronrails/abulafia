@@ -86,7 +86,8 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @discussion = @project.discussions.new
     @task = @project.tasks.new
-    @project_users = @project.users.delete_if{|u| u==current_user}
+    @project_users = @project.users
+    #.delete_if{|u| u==current_user}
 
     respond_to do |format|
       format.html # show.html.erb

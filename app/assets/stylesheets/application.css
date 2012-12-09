@@ -15,14 +15,33 @@
  *= require_tree .
  */
 
-body{
+.rotate {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    /* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+
+    /* Should be unset in IE9+ I think. */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation = 3);
+}
+
+body {
     background: url("/assets/012-subtle-light-patterns.jpg")
 }
 
-.h{
-    display:none;
+.h {
+    display: none;
 }
-.avatar img{
+
+.avatar img {
     border-radius: 100px 100px 100px 100px;
     width: 40px;
     float: left;
@@ -62,16 +81,14 @@ textarea {
     /*border:1px solid red;*/
 }
 
-
-
-.accordion-group{
+.accordion-group {
     background-color: #fff;
 }
 
-.h{
-    display:none;
+.h {
+    display: none;
 }
 
-.estimates{
-    display:none;
+.estimates {
+    display: none;
 }

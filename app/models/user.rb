@@ -16,20 +16,20 @@ class User < ActiveRecord::Base
     self.project_memberships.where(:project_id => project_id).first.role.text
   end
 
-  def fio
-    begin
-      id(self.first_name && self.fist_name)
-      id(self.first_name && self.second_name)
-      id(self.first_name && self.second_name)
-      id(self.first_name, self.second_name).join(" ")
-    rescue
-      "My"
-    end
-
-
-
-
+  def login
+      self.email.split("@").first
   end
+
+  def fio
+      self.email.split("@").first
+  end
+
+
+  #
+  #
+  #def initials
+  #    self.email.split("@").first[0..2]
+  #end
 
 
 end

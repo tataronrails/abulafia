@@ -15,7 +15,12 @@
     %small= @discussion.project.desc
 
 -#.bs-docs-example.discussion_show
-%p.lead #{@discussion.title}
+%p
+  .lead
+    =@discussion.title
+    %br/
+    %small
+      =@discussion.desc
 
 =form_tag add_new_comment_to_discussion_path, :remote => true, :update => { :success => "#comments_line"} do |f|
   =hidden_field_tag "user_id", current_user.id

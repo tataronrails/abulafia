@@ -20,8 +20,10 @@
               -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
               = t.title
 
-              =t.assigned_to rescue nil
-              - if t.assigned_to
-                %small
-                  =t.place
-                  (#{users_initials(t.assigned_to)})
+              %small
+                =t.assigned_to_initials
+
+              -#- if t.assigned_to
+              -#  %small
+              -#    =t.place
+              -#    (#{users_initials(t.assigned_to)})

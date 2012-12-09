@@ -17,13 +17,15 @@ window.open_task_modal = (title_of_task) ->
   $('#task_modal .modal-header h3').html(title_of_task)
 
 send_form_on_select_assigned_to = () ->
-  $("#task_assigned_to").change ->
-    $(this).parent("form").submit()
+  $("#task_assigned_to").live 'change', ()->
+    $(this).parents(".accordion-inner").find("form").submit().end().find("input[type='text']").focus().select()
+
 
 #window.update_me = (id_of_task) ->
   #  alert(id_of_task)
 
 labels_click_bind = () ->
+
   $('.estimates_label').live 'click', ()->
     status = $(this).data('status')
     status_text = $(this).text()
@@ -62,11 +64,12 @@ $(document).ajaxComplete (xhr, data, status) ->
     $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
 
 
-  if status.url.indexOf("/update_points") > 0
-    task_id = status.url.split("/")[2]
-
-    $("#accordion_id").html("its test static message here:  333")
-    $("#accordion_id").html(data.responseText)
+#  if status.url.indexOf("/update_points") > 0
+#    alert 444
+#    task_id = status.url.split("/")[2]
+#
+#    $("#accordion_id").html("its test static message here:  333")
+#    $("#accordion_id").html(data.responseText)
 
 
 
@@ -82,6 +85,7 @@ $ ->
     points = $(this).attr("rel")
 
     task_id = $(this).parents(".accordion-group").data("taskid")
+
 
     $.ajax(
       url: "/tasks/" + task_id + "/update_points"
@@ -115,7 +119,7 @@ $ ->
     e.preventDefault()
 
   $(".accordion-body").on "shown", ->
-    f = $(this).parents(".accordion").find("input[type=text]").focus().select()
+    $(this).parents(".accordion").find("input[type=text]").focus().select()
 #    $("#discussion_title").focus().select()
 
   if location.hash == "#comments"

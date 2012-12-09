@@ -30,19 +30,6 @@
 
 
 
--#-content_for :user_stories_icebox do
--#  .accordion{:id => "accordion_id"}
--#    -@project.tasks.each do |t|
--#      .accordion-group{:id => "accordion-group_"+t.id.to_s}
--#        .accordion-heading
--#          .row-fluid
--#            .span10
--#              =link_to t.title, "#story_1", :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}
--#            .row-right
--#              =link_to("#story_1", :class => "accordion-toggle", :data => {:toggle => 'collapse', :parent => "accordion_id"}) do |s|
--#                .label
--#                  =t.status_via_words
-
 
 
 
@@ -66,7 +53,6 @@
           Users [
           = @project.users.count
           ]
-
 .lead
   Tasks
 #accordion3.accordion
