@@ -13,6 +13,10 @@ EOffice::Application.routes.draw do
 
   resources :projects, :has_many => :comments do
     post 'invite_user'
+    get 'update_icebox'
+    get 'update_backlog'
+    get 'update_mywork'
+    get "user_stories", "user_stories"
     #resource 'users'
   end
 

@@ -1,0 +1,20 @@
+.row-fluid
+  .span12
+    =link_to_function "icebox", "window.update_icobox_in_us_page(#{@project.id})"
+    =link_to_function "backlog", "window.update_backlog_in_us_page(#{@project.id})"
+    =link_to_function "my work", "window.update_my_work_in_us_page(#{@project.id})"
+.row-fluid
+  .span4.us_column
+    .lead My work
+    = render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work"}
+  .span4.us_column
+    .lead
+      Backlog
+    = render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog"}
+  .span4.us_column
+    .lead
+      Icebox
+    .icebox_column= render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox"}
+  -#.span3.us_column
+  -#  .us_header
+  -#    History

@@ -17,15 +17,15 @@
 -content_for :icebox do
   .accordion{:id => "accordion_id"}
 
-    = render :partial => "story", :locals => {:tasks => @project.icebox}
+    = render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox"}
 
 -content_for :my_work do
   .accordion{:id => "accordion_id"}
-    = render :partial => "story", :locals => {:tasks => @project.my_work(current_user)}
+    = render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work"}
 
 -content_for :backlog do
   .accordion{:id => "accordion_id"}
-    = render :partial => "story", :locals => {:tasks => @project.backlog}
+    = render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog"}
 
 
 

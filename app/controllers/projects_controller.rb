@@ -2,6 +2,27 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
 
+  def update_icebox
+    project = Project.find(params[:project_id])
+    render :partial => "projects/story", :locals => {:tasks => project.icebox}
+  end
+
+  def update_backlog
+    project = Project.find(params[:project_id])
+    render :partial => "projects/story", :locals => {:tasks => project.backlog}
+  end
+
+  def update_mywork
+    project = Project.find(params[:project_id])
+    render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user)}
+  end
+
+  def user_stories
+    @project = Project.find(params[:project_id])
+    render :layout => "user_stories"
+  end
+
+
   def kick_out_users
     ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
     redirect_to :back, :notice => "User was kicked out from project!"

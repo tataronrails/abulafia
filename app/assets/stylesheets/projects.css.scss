@@ -2,6 +2,41 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.to_backlog{
+  //visibility: hidden;
+}
+
+.us_column {
+  //background: url(/assets/dropzone_repeating_pattern.png) repeat-x scroll 0 0 #AEB6B9;
+  //-moz-border-radius: 10px;
+  //-webkit-border-radius: 10px;
+  //border-radius: 10px; /* future proofing */
+  //-khtml-border-radius: 10px; /* for old Konqueror browsers */
+
+  //-moz-box-shadow: 5px 5px 5px #888;
+  //-webkit-box-shadow: 5px 5px 5px #888;
+  //box-shadow: 5px 5px 5px #888;
+
+  //border:1px solid #999;
+
+  //height: 600px;
+
+  .us_header {
+    background-color: #666;
+    padding: 10px 0 10px 10px;
+
+    -moz-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0; /* future proofing */
+    -khtml-border-radius: 10px 10px 0 0; /* for old Konqueror browsers */
+
+    color: white;
+    font-weight: bold;
+
+  }
+}
+
 #new_discussion input[type='text'] {
   width: 357px;
   height: 20px !important;
@@ -31,15 +66,13 @@ textarea {
   box-shadow: 3px 3px 5px 6px #ccc;
 }
 
-
-.setting_of_project{
+.setting_of_project {
   font-size: 24px;
   //marhin-left: -20px;
   width: 140px;
-  border:1px solid red;
+  border: 1px solid red;
 }
 
-
-.estimates_label, span.estimates > img{
+.estimates_label, span.estimates > img {
   cursor: pointer;
 }

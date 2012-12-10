@@ -3,6 +3,36 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+
+#make_visible_2_backlog_button = (e) ->
+#  $(".icebox_column .accordion-group").hover (=> console.log e), (=> console.log 2)
+
+update_column_in_us_page = (proj_id, column_name) ->
+  $.ajax(
+    url: "/projects/"+proj_id+"/update_"+column_name,
+    success: (data) ->
+      $("."+column_name+"_column").html(data)
+  )
+
+
+window.update_icobox_in_us_page = (proj_id, data) ->
+  update_column_in_us_page(proj_id, "icebox")
+
+
+
+window.update_backlog_in_us_page = (proj_id, data) ->
+
+  $.ajax(
+    url: "/projects/"+proj_id+"/update_backlog"
+  )
+
+window.update_my_work_in_us_page = (proj_id, data) ->
+
+  $.ajax(
+    url: "/projects/"+proj_id+"/update_mywork"
+  )
+
+
 window.update_estimates = (id_of_task, data) ->
   estimate_horizontal = $("#image_of_estimates_vertical_" + id_of_task)
   estimate_horizontal.find("img").attr("src", "/assets/estimate_" + data + "pt_fibonacci.gif")
@@ -46,7 +76,7 @@ labels_click_bind = () ->
         url: "/tasks/" + task_id + "/update_points"
         type: "post",
         data:
-          {'status': next_status}
+          {'status': next_status, 'project_id': 23}
         headers:
           {
           'X-Transaction': 'POST Example',
@@ -60,7 +90,10 @@ $(document).ajaxComplete (xhr, data, status) ->
   #  console.log data
   #  console.log data.responseText
 
+  $( ".users_stories" ).effect( "fade", "fast");
+
   if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
+#    if(status.url).indexOf("/user_stories")
     $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
 
 
@@ -78,13 +111,15 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 
 $ ->
+#  make_visible_2_backlog_button()
   labels_click_bind()
   send_form_on_select_assigned_to()
 
   $('span.estimates img').live 'click', (e) ->
     points = $(this).attr("rel")
-
     task_id = $(this).parents(".accordion-group").data("taskid")
+
+    url_location = window.location.pathname
 
 
     $.ajax(
@@ -92,6 +127,10 @@ $ ->
       type: "post",
       data:
         {'points': points}
+      complete: (data) ->
+        if url_location.indexOf("/user_stories")
+          console.log "updated"
+          ,
       headers:
         {
         'X-Transaction': 'POST Example',
