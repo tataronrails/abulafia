@@ -12,15 +12,18 @@
                 - estimate_of_task = 0
               =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
             .pull-right
-              - unless place == "icebox"
+              - if place != "icebox"
                 .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                   =t.status_via_words
+              -else
+                .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
+                  to backlog
               %span.estimates{:class =>"estimates_"+t.id.to_s}
                 -["0","1","2","3","5","8"].each do |a|
                   =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
             .story_1{:id => t.id.to_s+"_around",  :class => "accordion-toggle alone_story", :data => {:toggle => 'collapse', :parent => "accordion_id"}}
-              - if place == "icebox"
-                %i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}
+              -#- if place == "icebox"
+                -#%i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}
               -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
 
               = t.title

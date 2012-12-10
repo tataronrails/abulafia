@@ -11,26 +11,23 @@ update_column_in_us_page = (proj_id, column_name) ->
   $.ajax(
     url: "/projects/"+proj_id+"/update_"+column_name,
     success: (data) ->
-      $("."+column_name+"_column").html(data)
+      column_element = $("."+column_name+"_column")
+      console.log column_element
+      column_element.fadeTo("fast",".6", -> column_element.html(data)).fadeTo("fast","1")
+
   )
 
 
-window.update_icobox_in_us_page = (proj_id, data) ->
+window.update_icebox_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "icebox")
 
 
+window.update_backlog_in_us_page = (proj_id) ->
+  update_column_in_us_page(proj_id, "backlog")
 
-window.update_backlog_in_us_page = (proj_id, data) ->
+window.update_my_work_in_us_page = (proj_id) ->
+  update_column_in_us_page(proj_id, "my_work")
 
-  $.ajax(
-    url: "/projects/"+proj_id+"/update_backlog"
-  )
-
-window.update_my_work_in_us_page = (proj_id, data) ->
-
-  $.ajax(
-    url: "/projects/"+proj_id+"/update_mywork"
-  )
 
 
 window.update_estimates = (id_of_task, data) ->
@@ -63,13 +60,29 @@ labels_click_bind = () ->
 
     task_id = $(this).parents(".accordion-group").data("taskid")
 
+
+    console.log status
+
+    if status == "to_backlog"
+      $.ajax(
+        url: "/tasks/" + task_id + "/to_backlog"
+        type: "post",
+        data:
+          { 'project_id': 23}
+        headers:
+          {
+          'X-Transaction': 'POST Example',
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+          }
+      )
+
+
     if status == 0
       $(this).next().show().end().hide()
 
+
     if status == 1
       task_id = $(this).parents(".accordion-group").data("taskid")
-
-
       next_status =  parseInt(status, 10) + 1
 
       $.ajax(
@@ -111,11 +124,19 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 
 $ ->
-#  make_visible_2_backlog_button()
+  $.ajaxSetup beforeSend: (xhr) ->
+    xhr.setRequestHeader "Accept", "text/javascript"
+    console.log "js here"
+
+
+
+  #  make_visible_2_backlog_button()
   labels_click_bind()
   send_form_on_select_assigned_to()
 
   $('span.estimates img').live 'click', (e) ->
+
+    column_and_place = $(this).parents(".us_column").data("column")
     points = $(this).attr("rel")
     task_id = $(this).parents(".accordion-group").data("taskid")
 
@@ -127,16 +148,24 @@ $ ->
       type: "post",
       data:
         {'points': points}
-      complete: (data) ->
-        if url_location.indexOf("/user_stories")
-          console.log "updated"
-          ,
+      complete: (data) -> update_some_test_smth(data, column_and_place, url_location),
       headers:
         {
         'X-Transaction': 'POST Example',
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
         }
     )
+
+  update_some_test_smth = (data, column_and_place, url_location) ->
+
+    if url_location.indexOf("/user_stories")
+      project_id = $("body").data("project_id")
+
+      switch column_and_place
+#        when 'icebox' then update_icebox_in_us_page(project_id)
+        when 'backlog' then update_backlog_in_us_page(project_id)
+        when 'my_work' then update_my_work_in_us_page(project_id)
+
 
 
   $(".estimate_me_class select").change ->
@@ -148,7 +177,7 @@ $ ->
 
     form_of_estimation.find("input[type='text']").val(estimate_of_task)
 
-    console.log(form_of_estimation.find("input[type='text']").val())
+#    console.log(form_of_estimation.find("input[type='text']").val())
 
     form_of_estimation.submit()
 

@@ -1,6 +1,7 @@
 EOffice::Application.routes.draw do
   resources :tasks, :has_many => :comments do
     post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+    post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
     post "update_points" => "tasks#update_points", :as => "update_points"
   end
 
@@ -15,7 +16,7 @@ EOffice::Application.routes.draw do
     post 'invite_user'
     get 'update_icebox'
     get 'update_backlog'
-    get 'update_mywork'
+    get 'update_my_work'
     get "user_stories", "user_stories"
     #resource 'users'
   end
