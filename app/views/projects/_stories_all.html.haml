@@ -1,16 +1,16 @@
 -#=gflash
-
 - project = @project ? @project : project
 -if project
   - if project.my_work(current_user).present?
     .lead
       =link_to "My work", project_user_stories_path(project )
     .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user), :place => "my_work", :updated_task => nil}
-
-  - if project.backlog.present?
-    .lead
-      =link_to "Backlog", project_user_stories_path(project)
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog, :place => "backlog", :updated_task => nil}
+  -#
+  -#- if project.backlog.present?
+  -#  .lead
+  -#    =link_to "Backlog", project_user_stories_path(project)
+  -#  .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog, :place => "backlog", :updated_task => nil}
+  -#
   - if project.icebox.present?
     .lead
       =link_to "Icebox", project_user_stories_path(project)

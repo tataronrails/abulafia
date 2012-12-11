@@ -6,13 +6,12 @@
     = link_to @task.project.name, project_path(@task.project)
     %span.divider /
   %li
-    .active
-      =link_to "Tasks", "#"
+    =link_to "User stories", project_user_stories_path(@task.project)
 
-.page-header
-  %h3
-    = @task.project.name
-    %small= @task.project.desc
+-#.page-header
+-#  %h3
+-#= @task.project.name
+
 
 -#.bs-docs-example.discussion_show
 %p.lead #{@task.title}

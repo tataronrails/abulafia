@@ -1,4 +1,3 @@
--#= raise params[:project_id]
 - if place == "backlog"
   - order_1 = ColumnOrder.where(:project_id => params[:project_id], :place_id => 1).first
   - if order_1
@@ -21,16 +20,17 @@
                 - else
                   - estimate_of_task = 0
                 =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
-              .pull-right
-                - if place != "icebox"
-                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                    =t.status_via_words
-                -else
-                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
-                    to backlog
-                %span.estimates{:class =>"estimates_"+t.id.to_s}
-                  -["0","1","2","3","5","8"].each do |a|
-                    =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+              -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")
+                .pull-right
+                  - if place != "icebox"
+                    .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                      =t.status_via_words
+                  -else
+                    .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
+                      to backlog
+                  %span.estimates{:class =>"estimates_"+t.id.to_s}
+                    -["0","1","2","3","5","8"].each do |a|
+                      =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
               .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
                 -#- if place == "icebox"
                   -#%i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}

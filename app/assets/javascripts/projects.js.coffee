@@ -134,7 +134,7 @@ $ ->
       backlogOrder = $(this).sortable('toArray').toString()
 
       $.ajax(
-        url: "/tasks/" + task_id + "/update_order"
+        url: "/tasks/update_order"
         type: "post",
         data:
           {'project_id': project_id, 'position_array': backlogOrder}
