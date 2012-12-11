@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207063824) do
+ActiveRecord::Schema.define(:version => 20121211073200) do
+
+  create_table "column_orders", :force => true do |t|
+    t.integer "project_id"
+    t.integer "place_id"
+    t.text    "position_array"
+  end
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""

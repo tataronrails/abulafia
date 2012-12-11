@@ -6,15 +6,15 @@
 .row-fluid
   .span4.us_column{:data => {:column =>"my_work"}}
     .lead My work
-    .my_work_column= render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work"}
+    .my_work_column= render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work", :updated_task => nil}
   .span4.us_column{:data => {:column =>"backlog"}}
     .lead
       Backlog
-    .backlog_column= render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog"}
+    .backlog_column= render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog", :updated_task => nil}
   .span4.us_column{:data => {:column =>"icebox"}}
     .lead
       Icebox
-    .icebox_column= render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox"}
+    .icebox_column= render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox", :updated_task => nil}
   -#.span3.us_column
   -#  .us_header
   -#    History

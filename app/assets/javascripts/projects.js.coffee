@@ -7,14 +7,15 @@
 #make_visible_2_backlog_button = (e) ->
 #  $(".icebox_column .accordion-group").hover (=> console.log e), (=> console.log 2)
 
-update_column_in_us_page = (proj_id, column_name) ->
+update_column_in_us_page = (proj_id, column_name, task_id) ->
   $.ajax(
     url: "/projects/"+proj_id+"/update_"+column_name,
+    data:
+      { 'task_id': task_id}
     success: (data) ->
       column_element = $("."+column_name+"_column")
       console.log column_element
-      column_element.fadeTo("fast",".6", -> column_element.html(data)).fadeTo("fast","1")
-
+      column_element.fadeTo("fast",".6", -> column_element.html(data)).fadeTo("fast","1");
   )
 
 
@@ -22,8 +23,10 @@ window.update_icebox_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "icebox")
 
 
-window.update_backlog_in_us_page = (proj_id) ->
-  update_column_in_us_page(proj_id, "backlog")
+window.update_backlog_in_us_page = (proj_id,task_id) ->
+  update_column_in_us_page(proj_id, "backlog", task_id)
+
+  $(".accordion-group").sortable()
 
 window.update_my_work_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "my_work")
@@ -54,21 +57,21 @@ send_form_on_select_assigned_to = () ->
 labels_click_bind = () ->
 
   $('.estimates_label').live 'click', ()->
+#    story_id = $(this).attr("id").replace("estimates_label_","")
     status = $(this).data('status')
     status_text = $(this).text()
+    project_id = $('body').data('project_id')
 
 
     task_id = $(this).parents(".accordion-group").data("taskid")
 
-
-    console.log status
 
     if status == "to_backlog"
       $.ajax(
         url: "/tasks/" + task_id + "/to_backlog"
         type: "post",
         data:
-          { 'project_id': 23}
+          { 'project_id': project_id}
         headers:
           {
           'X-Transaction': 'POST Example',
@@ -89,7 +92,7 @@ labels_click_bind = () ->
         url: "/tasks/" + task_id + "/update_points"
         type: "post",
         data:
-          {'status': next_status, 'project_id': 23}
+          {'status': next_status, 'project_id': project_id}
         headers:
           {
           'X-Transaction': 'POST Example',
@@ -124,6 +127,28 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 
 $ ->
+  project_id = $('body').data('project_id')
+
+  $('.backlog_column').sortable(
+    update: (event, ui) ->
+      backlogOrder = $(this).sortable('toArray').toString()
+
+      $.ajax(
+        url: "/tasks/" + task_id + "/update_order"
+        type: "post",
+        data:
+          {'project_id': project_id, 'position_array': backlogOrder}
+        headers:
+          {
+          'X-Transaction': 'POST Example',
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+          }
+      )
+
+
+#      $.get('update-sort.cfm', {fruitOrder:fruitOrder});
+  )
+
   $.ajaxSetup beforeSend: (xhr) ->
     xhr.setRequestHeader "Accept", "text/javascript"
     console.log "js here"

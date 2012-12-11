@@ -13,19 +13,19 @@
   .modal-footer
     =link_to "Close", "#", :class =>"btn", :data => {:dismiss=>"modal"}, :aria => {:hidden=>"true"}
 
-
--content_for :icebox do
-  .accordion{:id => "accordion_id"}
-
-    = render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox"}
-
--content_for :my_work do
-  .accordion{:id => "accordion_id"}
-    = render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work"}
-
--content_for :backlog do
-  .accordion{:id => "accordion_id"}
-    = render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog"}
+-#
+-#-content_for :icebox do
+-#  .accordion{:id => "accordion_id"}
+-#
+-#    = render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox", :updated_task => 'nil'}
+-#
+-#-content_for :my_work do
+-#  .accordion{:id => "accordion_id"}
+-#    = render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work", :updated_task => 'nil'}
+-#
+-#-content_for :backlog do
+-#  .accordion{:id => "accordion_id"}
+-#    = render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog", :updated_task => 'nil'}
 
 
 

@@ -1,8 +1,12 @@
 EOffice::Application.routes.draw do
+  resources :column_orders
+
+
   resources :tasks, :has_many => :comments do
     post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
     post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
     post "update_points" => "tasks#update_points", :as => "update_points"
+    post "update_order" => "tasks#update_order", :as => "update_order"
   end
 
 

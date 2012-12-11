@@ -1,39 +1,46 @@
--#=place
--tasks.each do |t|
-  - if t.title.present?
-    .accordion-group{:data => {:taskid => t.id}, :class => "accordion_group_"+t.id.to_s}
-      .accordion-heading
-        .row-fluid
-          .span12
-            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}"}
-              - if t.estimate.present?
-                - estimate_of_task =  t.estimate
-              - else
-                - estimate_of_task = 0
-              =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
-            .pull-right
-              - if place != "icebox"
-                .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                  =t.status_via_words
-              -else
-                .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
-                  to backlog
-              %span.estimates{:class =>"estimates_"+t.id.to_s}
-                -["0","1","2","3","5","8"].each do |a|
-                  =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
-            .story_1{:id => t.id.to_s+"_around",  :class => "accordion-toggle alone_story", :data => {:toggle => 'collapse', :parent => "accordion_id"}}
-              -#- if place == "icebox"
-                -#%i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}
-              -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
+-#= raise params[:project_id]
+- if place == "backlog"
+  - order_1 = ColumnOrder.where(:project_id => params[:project_id], :place_id => 1).first
+  - if order_1
+    - order = order_1.position_array.split(",")
+- else
+  - order = tasks.map(&:id)
 
-              = t.title
+- if order.present?
+  -order.each do |o|
+    -t = Task.find(o)
+    - if t.title.present?
+      -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
+      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} accordion_group_#{t.id}"}
+        .accordion-heading
+          .row-fluid
+            .span12
+              .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}"}
+                - if t.estimate.present?
+                  - estimate_of_task =  t.estimate
+                - else
+                  - estimate_of_task = 0
+                =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
+              .pull-right
+                - if place != "icebox"
+                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                    =t.status_via_words
+                -else
+                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
+                    to backlog
+                %span.estimates{:class =>"estimates_"+t.id.to_s}
+                  -["0","1","2","3","5","8"].each do |a|
+                    =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+              .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
+                -#- if place == "icebox"
+                  -#%i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}
+                -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
+                =t.id
+                )
+                =link_to t.title, task_path(t)
 
-              - if t.comments.present?
-                %i.icon-comment-alt
-              %small
-                =t.assigned_to_initials
+                - if t.comments.present?
+                  %i.icon-comment-alt
+                %small
+                  =t.assigned_to_initials
 
-              -#- if t.assigned_to
-              -#  %small
-              -#    =t.place
-              -#    (#{users_initials(t.assigned_to)})
