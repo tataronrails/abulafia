@@ -87,7 +87,7 @@
           = yield
         .span4
           .users_stories
-            = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
+            = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user, :task => nil}
             -#.lead
             -#  My work
             -#=yield :my_work
