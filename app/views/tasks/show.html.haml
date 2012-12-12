@@ -12,7 +12,6 @@
 -#  %h3
 -#= @task.project.name
 
-
 -#.bs-docs-example.discussion_show
 %p.lead #{@task.title}
 
@@ -22,6 +21,11 @@
   =text_area_tag "task[comment]"
   %p
     =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
+
+- project_users = @task.project.users.map(&:login)
+
+=text_field :mention, :logins, :data => {:logins => project_users}
+
 
 #comments_line
   = render :partial => "comments", :locals => {:comments => @task.comments}
