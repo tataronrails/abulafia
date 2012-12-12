@@ -1,8 +1,11 @@
 %h2
   =gravatar_image_tag(current_user.email)
-  =link_to "Gravatar", "http://ru.gravatar.com/", :target => "_blank"
   Edit my profile
-
+.gravatar
+  = link_to "http://#{I18n.locale.to_s}.gravatar.com/", :target => "_blank" do |l|
+    Gravatar
+    %i.icon-external-link
+%p
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f|
   = devise_error_messages!
   %div= f.email_field :email, :placeholder => "email"
