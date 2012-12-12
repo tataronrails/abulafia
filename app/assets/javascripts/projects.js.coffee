@@ -102,28 +102,14 @@ labels_click_bind = () ->
 
 
 $(document).ajaxComplete (xhr, data, status) ->
-  #  console.log xhr
-  #  console.log data
-  #  console.log data.responseText
 
   $( ".users_stories" ).effect( "fade", "fast");
 
   if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
-#    if(status.url).indexOf("/user_stories")
     $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
 
 
-#  if status.url.indexOf("/update_points") > 0
-#    alert 444
-#    task_id = status.url.split("/")[2]
-#
-#    $("#accordion_id").html("its test static message here:  333")
-#    $("#accordion_id").html(data.responseText)
 
-
-
-
-#    alert(data.resonseText())
 
 
 $ ->
@@ -151,9 +137,6 @@ $ ->
 
   $.ajaxSetup beforeSend: (xhr) ->
     xhr.setRequestHeader "Accept", "text/javascript"
-    console.log "js here"
-
-
 
   #  make_visible_2_backlog_button()
   labels_click_bind()

@@ -7,20 +7,13 @@
     <div class="well">
 
     <%= f.password_field :password, :placeholder => "Password" %>
-
     <p>
       <%= f.password_field :password_confirmation, :placeholder => "Password confirmation" %></p>
 
     </div>
-    <p>
-      <%= f.text_field :first_name, :placeholder => "First name" %></p>
-
-    <p>
-      <%= f.text_field :second_name, :placeholder => "Second name" %></p>
-
-
-    <p>
-      <%= f.text_field :initials, :placeholder => "Initials" %></p>
+      <%# f.text_field :first_name, :placeholder => "First name" %>
+      <%# f.text_field :second_name, :placeholder => "Second name" %>
+      <%# f.text_field :initials, :placeholder => "Initials" %>
 
     <p><%= f.button t("devise.invitations.edit.submit_button"),  :class => "btn" %></p>
 <% end %>

@@ -1,17 +1,17 @@
 -#=link_to "#myModal" , "#myModal", :data => {:toggle => "modal"}
-#task_modal.modal.hide.fade
-  .modal-header
-    %h3 Modal header
-  .modal-body
-    %ol
-      %li
-        %p
-          Estimate:
-        -["0","1","2","3","5","8"].each do |a|
-          =image_tag "select_"+a+"pt_fibonacci.gif"
-
-  .modal-footer
-    =link_to "Close", "#", :class =>"btn", :data => {:dismiss=>"modal"}, :aria => {:hidden=>"true"}
+-##task_modal.modal.hide.fade
+-#  .modal-header
+-#    %h3 Modal header
+-#  .modal-body
+-#    %ol
+-#      %li
+-#        %p
+-#          Estimate:
+-#        -["0","1","2","3","5","8"].each do |a|
+-#          =image_tag "select_"+a+"pt_fibonacci.gif"
+-#
+-#  .modal-footer
+-#    =link_to "Close", "#", :class =>"btn", :data => {:dismiss=>"modal"}, :aria => {:hidden=>"true"}
 
 -#
 -#-content_for :icebox do
@@ -33,19 +33,19 @@
 
 
 
-%ul.breadcrumb
-  %li
-    =link_to "Home", root_path
-    %span.divider /
-  %li
-    .active
-      = link_to @project.name, "#"
 .row-fluid
-  .span4
-    %h3
-      = @project.name
-      %small= @project.desc
-
+  .span10
+    %ul.breadcrumb
+      %li
+        =link_to "Home", root_path
+        %span.divider /
+      %li
+        =link_to "Projects", projects_path
+        %span.divider /
+      %li
+        .active
+          %strong
+            =@project.name
   .pull-right
     .span7
       =link_to users_list_path(@project) do |u|
@@ -53,6 +53,7 @@
           Users [
           = @project.users.count
           ]
+
 .lead
   Tasks
 #accordion3.accordion

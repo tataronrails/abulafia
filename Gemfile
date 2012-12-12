@@ -19,7 +19,8 @@ gem 'haml'
 gem 'haml-rails'
 gem 'ruby_parser'
 gem 'thin'
- 
+gem "hipchat-api"
+
 gem 'gravatar_image_tag'
 
 gem 'cancan'

@@ -34,6 +34,8 @@ class DiscussionsController < ApplicationController
   def show
     @discussion = Discussion.find(params[:id])
     @comment = @discussion.comments.new
+    @project_users = @discussion.project.users.map(&:login)
+
 
     respond_to do |format|
       format.html # show.html.erb

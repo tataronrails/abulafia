@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :cell, :im, :desc, :initials
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :cell, :im, :desc, :initials, :hc_user_id, :login
 
   has_many :project_memberships
   has_many :projects, :through => :project_memberships
@@ -16,9 +16,10 @@ class User < ActiveRecord::Base
     self.project_memberships.where(:project_id => project_id).first.role.text
   end
 
-  def login
-      self.email.split("@").first
-  end
+  #def login
+  #  self.login
+    #self.email.split("@").first
+  #end
 
   def fio
       self.email.split("@").first

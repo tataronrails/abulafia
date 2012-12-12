@@ -1,0 +1,44 @@
+%h2
+  =gravatar_image_tag(current_user.email)
+  =link_to "Gravatar", "http://ru.gravatar.com/", :target => "_blank"
+  Edit my profile
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put}) do |f|
+  = devise_error_messages!
+  %div= f.email_field :email, :placeholder => "email"
+  = f.label :hipchat_userid
+  %div= f.number_field :hc_user_id, :placeholder => "Hipchat user_id"
+  .well-large
+    .row= f.text_field :first_name, :placeholder => "First Name"
+    .row= f.text_field :second_name, :placeholder => "Second Name"
+    .row
+      = f.label :login
+      = f.text_field :login, :placeholder => "Login"
+
+    .row
+      = f.label :initials
+      = f.text_field :initials, :placeholder => "Initials", :size => 4
+    .row= f.phone_field :cell, :placeholder => "Cell"
+    .row
+      =f.text_area :desc
+
+  .well
+    = f.label :password
+    %i (leave blank if you don't want to change it)
+    %br/
+    = f.password_field :password, :autocomplete => "off"
+    %div
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation
+  %div
+  = f.label :current_password
+  %i (we need your current password to confirm your changes)
+  %br/
+  = f.password_field :current_password
+  %div= f.submit "Update"
+%h3 Cancel my account
+%p
+Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :data => {:confirm => "Are you sure?"}, :method => :delete}
+\.
+= link_to "Back", :back

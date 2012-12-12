@@ -29,6 +29,9 @@
   %p
     =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
 
+=text_field :mention, :logins, :data => {:logins => @project_users}
+
+
 #comments_line
   = render :partial => "comments", :locals => {:comments => @discussion.comments}
 

@@ -19,6 +19,7 @@ EOffice::Application.routes.draw do
   resources :discussions, :has_many => :comments
 
   resources :projects, :has_many => :comments do
+    resources :discussions, :has_many => :comments
     post 'invite_user'
     get 'update_icebox'
     get 'update_backlog'
@@ -28,7 +29,7 @@ EOffice::Application.routes.draw do
   end
 
 
-  devise_for :users, :controllers => { :invitations => 'users/invitations' } do
+  devise_for :users, :controllers => {:invitations => 'users/invitations'} do
     get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
     get 'projects/:project_id/:user_id/kick_out_users' => 'projects#kick_out_users', :as => "kick_out_users"
 

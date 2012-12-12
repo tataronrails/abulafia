@@ -9,11 +9,13 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require twitter/bootstrap/static/bootstrap
+ * require twitter/bootstrap/static/bootstrap
  *= require 'font-awesome'
- *= require gritter
- *= require select2
- *= require_tree .
+ * require gritter
+
+ *= require_tree
+
+ .
  */
 
 

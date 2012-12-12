@@ -22,9 +22,8 @@
   %p
     =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
 
-- project_users = @task.project.users.map(&:login)
 
-=text_field :mention, :logins, :data => {:logins => project_users}
+=hidden_field :mention, :logins, :data => {:logins => @project_users}
 
 
 #comments_line
