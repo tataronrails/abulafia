@@ -14,6 +14,9 @@ gem "bootstrapped", :git => 'https://github.com/entropillc/bootstrapped.git'
 gem 'font-awesome-rails'
 gem "gritter", "1.0.2"
 gem "select2-rails"
+gem "capistrano"
+gem "rails_autolink"
+gem "best_in_place"
 
 gem 'haml'
 gem 'haml-rails'

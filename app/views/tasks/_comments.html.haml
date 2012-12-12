@@ -4,6 +4,6 @@
       .alone_comment
         .avatar
           = gravatar_image_tag(c.user.email)
-        = c.comment
+        = auto_link(c.comment,:html => { :target => '_blank' })
         .datetime
           %small= distance_of_time_in_words_to_now(c.created_at)

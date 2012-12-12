@@ -40,9 +40,6 @@
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation = 3);
 }
 
-body {
-    background: url("/assets/012-subtle-light-patterns.jpg")
-}
 
 .h {
     display: none;

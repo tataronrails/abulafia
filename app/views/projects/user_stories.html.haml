@@ -1,11 +1,14 @@
-.row-fluid
+.row-fluid.h
   .span12
     =link_to_function "icebox", "window.update_icebox_in_us_page(#{@project.id})"
     =link_to_function "backlog", "window.update_backlog_in_us_page(#{@project.id})"
     =link_to_function "my work", "window.update_my_work_in_us_page(#{@project.id})"
 .row-fluid
   .span4.us_column{:data => {:column =>"my_work"}}
-    .lead My work
+    .lead
+      =link_to project_path(@project) do |l|
+        %i.icon-arrow-left
+      My work
     .my_work_column= render :partial => "story", :locals => {:tasks => @project.my_work(current_user), :place => "my_work", :updated_task => nil}
   .span4.us_column{:data => {:column =>"backlog"}}
     .lead

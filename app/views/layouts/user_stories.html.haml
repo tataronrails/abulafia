@@ -11,7 +11,7 @@
     = stylesheet_link_tag "application", :media => "all"
     :css
       body {
-        padding-top: 60px;
+        padding-top: 20px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -26,34 +26,40 @@
     -#%link(rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png")
     -#%link(rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png")
 
-  %body{:data=>{:project_id => @project.id}}
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container-fluid
-          %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          =link_to "Abulafia", root_path, :class => "brand"
-          .nav-collapse.collapse.navbar-responsive-collapse
-            %ul.nav
-              %li= link_to "Home", root_path
-              - if controller.controller_name == "projects"
-                %li.active
-                  = link_to t( :projects), projects_path
-              - else
-                %li
-                  = link_to t( :projects), projects_path
-              %li= link_to "About", "#about"
-              %li= link_to "Contact", "#contact"
-            %p.navbar-text.pull-right
-              - if user_signed_in?
-                Logged in as
-                = link_to current_user.email, "#"
-                |
-                = link_to "Sign out", destroy_user_session_path
-              - else
-                = link_to "Sign in", new_user_session_path
+  - papers = []
+  - papers << "012-subtle-light-patterns.jpg"
+  - papers << "background-texture.jpg"
+  - papers << "white_wall.png"
+  - papers << "creampaper.png"
+  - papers << "debut_light.png"
+  %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/#{papers.sample})"}
+    -#.navbar.navbar-fixed-top
+    -#  .navbar-inner
+    -#    .container-fluid
+    -#      %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
+    -#        %span.icon-bar
+    -#        %span.icon-bar
+    -#        %span.icon-bar
+    -#      =link_to "Abulafia", root_path, :class => "brand"
+    -#      .nav-collapse.collapse.navbar-responsive-collapse
+    -#        %ul.nav
+    -#          %li= link_to "Home", root_path
+    -#          - if controller.controller_name == "projects"
+    -#            %li.active
+    -#              = link_to t( :projects), projects_path
+    -#          - else
+    -#            %li
+    -#              = link_to t( :projects), projects_path
+    -#          %li= link_to "About", "#about"
+    -#          %li= link_to "Contact", "#contact"
+    -#        %p.navbar-text.pull-right
+    -#          - if user_signed_in?
+    -#            Logged in as
+    -#            = link_to current_user.email, "#"
+    -#            |
+    -#            = link_to "Sign out", destroy_user_session_path
+    -#          - else
+    -#            = link_to "Sign in", new_user_session_path
     .container-fluid
       .row-fluid
         - if flash[:alert] || flash[:notice]
@@ -62,8 +68,8 @@
         = yield
 
 
-      %footer.navbar-fixed-bottom
-        = app_name
-        Copyright &copy;  2012. All Rights Reserved.
+      -#%footer.navbar-fixed-bottom
+      -#  = app_name
+      -#  Copyright &copy;  2012. All Rights Reserved.
 
     = javascript_include_tag "application"

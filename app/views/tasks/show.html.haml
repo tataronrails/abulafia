@@ -15,12 +15,19 @@
 -#.bs-docs-example.discussion_show
 %p.lead #{@task.title}
 
-=form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
-  =hidden_field_tag "user_id", current_user.id
-  =hidden_field_tag "id", @task.id
-  =text_area_tag "task[comment]"
-  %p
-    =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
+.row-fluid
+  =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
+    =hidden_field_tag "user_id", current_user.id
+    =hidden_field_tag "id", @task.id
+    =text_area_tag "task[comment]"
+    .row-fluid
+      =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
+    %p
+    .row-fluid
+      %i.icon-paper-clip
+      =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
+
+
 
 
 =hidden_field :mention, :logins, :data => {:logins => @project_users}

@@ -28,7 +28,16 @@
     -#%link(rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png")
     -#%link(rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png")
 
-  %body
+  - papers = []
+  - papers << "012-subtle-light-patterns.jpg"
+  - papers << "background-texture.jpg"
+  - papers << "creampaper.png"
+  - papers << "debut_light.png"
+  - papers << "diagonal_waves.png"
+  - papers << "billie_holiday.png"
+  - papers << "shl.png"
+  - papers << "shl_2X.png"
+  %body{:style => "background: url(/assets/#{papers.sample})"}
     .navbar.navbar-fixed-top
       .navbar-inner
         .container
