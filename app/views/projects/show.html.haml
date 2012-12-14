@@ -95,13 +95,13 @@
                   %td
                     = link_to t.title, task_path(t)
                   %td
-                    =truncate(t.comments.first.comment) if t.comments.present?
+                    =truncate(t.discussion.comments.first.comment) if t.discussion.comments.present?
                   %td
                     %i.icon-comment
-                    - if t.comments.present?
+                    - if t.discussion.comments.present?
                       =link_to task_path(t) do |task|
                         .badge.badge-info
-                          =t.comments.count
+                          =t.discussion.comments.count
                   %td
                     %i.icon-remove
 
