@@ -47,6 +47,8 @@
           %i.icon-leaf
           %strong
             =@project.name
+          =link_to edit_project_path(@project) do |l|
+            %i.icon-edit
   .pull-right
     .span7
       =link_to users_list_path(@project) do |u|
