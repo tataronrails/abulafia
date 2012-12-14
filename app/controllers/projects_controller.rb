@@ -116,9 +116,9 @@ class ProjectsController < ApplicationController
 
 
     begin
-      t.discussion
+      @task.discussion
     rescue
-      t.discussion.create(:title => "some test descussion")
+      @task.discussion.create(:title => "some test descussion")
     end
 
 
