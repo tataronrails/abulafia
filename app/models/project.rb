@@ -26,6 +26,20 @@ class Project < ActiveRecord::Base
     end
   end
 
+
+  def project_manager
+    #self.project_memberships.where(:project_id => project_id).first.role.text
+    pm = nil
+    project = self
+    self.users.each do |u|
+      if u.project_memberships.where(:project_id => project.id).first.role = "project_manager"
+        pm = u
+      end
+    end
+    pm
+  end
+
+
   def my_work user
     self.tasks.where(:assigned_to => user.id)
   end

@@ -81,19 +81,25 @@
           -#      here
           -#    %li
           -#      =link_to "Another place", "#"
-        .span8
-          - if flash[:alert] || flash[:notice]
-            = gflash
+        -if action_name == "users_page"
+          - div_column = "span12"
+        - else
+          - div_column = "span8"
+        %div{:class =>div_column}
+
+
           = content_tag :h1, yield(:title) if show_title
           = yield
-        .span4
-          -if @activities
-            -for activity in @activities
-              =render_activity(activity)
 
-          - if controller_name == "projects" && action_name == "show"
-            .users_stories
-              = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
+        - unless action_name == "users_page"
+          .span4
+            -if @activities
+              -for activity in @activities
+                =render_activity(activity)
+
+            - if controller_name == "projects" && action_name == "show"
+              .users_stories
+                = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
 
 
       -#%footer.navbar-fixed-bottom

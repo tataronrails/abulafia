@@ -6,6 +6,10 @@
   %li.active
     %i.icon-inbox
     =link_to "User stories", project_user_stories_path(project)
+  .pull-right
+    %span{:title => "project mamager of project"}
+      =link_to user_profile_path(@project.project_manager) do |u|
+        =gravatar_image_tag(@project.project_manager.email)
 
 -if project
   - if project.my_work(current_user).present?
