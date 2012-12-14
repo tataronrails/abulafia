@@ -67,6 +67,7 @@ class DiscussionsController < ApplicationController
   # POST /discussions
   # POST /discussions.json
   def create
+    PublicActivity.enabled = false
     @discussion = Discussion.new(params[:discussion])
 
     respond_to do |format|
@@ -78,6 +79,7 @@ class DiscussionsController < ApplicationController
         format.json { render json: @discussion.errors, status: :unprocessable_entity }
       end
     end
+    PublicActivity.enabled = true
   end
 
   # PUT /discussions/1

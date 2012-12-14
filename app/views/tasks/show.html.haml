@@ -34,5 +34,5 @@
 
 
 #comments_line
-  = render :partial => "comments", :locals => {:comments => @task.comments, :list_of_mentions => @list_of_mentions}
+  = render :partial => "comments", :locals => {:comments => @task.discussion.comments, :list_of_mentions => @list_of_mentions}
 

@@ -15,7 +15,7 @@
 
 
         - @list_of_mentions.each do |login|
-          =c.comment.gsub(login, link_to(user))
+          -#= c.comment.gsub(login, content_tag(:strong,login))
         = auto_link(c.comment,:html => { :target => '_blank' })
         .datetime
           %small= distance_of_time_in_words_to_now(c.created_at)

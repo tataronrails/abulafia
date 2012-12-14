@@ -20,7 +20,7 @@
 
 .activity_alone {
     padding: 5px;
-    border-bottom: 1px solid white;
+    border-bottom: 1px dotted #ccc;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
 }
@@ -53,6 +53,16 @@
     float: left;
     margin: 0 10px 0 0;
     vertical-align: bottom;
+
+}
+
+i.avatar_activites img {
+    width: 20px;
+    padding: 0 7px 0 3px;
+    opacity: .7;
+    /*float: left;*/
+    /*margin: 0 10px 0 0;*/
+    /*vertical-align: bottom;*/
 
 }
 
