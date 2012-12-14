@@ -10,7 +10,7 @@ gem 'devise'
 gem 'devise_invitable'
 gem 'acts_as_commentable', '3.0.1'
 gem "select2-rails"
-gem "bootstrapped", :git => 'https://github.com/entropillc/bootstrapped.git'
+gem "bootstrapped"
 gem 'font-awesome-rails'
 gem "gritter", "1.0.2"
 gem "select2-rails"

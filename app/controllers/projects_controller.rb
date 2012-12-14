@@ -106,11 +106,21 @@ class ProjectsController < ApplicationController
   def show
 
 
+
+
     @project = Project.find(params[:id])
     @discussion = @project.discussions.new
     @task = @project.tasks.new
     @project_users = @project.users
     #.delete_if{|u| u==current_user}
+
+
+    begin
+      t.discussion
+    rescue
+      t.discussion.create(:title => "some test descussion")
+    end
+
 
     respond_to do |format|
       format.html # show.html.erb
