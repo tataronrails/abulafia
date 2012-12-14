@@ -34,7 +34,7 @@ class DiscussionsController < ApplicationController
   def show
     @discussion = Discussion.find(params[:id])
     @comment = @discussion.comments.new
-    @project_users = @discussion.project.users.map(&:login)
+    @project_users = @discussion.project.users.map(&:fio)
 
 
     respond_to do |format|

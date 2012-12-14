@@ -86,17 +86,10 @@
           = content_tag :h1, yield(:title) if show_title
           = yield
         .span4
-          .users_stories
-            = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user, :task => nil}
-            -#.lead
-            -#  My work
-            -#=yield :my_work
-            -#.lead
-            -#  Backlog
-            -#= yield :backlog
-            -#.lead
-            -#  Icebox
-            -#= yield :icebox
+          - if controller_name == "projects" && action_name == "show"
+            .users_stories
+              = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
+
 
       %footer.navbar-fixed-bottom
         = app_name

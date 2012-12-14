@@ -1,6 +1,12 @@
 -#=gflash
-
 - project = @project ? @project : project
+
+
+%ul.breadcrumb
+  %li.active
+    %i.icon-inbox
+    =link_to "User stories", project_user_stories_path(project)
+
 -if project
   - if project.my_work(current_user).present?
     .lead
@@ -9,7 +15,7 @@
 
   - if project.backlog.present?
     .lead
-      =link_to "Backlog 2", project_user_stories_path(project)
+      =link_to "Backlog", project_user_stories_path(project)
     .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog, :place => "backlog", :updated_task => nil}
 
   - if project.icebox.present?

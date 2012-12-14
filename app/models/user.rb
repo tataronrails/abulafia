@@ -16,10 +16,7 @@ class User < ActiveRecord::Base
     self.project_memberships.where(:project_id => project_id).first.role.text
   end
 
-  #def login
-  #  self.login
-    #self.email.split("@").first
-  #end
+
 
   def fio
       self.email.split("@").first
