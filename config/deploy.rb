@@ -11,7 +11,7 @@ set :rails_env,     :production
 set :deploy_via,    :remote_cache # :checkout
 set :shared_files,  %w(config/database.yml)
 
-set :rvm_ruby_string, "1.9.3@iq300"
+set :rvm_ruby_string, "1.9.3@e-office"
 set :use_sudo, false
 
 set :stages, %w(staging production)
@@ -22,7 +22,7 @@ set :default_stage, 'production'
 
 
 
-set :whenever_command, "bundle exec whenever"
+#set :whenever_command, "bundle exec whenever"
 
 default_run_options[:pty]   = true
 ssh_options[:forward_agent] = true
