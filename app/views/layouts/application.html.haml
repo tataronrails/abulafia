@@ -13,7 +13,7 @@
 
     :css
       body {
-        padding-top: 60px;
+        padding-top: 80px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -37,7 +37,8 @@
   - papers << "billie_holiday.png"
   - papers << "shl.png"
   - papers << "shl_2X.png"
-  %body{:style => "background: url(/assets/#{papers.sample})"}
+  -#%body{:style => "background: url(/assets/#{papers.sample})"}
+  %body
     .navbar.navbar-fixed-top
       .navbar-inner
         .container

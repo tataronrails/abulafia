@@ -1,0 +1,18 @@
+.row.activity_alone
+  .span1
+    %i.icon-plus.white
+  %small
+    = distance_of_time_in_words_to_now(activity.created_at)
+    ,
+    =activity.trackable.class
+    ,
+    =activity.trackable.title rescue nil
+  .user
+    -#-user = activity.trackable.user
+    -#.span2.avatar30
+    -#  =gravatar_image_tag(user.email)
+    -#%small= link_to user.login, user_profile_path(user.id)
+    -#.body
+    -#  =activity.trackable.name rescue nil
+
+      -#=link_to truncate(activity.trackable.name), project_path(activity.trackable.id)
