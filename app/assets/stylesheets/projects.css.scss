@@ -2,7 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+.users_stories .breadcrumb img{
+  border-radius: 8px;
+  opacity: .8;
+}
 .to_backlog{
   //visibility: hidden;
 }
