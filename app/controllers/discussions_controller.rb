@@ -17,6 +17,11 @@ class DiscussionsController < ApplicationController
     discussion = Discussion.find(params[:id])
     comment = params[:discussion][:comment]
     user = params[:user_id]
+    project = Project.find(params[:project_id])
+
+
+
+
 
     discussion.comments.create(:comment => comment, :user_id => user)
 
@@ -34,7 +39,7 @@ class DiscussionsController < ApplicationController
   def show
     @discussion = Discussion.find(params[:id])
     @comment = @discussion.comments.new
-    @project_users = @discussion.project.users.map(&:fio)
+    @project_users = @discussion.project.users.map(&:login)
 
 
     respond_to do |format|

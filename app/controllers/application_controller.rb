@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   #  redirect_to root_path, :alert => exception.message
   #end
 
+
+
   private
 
   def set_locale
@@ -17,4 +19,12 @@ class ApplicationController < ActionController::Base
   def set_timezone
     Time.zone = 'Moscow'
   end
+
+
+  def list_of_mentions comment
+    comment.scan(/(^@(\w+))|((?<= )@(\w+))/).map{|a| a.compact!.delete_if{|m| m[0]=="@"}}.join(",").split(",")
+  end
+
+
+  helper_method :list_of_mentions
 end

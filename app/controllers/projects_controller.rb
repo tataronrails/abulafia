@@ -93,6 +93,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = current_user.projects
+    @activities = PublicActivity::Activity.order("updated_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb

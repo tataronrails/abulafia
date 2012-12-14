@@ -4,6 +4,18 @@
       .alone_comment
         .avatar
           = gravatar_image_tag(c.user.email)
+
+
+        -list_of_mentions_array = list_of_mentions(c.comment)
+        -@list_of_mentions = []
+
+        -list_of_mentions_array.each do |login|
+          -if User.where(:login => login).present?
+            -@list_of_mentions<< login
+
+
+        - @list_of_mentions.each do |login|
+          =c.comment.gsub(login, link_to(user))
         = auto_link(c.comment,:html => { :target => '_blank' })
         .datetime
           %small= distance_of_time_in_words_to_now(c.created_at)

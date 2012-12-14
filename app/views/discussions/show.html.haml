@@ -25,13 +25,11 @@
 =form_tag add_new_comment_to_discussion_path, :remote => true, :update => { :success => "#comments_line"} do |f|
   =hidden_field_tag "user_id", current_user.id
   =hidden_field_tag "id", @discussion.id
+  =hidden_field_tag "project_id", @discussion.project.id
   =text_area_tag "discussion[comment]"
   %p
     =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
-
-=text_field :mention, :logins, :data => {:logins => @project_users}
-
+=hidden_field :mention, :logins, :data => {:logins => @project_users}
 
 #comments_line
   = render :partial => "comments", :locals => {:comments => @discussion.comments}
-

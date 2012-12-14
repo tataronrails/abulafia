@@ -70,7 +70,7 @@
             = f.text_field :title, :placeholder => "Enter task", :class => "span12", :autocomplete =>  "off"
           - if @project_users.present?
             .row-fluid
-              = collection_select(:task, :assigned_to, @project_users, :id, :fio, :prompt => true)
+              = collection_select(:task, :assigned_to, @project_users, :id, :login, :prompt => true)
           .row-fluid
             = f.hidden_field :project_id, :value => @project.id
             -#= f.submit 'ok', :class => "btn btn-info row-right"

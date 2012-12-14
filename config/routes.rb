@@ -32,8 +32,10 @@ EOffice::Application.routes.draw do
   devise_for :users, :controllers => {:invitations => 'users/invitations'} do
     get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
     get 'projects/:project_id/:user_id/kick_out_users' => 'projects#kick_out_users', :as => "kick_out_users"
-
   end
+
+
+  get 'users/:id' => 'users#profile', :as => "user_profile"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

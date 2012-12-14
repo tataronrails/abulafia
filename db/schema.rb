@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212064329) do
+ActiveRecord::Schema.define(:version => 20121214101907) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "column_orders", :force => true do |t|
     t.integer "project_id"
@@ -36,9 +49,11 @@ ActiveRecord::Schema.define(:version => 20121212064329) do
   create_table "discussions", :force => true do |t|
     t.string   "title"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.text     "desc"
+    t.integer  "discussable_id"
+    t.string   "discussable_type"
   end
 
   add_index "discussions", ["project_id"], :name => "index_discussions_on_project_id"

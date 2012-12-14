@@ -30,9 +30,9 @@
 
 
 
-=text_field :mention, :logins, :data => {:logins => @project_users}
+=hidden_field :mention, :logins, :data => {:logins => @project_users}
 
 
 #comments_line
-  = render :partial => "comments", :locals => {:comments => @task.comments}
+  = render :partial => "comments", :locals => {:comments => @task.comments, :list_of_mentions => @list_of_mentions}
 

@@ -1,0 +1,6 @@
+ru:
+  activity:
+    discussion:
+      create: 'Дискуссия была создана'
+      update: 'Someone has edited the article'
+      destroy: 'Some user removed an article!'
