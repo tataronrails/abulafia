@@ -37,8 +37,8 @@
               -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
               =link_to t.title, task_path(t)
 
-              -#- if t.comments.present?
-              -#  %i.icon-comment-alt
-              -#%small
-              -#  =t.assigned_to_initials
+              - if t.discussion.comments.present?
+                %i.icon-comment-alt
+              %small
+                =t.assigned_to_initials
 
