@@ -1,0 +1,2 @@
+class ColumnOrdersController < ApplicationController
+end
