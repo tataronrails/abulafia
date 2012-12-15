@@ -17,11 +17,6 @@ set :use_sudo, false
 set :stages, %w(staging production)
 set :default_stage, 'production'
 
-
-
-
-
-
 #set :whenever_command, "bundle exec whenever"
 
 default_run_options[:pty]   = true

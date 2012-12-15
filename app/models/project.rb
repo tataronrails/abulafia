@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
     pm = nil
     project = self
     self.users.each do |u|
-      if u.project_memberships.where(:project_id => project.id).first.role = "project_manager"
+      if u.project_memberships.where(:project_id => project.id).first.role == "project_manager"
         pm = u
       end
     end
