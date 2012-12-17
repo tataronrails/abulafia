@@ -43,6 +43,7 @@ show_toolbox = () ->
 
 $ ->
   show_toolbox()
+  $('#task_start').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true})
 
   $(".form-inline button").click (e)->
     $(".form-inline button").removeAttr("class").addClass("btn btn-small")

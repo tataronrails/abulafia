@@ -8,7 +8,14 @@
           %li= msg
 
   .field
-    = f.label :Task
+    .tabbable
+      %ul.nav.nav-tabs
+        %li.active
+          =link_to "Task","#"
+        %li
+          =link_to "Templates","#"
+
+      -#= f.label :Task
     = f.text_area :title, :class => "span8"
 
   .well.well-small
@@ -45,7 +52,6 @@
       -#      =check_box_tag 'user_story_type'
       -#      User story type
 
-  =@task.task_type
   .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
     %i.icon-sitemap
     Behavior
@@ -57,6 +63,20 @@
       %span.add-on
         %i.icon-tags
       = f.text_field :tagging_list, :class => "span4"
+  .field
+    =f.label "Assigned_to"
+    .input-prepend
+      %span.add-on
+        %i.icon-user
+      = collection_select(:task, :assigned_to, @task.project.users, :id, :login, :prompt => true)
+
+  .field
+    =f.label "To finish at:"
+    Day | 3 days | Week | 2 weeks| custom
+    .input-prepend
+      %span.add-on
+        %i.icon-user
+      -#= f.date_select :start, :class => "datapicker"
 
 
 

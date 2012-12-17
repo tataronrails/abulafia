@@ -36,6 +36,8 @@ GEM
     best_in_place (2.0.2)
       jquery-rails
       rails (~> 3.1)
+    bootstrap-datepicker-rails (0.6.32)
+      railties (>= 3.0)
     bootstrapped (2.0.4)
       actionpack (>= 3.1)
       less-rails (~> 2.1.6)
@@ -197,6 +199,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 2.3.1)
   acts_as_commentable (= 3.0.1)
   best_in_place
+  bootstrap-datepicker-rails
   bootstrapped
   cancan
   capistrano

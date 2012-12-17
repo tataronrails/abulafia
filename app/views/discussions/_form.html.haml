@@ -8,9 +8,9 @@
 
   .field
     = f.label :title
-    = f.text_field :title
+    = f.text_field :title, "", :class => "span8"
   .field
     = f.label :project
-    = f.text_field :project
+    = f.text_field :project_id
   .actions
     = f.submit 'Save'
