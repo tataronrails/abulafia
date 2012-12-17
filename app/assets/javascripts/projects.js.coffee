@@ -48,11 +48,14 @@ window.open_task_modal = (title_of_task) ->
 
 send_form_on_select_assigned_to = () ->
   $("#task_assigned_to").live 'change', ()->
-    $(this).parents(".accordion-inner").find("form").submit().end().find("input[type='text']").focus().select()
+    if $("#task_title").val().length >0
+      $(this).parents(".accordion-inner").find("form").submit().end().find("input[type='text']").focus().select()
 
 
 #window.update_me = (id_of_task) ->
   #  alert(id_of_task)
+
+labels_click_bind = () ->
 
 labels_click_bind = () ->
 
@@ -107,6 +110,7 @@ $(document).ajaxComplete (xhr, data, status) ->
 
   if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
     $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
+    $("#task_title, #task_assigned_to").val("")
 
 
 
@@ -140,7 +144,7 @@ $ ->
 
   #  make_visible_2_backlog_button()
   labels_click_bind()
-  send_form_on_select_assigned_to()
+#  send_form_on_select_assigned_to()
 
   $('span.estimates img').live 'click', (e) ->
 

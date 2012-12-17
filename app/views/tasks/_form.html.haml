@@ -1,0 +1,52 @@
+- list_of_task_types = list_of_task_types
+= form_for @task do |f|
+  - if @task.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@task.errors.count, "error")} prohibited this project from being saved:"
+      %ul
+        - @task.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :title
+    = f.text_area :title, :class => "span8"
+
+  .well-small
+    .form-inline
+      %span.btn-group.user_story_types
+        %button.btn{:id => 0}
+          %l.icon-asterisk
+          Feature
+        %button.btn{:id => 2}
+          %l.icon-wrench
+          Chore
+        %button.btn{:id => 1}
+          %l.icon-bolt
+          Bug
+      %span.btn-group.other_toolbox
+        .btn-group
+          %button.btn{:id => 3}
+            %l.icon-bullhorn
+            Intruction
+          %button.btn{:id => 4}
+            %l.icon-briefcase
+            Self task
+          %button.btn{:id => 5}
+            %l.icon-bolt
+            Simple task
+      =f.hidden_field :task_type
+      -#%p
+      -#  .checkbox
+      -#    %label.checkbox
+      -#      =check_box_tag 'user_story_type'
+      -#      User story type
+
+  .field
+    =f.label :tags
+    = f.text_field :tagging_list, :class => "span8"
+
+  -#.field
+  -#  = f.label :desc
+  -#  = f.text_area :desc
+  .actions
+    = f.submit 'Save', {:class => "btn"}

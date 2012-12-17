@@ -29,6 +29,7 @@
 //= require jquery.autosize
 //= require gritter
 //= jquery-ui.triggeredAutocomplete.js
+//= require select2
 //= require_tree .
 
 $(document).ready(function () {

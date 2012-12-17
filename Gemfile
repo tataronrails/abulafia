@@ -15,6 +15,7 @@ gem 'font-awesome-rails'
 gem "gritter", "1.0.2"
 gem "select2-rails"
 gem 'public_activity'
+gem 'acts-as-taggable-on', '~> 2.3.1'
 
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development

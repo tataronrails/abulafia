@@ -70,43 +70,59 @@
       .accordion-inner
         = form_for @task , :remote => true do |f|
           .row-fluid
-            = f.text_field :title, :placeholder => "Enter task", :class => "span12", :autocomplete =>  "off"
+            .control-group
+              .controls
+                .input-prepend
+                  %span.add-on
+                    %i.icon-tasks
+                  = f.text_field :title, :placeholder => "Enter task", :class => "span11", :autocomplete =>  "off"
           - if @project_users.present?
             .row-fluid
-              = collection_select(:task, :assigned_to, @project_users, :id, :login, :prompt => true)
+              .control-group
+                .controls
+                  .input-prepend
+                    %span.add-on
+                      %i.icon-user
+                    = collection_select(:task, :assigned_to, @project_users, :id, :login, :prompt => true)
           .row-fluid
             = f.hidden_field :project_id, :value => @project.id
+
+          =f.submit "Create", {:class => "btn"}
+          %label.checkbox
+            =check_box_tag "advanced_settings"
+            %small advanced settings
+
             -#= f.submit 'ok', :class => "btn btn-info row-right"
 
-  -if @project.discussions.exists?
-    .accordion-group.existed_discussions
-      .accordion-heading
-        %a(class="accordion-toggle add_new_task_link" data-toggle="collapse" data-parent="#accordion3" href="#collapseTaskCreateField")
-          %i.icon-list-alt
-          =pluralize(@project.tasks.count, "task")
-      #collapseTaskCreateField.accordion-body.collapse
-        .accordion-inner
-
-          %table.table.table-striped
-            - @project.tasks.each do |t|
-              -if t.id
-                %tr
-                  %td.avatar
-                    -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
-                    %span.label.label-success
-                      =t.status_via_words
-                  %td
-                    = link_to t.title, task_path(t)
-                  %td
-                    =truncate(t.discussion.comments.first.comment) if t.discussion.comments.present?
-                  %td
-                    %i.icon-comment
-                    - if t.discussion.comments.present?
-                      =link_to task_path(t) do |task|
-                        .badge.badge-info
-                          =t.discussion.comments.count
-                  %td
-                    %i.icon-remove
+  -#-if task.discussion.comments
+  -#  .accordion-group.existed_discussions
+  -#    .accordion-heading
+  -#      %a(class="accordion-toggle add_new_task_link" data-toggle="collapse" data-parent="#accordion3" href="#collapseTaskCreateField")
+  -#        %i.icon-list-alt
+  -#        =pluralize(@project.tasks.count, "task")
+  -#    #collapseTaskCreateField.accordion-body.collapse
+  -#      .accordion-inner
+  -#
+  -#        %table.table.table-striped
+  -#          - @project.tasks.each do |t|
+  -#            -if t.id
+  -#              %tr
+  -#                %td.avatar
+  -#                  -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
+  -#                  %span.label.label-success
+  -#                    =t.status_via_words
+  -#                %td
+  -#                  = link_to t.title, task_path(t)
+  -#                %td
+  -#                  =truncate(t.discussion.comments.first.comment) if t.discussion.comments.present?
+  -#                %td
+  -#                  %i.icon-comment
+  -#                  - if t.discussion.comments.present?
+  -#                    =link_to task_path(t) do |task|
+  -#                      .badge.badge-info
+  -#                        =t.discussion.comments.count
+  -#                %td
+  -#                  %i.icon-remove
 
 
 .lead

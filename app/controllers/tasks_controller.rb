@@ -2,6 +2,31 @@ class TasksController < ApplicationController
 
   skip_authorization_check
 
+  def update
+    #raise params.to_json
+
+    #params[:task].delete(:tagging_list)
+
+    #raise params.to_json
+
+
+    @task = Task.find(params[:id])
+
+    respond_to do |format|
+      if @task.update_attributes(params[:task])
+        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+  end
+
 
   def update_order
     project = Project.find(params[:project_id])
@@ -102,8 +127,6 @@ class TasksController < ApplicationController
         end
       }
     end
-
-
   end
 
   def add_new_comment
@@ -119,7 +142,6 @@ class TasksController < ApplicationController
         render :partial => "comments", :locals => {:comments => task.discussion.comments}
       }
     end
-
   end
 
   def show
@@ -128,6 +150,9 @@ class TasksController < ApplicationController
   end
 
   def create
+
+
+
     @project = Project.find(params[:task][:project_id])
     @task = @project.tasks.new
     @task.title = params[:task][:title]
@@ -136,13 +161,17 @@ class TasksController < ApplicationController
     #@task = @project.tasks.new(:title => params[:task][:title], :assigned_to => User.where(:email => params[:assigned_to]).first.id, :owner_id => current_user.id)
 
     if @task.save
+      #if params[:advanced_settings]
+      #  redirect_to edit_task_path(@task) and return
+      #end
+
       respond_to do |format|
         format.js {
-          if params[:assigned_to].present?
-            gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
-          else
-            gflash :success => "Alone task successfully created"
-          end
+          #if params[:assigned_to].present?
+            #gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
+          #else
+            #gflash :success => "Alone task successfully created"
+          #end
 
           render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
         }
