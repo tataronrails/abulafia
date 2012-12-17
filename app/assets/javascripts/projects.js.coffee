@@ -57,8 +57,6 @@ send_form_on_select_assigned_to = () ->
 
 labels_click_bind = () ->
 
-labels_click_bind = () ->
-
   $('.estimates_label').live 'click', ()->
 #    story_id = $(this).attr("id").replace("estimates_label_","")
     status = $(this).data('status')
@@ -117,6 +115,7 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 
 $ ->
+#  task_create_advanced_settings()
   project_id = $('body').data('project_id')
 
   $('.backlog_column').sortable(

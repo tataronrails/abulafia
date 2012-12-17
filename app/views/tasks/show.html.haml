@@ -13,19 +13,26 @@
 -#= @task.project.name
 
 -#.bs-docs-example.discussion_show
-%p.lead
-  =@task.task_type
-  #{@task.title}
-  =link_to edit_task_path(@task) do |l|
-    %i.icon-edit
+.bs-docs-example.shadow
+  %p.lead
+    =type_icon(@task.task_type) if @task.task_type
+    &nbsp;
+    #{@task.title}
+    &nbsp;
+    =link_to edit_task_path(@task) do |l|
+      %i.icon-edit
+    .row-fluid
+      .accordion-group.well-small
+        %i.icon-tags
+        %small
+          =@task.tag_list
 
 .row-fluid
-  %hr/
   .lead Discussion:
   =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
     =hidden_field_tag "user_id", current_user.id
     =hidden_field_tag "id", @task.id
-    =text_area_tag "task[comment]"
+    =text_area_tag "task[comment]", "12", :class => "span12"
     .row-fluid
       =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
     %p

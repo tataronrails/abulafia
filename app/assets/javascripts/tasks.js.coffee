@@ -24,7 +24,7 @@ show_toolbox = () ->
   get_type = $("#task_task_type").val()
   if(get_type)
     activate_me = $(".form-inline").find("button[id="+get_type+"]")
-    $(activate_me).addClass("active")
+    $(activate_me).addClass("active").addClass($(activate_me).data("class"))
 
 #    $(".btn-group").hide()
 #    $(activate_me).parents(".btn-group").show()
@@ -44,12 +44,18 @@ show_toolbox = () ->
 $ ->
   show_toolbox()
 
-
   $(".form-inline button").click (e)->
-    $(".form-inline button").removeClass("active")
-    $(this).addClass("active")
+    $(".form-inline button").removeAttr("class").addClass("btn btn-small")
+
+    $(this).addClass("active").addClass($(this).data("class"))
+
+    if $(this).attr("id") == "0"
+      $(".behavior_block").show()
+    else
+      $(".behavior_block").hide()
+
+
     val = $(this).attr("id")
-    console.log(val)
     $("#task_task_type").val(val)
 
     e.preventDefault()

@@ -8,31 +8,35 @@
           %li= msg
 
   .field
-    = f.label :title
+    = f.label :Task
     = f.text_area :title, :class => "span8"
 
-  .well-small
+  .well.well-small
     .form-inline
-      %span.btn-group.user_story_types
-        %button.btn{:id => 0}
-          %l.icon-asterisk
+      .btn-group.user_story_types
+        %button.btn.btn-small{:id => 0, :data=>{:class => "btn-primary"}}
+          %l.icon-star-empty
           Feature
-        %button.btn{:id => 2}
-          %l.icon-wrench
+        %button.btn.btn-small{:id => 6, :data=>{:class => ""}}
+          %l.icon-star-half
+          Story
+        %button.btn.btn-small{:id => 2, :data=>{:class => "btn-inverse"}}
+          %l.icon-cogs
           Chore
-        %button.btn{:id => 1}
+        %button.btn.btn-small{:id => 1, :data=>{:class => "btn-danger"}}
           %l.icon-bolt
           Bug
-      %span.btn-group.other_toolbox
+
+      .btn-group.other_toolbox
         .btn-group
-          %button.btn{:id => 3}
+          %button.btn.btn-small{:id => 3, :data=>{:class => "btn-warning"}}
             %l.icon-bullhorn
-            Intruction
-          %button.btn{:id => 4}
+            Instruction
+          %button.btn.btn-small{:id => 4, :data=>{:class => "btn-info"}}
             %l.icon-briefcase
             Self task
-          %button.btn{:id => 5}
-            %l.icon-bolt
+          %button.btn.btn-small{:id => 5, :data=>{:class => "btn-success"}}
+            %l.icon-ok
             Simple task
       =f.hidden_field :task_type
       -#%p
@@ -41,9 +45,20 @@
       -#      =check_box_tag 'user_story_type'
       -#      User story type
 
+  =@task.task_type
+  .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
+    %i.icon-sitemap
+    Behavior
+    =f.text_area :behavior, :class => "span8"
+
   .field
     =f.label :tags
-    = f.text_field :tagging_list, :class => "span8"
+    .input-prepend
+      %span.add-on
+        %i.icon-tags
+      = f.text_field :tagging_list, :class => "span4"
+
+
 
   -#.field
   -#  = f.label :desc

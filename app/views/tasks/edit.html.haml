@@ -1,4 +1,16 @@
-.lead Editing task
+%ul.breadcrumb
+  %li
+    %i.icon-home
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    = link_to @task.project.name, project_path(@task.project)
+    %span.divider /
+
+
+.lead
+  %i.icon-edit
+  Edit task
 
 = render 'form'
 

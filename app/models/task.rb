@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
   acts_as_taggable
-  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type
+  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior
 
   belongs_to :project
   after_create :assign_discussion

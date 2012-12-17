@@ -161,9 +161,7 @@ class TasksController < ApplicationController
     #@task = @project.tasks.new(:title => params[:task][:title], :assigned_to => User.where(:email => params[:assigned_to]).first.id, :owner_id => current_user.id)
 
     if @task.save
-      #if params[:advanced_settings]
-      #  redirect_to edit_task_path(@task) and return
-      #end
+
 
       respond_to do |format|
         format.js {
@@ -172,6 +170,7 @@ class TasksController < ApplicationController
           #else
             #gflash :success => "Alone task successfully created"
           #end
+
 
           render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
         }
