@@ -84,7 +84,7 @@
         - unless action_name == "users_page"
           .span4
             -if @activities
-              -for activity in @activities.last(20)
+              -for activity in @activities.first(20)
                 =render_activity(activity)
 
             - if controller_name == "projects" && action_name == "show"
