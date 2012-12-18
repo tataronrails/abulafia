@@ -9,9 +9,6 @@ class Task < ActiveRecord::Base
 
   validates :title, :presence => true, :length => {:minimum => 5}
 
-
-
-
   include PublicActivity::Model
   tracked
 
@@ -59,12 +56,9 @@ class Task < ActiveRecord::Base
     rescue
       ""
     end
-
   end
 
   private
-
-
   def make_simple_task
     self.update_attributes(:task_type => "5")
 
@@ -75,6 +69,4 @@ class Task < ActiveRecord::Base
 
     make_simple_task
   end
-
-
 end
