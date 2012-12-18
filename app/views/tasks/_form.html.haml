@@ -19,32 +19,57 @@
     = f.text_area :title, :class => "span8"
 
   .well.well-small
-    .form-inline
-      .btn-group.user_story_types
-        %button.btn.btn-small{:id => 0, :data=>{:class => "btn-primary"}}
-          %l.icon-star-empty
-          Feature
-        %button.btn.btn-small{:id => 6, :data=>{:class => ""}}
-          %l.icon-star-half
-          Story
-        %button.btn.btn-small{:id => 2, :data=>{:class => "btn-inverse"}}
-          %l.icon-cogs
-          Chore
-        %button.btn.btn-small{:id => 1, :data=>{:class => "btn-danger"}}
-          %l.icon-bolt
-          Bug
+    .row-fluid
+      .span6
+        .btn-group.user_story_types
+          %button.btn.btn-small{:id => 0, :data=>{:class => "btn-primary"}}
+            %l.icon-star-empty
+            Feature
+          %button.btn.btn-small{:id => 6, :data=>{:class => ""}}
+            %l.icon-star-half
+            Story
+          %button.btn.btn-small{:id => 2, :data=>{:class => "btn-inverse"}}
+            %l.icon-cogs
+            Chore
+          %button.btn.btn-small{:id => 1, :data=>{:class => "btn-danger"}}
+            %l.icon-bolt
+            Bug
 
-      .btn-group.other_toolbox
-        .btn-group
-          %button.btn.btn-small{:id => 3, :data=>{:class => "btn-warning"}}
-            %l.icon-bullhorn
-            Instruction
+      .span6
+        .btn-group.other_toolbox
+          %button.btn.btn-small.dropdown-toggle{:id => 3, :data => {:toggle => "dropdown", :class => "btn-warning"}}
+            %l.icon-calendar
+            %span{:id => "instruction_text",:data => {:default_text => "Until:"}}
+              Urgent
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              =link_to "1 day", "#", :data=>{:finish => (Time.now+1.day).to_s(:db).to_date}
+            %li
+              =link_to "3 days", "#", :data=>{:finish => (Time.now+3.day).to_s(:db).to_date}
+            %li
+              =link_to "week", "#", :data=>{:finish => (Time.now+7.day).to_s(:db).to_date}
+            %li
+              =link_to "2 weeks", "#", :data=>{:finish => (Time.now+14.day).to_s(:db).to_date}
+            %li.divider
+            %li
+              =link_to "Anytime", "#", :data=>{:finish => "", :anytime => "true"}
+            %li
+              =link_to "Custom", "#", :data=>{:finish => (Time.now+1.month).to_s(:db).to_date, :default_text => "Custom"}
+          -#%button.btn.btn-small{:id => 3, :data=>{:class => "btn-warning"}}
+          -#  %l.icon-bullhorn
+          -#  Instruction
           %button.btn.btn-small{:id => 4, :data=>{:class => "btn-info"}}
             %l.icon-briefcase
             Self task
           %button.btn.btn-small{:id => 5, :data=>{:class => "btn-success"}}
             %l.icon-ok
             Simple task
+        =f.text_field :end, :placeholder => "Finish until...", :class => "h"
+
+
+
+
       =f.hidden_field :task_type
       -#%p
       -#  .checkbox

@@ -3,57 +3,59 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
-show_toolbox = () ->
+intruction_select_ends_at = () ->
+#  $("#task_end").hide()
+  $("ul.dropdown-menu li a").click (e)->
+    ends = $(this).data("finish")
+    $("#task_end").val(ends.replace(/"/g,""))
+    text = $(this).text()
 
-#  $("#user_story_type").prop('checked', false)
-#  $(".user_story_types").hide()
+#    console.log
+    if $(this).data("default-text") == "Custom"
 
-#  $("#user_story_type").change ->
-#    $(".user_story_types").toggle()
-#    us_toolbar = $(".user_story_types")
+      $("#task_end").removeClass("h")
+    else
+      $("#task_end").addClass("h")
 
-#    if $(us_toolbar).is(":visible")
-#      $(".other_toolbox").hide()
-#    else
-#      $(".other_toolbox").show()
+    if $(this).attr("data-anytime") == "true"
+      text_span = $(".btn-group.other_toolbox button.active span#instruction_text")
+      default_text = text_span.data("default_text")
+      text_span.text(default_text)
+      $("#task_task_type").val("")
+      $(".btn-group.other_toolbox button.active").removeClass("btn-warning").removeClass("active")
+    else
+      $(".btn-group.other_toolbox button.active span#instruction_text").text(text)
+    e.preventDefault()
 
 
-
-
-
+task_type_detection = () ->
   get_type = $("#task_task_type").val()
   if(get_type)
-    activate_me = $(".form-inline").find("button[id="+get_type+"]")
+    activate_me = $(".well.well-small").find("button[id="+get_type+"]")
     $(activate_me).addClass("active").addClass($(activate_me).data("class"))
+  end_val = $("#task_end").val()
 
-#    $(".btn-group").hide()
-#    $(activate_me).parents(".btn-group").show()
-
-#    if get_type == '0' ||  get_type == '1' ||  get_type == '2'
-#      $("#user_story_type").prop('checked', true)
-#
-#
-#  if $(".user_story_types").is(":hidden")
-#    $(".other_toolbox").show()
-#  else
-#    $(".user_story_types").show()
-
+  if end_val.length > 0
+    $(".btn-group.other_toolbox button span#instruction_text").text(end_val)
+    console.log $(activate_me)
 
 
 
 $ ->
-  show_toolbox()
-  $('#task_start').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true})
+  task_type_detection()
+  intruction_select_ends_at()
+#  $('#task_start').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true})
 
-  $(".form-inline button").click (e)->
-    $(".form-inline button").removeAttr("class").addClass("btn btn-small")
+  $(".well.well-small button").click (e)->
+
+    $(".well.well-small button").removeAttr("class").addClass("btn btn-small")
 
     $(this).addClass("active").addClass($(this).data("class"))
 
     if $(this).attr("id") == "0"
-      $(".behavior_block").show()
+      $(".behavior_block").removeClass("h")
     else
-      $(".behavior_block").hide()
+      $(".behavior_block").addClass("h")
 
 
     val = $(this).attr("id")

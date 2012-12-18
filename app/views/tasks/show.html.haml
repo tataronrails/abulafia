@@ -21,11 +21,12 @@
     &nbsp;
     =link_to edit_task_path(@task) do |l|
       %i.icon-edit
-    .row-fluid
-      .accordion-group.well-small
-        %i.icon-tags
-        %small
-          =@task.tag_list
+    - if @task.tag_list.present?
+      .row-fluid
+        .accordion-group.well-small
+          %i.icon-tags
+          %small
+            =@task.tag_list
 
 .row-fluid
   .lead Discussion:

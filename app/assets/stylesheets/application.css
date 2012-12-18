@@ -19,6 +19,12 @@
 
  .
  */
+
+
+
+.h{
+    display:none !important;
+}
 .orange {
     color: orange;
 }
