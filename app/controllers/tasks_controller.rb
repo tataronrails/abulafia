@@ -147,12 +147,10 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
     @project_users = @task.project.users.map(&:login)
+    @assigned_to = User.find(@task.assigned_to).email if @task.assigned_to
   end
 
   def create
-
-
-
     @project = Project.find(params[:task][:project_id])
     @task = @project.tasks.new
     @task.title = params[:task][:title]

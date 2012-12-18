@@ -113,6 +113,9 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
+
+
+
 $ ->
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()

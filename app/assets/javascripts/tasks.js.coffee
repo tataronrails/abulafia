@@ -42,7 +42,7 @@ task_type_detection = () ->
 
 
 $ ->
-  task_type_detection()
+  task_type_detection() if $("#task_end").length > 0
   intruction_select_ends_at()
 #  $('#task_start').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true})
 
