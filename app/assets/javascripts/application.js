@@ -27,11 +27,8 @@
 //= require bootstrap-typeahead.js
 //= require bootstrap
 //= require jquery.autosize
-//= require gritter
 //= jquery-ui.triggeredAutocomplete.js
 //= require select2
-//= require bootstrap-datepicker
-//= require_tree .
 
 $(document).ready(function () {
     $('textarea').autosize({append: "\n"});

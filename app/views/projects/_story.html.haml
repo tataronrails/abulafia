@@ -9,12 +9,15 @@
 - if order.present?
   -order.each do |o|
     -t = Task.find(o)
+
     - if t.title.present?
       -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
       .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} accordion_group_#{t.id}"}
         .row-fluid
           .span12
-            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}"}
+            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px"}
+              -#=t.task_type
+              =type_icon t.task_type
               - if t.estimate.present?
                 - estimate_of_task =  t.estimate
               - else

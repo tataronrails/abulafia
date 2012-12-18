@@ -60,7 +60,17 @@
 
 .lead
   Tasks
-#accordion3.accordion
+= form_for @task , :remote => true do |f|
+  .row-fluid
+    .control-group
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-tasks
+          = f.text_field :title, :placeholder => "Enter draft task", :class => "span11", :autocomplete =>  "off"
+          = f.hidden_field :project_id, :value => @project.id
+
+#accordion3.accordion.h
   .accordion-group
     .accordion-heading
       %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTask")

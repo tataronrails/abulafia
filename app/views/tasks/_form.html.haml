@@ -95,15 +95,6 @@
         %i.icon-user
       = collection_select(:task, :assigned_to, @task.project.users, :id, :login, :prompt => true)
 
-  .field
-    =f.label "To finish at:"
-    Day | 3 days | Week | 2 weeks| custom
-    .input-prepend
-      %span.add-on
-        %i.icon-user
-      -#= f.date_select :start, :class => "datapicker"
-
-
 
   -#.field
   -#  = f.label :desc

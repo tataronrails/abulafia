@@ -2,12 +2,14 @@ class Task < ActiveRecord::Base
   acts_as_taggable
   attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior
 
-  belongs_to :project
+  belongs_to :project, :dependent => :destroy
   after_create :assign_discussion
 
   has_one :discussion, :as => :discussable
 
   validates :title, :presence => true, :length => {:minimum => 5}
+
+
 
 
   include PublicActivity::Model
@@ -30,7 +32,9 @@ class Task < ActiveRecord::Base
     a[1] = "start"
     a[2] = "finish"
     a[3] = "deliver"
-    a[4] = "reject"
+    a[4] = "testing"
+    a[5] = "reject"
+    a[5] = "accept"
 
     a[self.status]
   end
@@ -59,8 +63,17 @@ class Task < ActiveRecord::Base
   end
 
   private
+
+
+  def make_simple_task
+    self.update_attributes(:task_type => "5")
+
+  end
+
   def assign_discussion
     self.create_discussion!(:title => self.title)
+
+    make_simple_task
   end
 
 

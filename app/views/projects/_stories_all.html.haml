@@ -13,6 +13,20 @@
           =gravatar_image_tag(@project.project_manager.email)
 
 -if project
+
+
+
+  - if project.urgent.present?
+    .lead
+      Urgent
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.urgent, :place => "urgent", :updated_task => nil}
+
+
+  - if project.draft.present?
+    .lead
+      =link_to "Draft", project_user_stories_path(project )
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.draft, :place => "draft", :updated_task => nil}
+
   - if project.my_work(current_user).present?
     .lead
       =link_to "My work", project_user_stories_path(project )

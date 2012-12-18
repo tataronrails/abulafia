@@ -33,6 +33,14 @@
     color:red;
 }
 
+
+.light-gray{
+    color:#ccc;
+}
+
+.yellowgreen{
+    color: #9acd32;
+}
 .activity_alone {
     padding: 5px;
     border-bottom: 1px dotted #ccc;

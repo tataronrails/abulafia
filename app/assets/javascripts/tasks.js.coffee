@@ -67,6 +67,6 @@ $ ->
   $("#mention_logins").autocomplete source: availableTags
 
   availableTags = $("#mention_logins").data("logins")
-  $("#task_comment").triggeredAutocomplete
-    hidden: "#mention_logins"
-    source: availableTags
+#  $("#task_comment").triggeredAutocomplete
+#    hidden: "#mention_logins"
+#    source: availableTags

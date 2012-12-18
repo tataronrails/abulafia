@@ -40,16 +40,24 @@ class Project < ActiveRecord::Base
   end
 
 
+  def urgent
+    self.tasks.where(:task_type => "3")
+  end
+
+  def draft
+    self.tasks.where(:task_type => "5")
+  end
+
   def my_work user
-    self.tasks.where(:assigned_to => user.id)
+    self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
   end
 
   def icebox
-    self.tasks.where(:place => 0)
+    self.tasks.where(:place => 0).where("task_type != 5").where("task_type != 3")
   end
 
   def backlog
-    self.tasks.where(:place => 1)
+    self.tasks.where(:place => 1).where("task_type !=5").where("task_type !=3")
   end
 
 end

@@ -9,13 +9,14 @@
 
 update_column_in_us_page = (proj_id, column_name, task_id) ->
   $.ajax(
-    url: "/projects/"+proj_id+"/update_"+column_name,
+    url: "/projects/" + proj_id + "/update_" + column_name,
     data:
       { 'task_id': task_id}
     success: (data) ->
-      column_element = $("."+column_name+"_column")
+      column_element = $("." + column_name + "_column")
       console.log column_element
-      column_element.fadeTo("fast",".6", -> column_element.html(data)).fadeTo("fast","1");
+      column_element.fadeTo("fast", ".6",-> column_element.html(data)).fadeTo("fast", "1")
+      ;
   )
 
 
@@ -23,14 +24,13 @@ window.update_icebox_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "icebox")
 
 
-window.update_backlog_in_us_page = (proj_id,task_id) ->
+window.update_backlog_in_us_page = (proj_id, task_id) ->
   update_column_in_us_page(proj_id, "backlog", task_id)
 
   $(".accordion-group").sortable()
 
 window.update_my_work_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "my_work")
-
 
 
 window.update_estimates = (id_of_task, data) ->
@@ -48,17 +48,16 @@ window.open_task_modal = (title_of_task) ->
 
 send_form_on_select_assigned_to = () ->
   $("#task_assigned_to").live 'change', ()->
-    if $("#task_title").val().length >0
+    if $("#task_title").val().length > 0
       $(this).parents(".accordion-inner").find("form").submit().end().find("input[type='text']").focus().select()
 
 
 #window.update_me = (id_of_task) ->
-  #  alert(id_of_task)
+#  alert(id_of_task)
 
 labels_click_bind = () ->
-
   $('.estimates_label').live 'click', ()->
-#    story_id = $(this).attr("id").replace("estimates_label_","")
+    #    story_id = $(this).attr("id").replace("estimates_label_","")
     status = $(this).data('status')
     status_text = $(this).text()
     project_id = $('body').data('project_id')
@@ -103,19 +102,20 @@ labels_click_bind = () ->
 
 
 $(document).ajaxComplete (xhr, data, status) ->
-
-  $( ".users_stories" ).effect( "fade", "fast");
+  $(".users_stories").effect("fade", "fast")
+  ;
 
   if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
-    $(".users_stories").fadeTo("fast",".8", -> $(".users_stories").html(data.responseText).fadeTo("fast","1"))
+    $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
     $("#task_title, #task_assigned_to").val("")
+    $("#task_title").focus()
 
 
-
-
-
+focus_on_ready_on_create_task = () ->
+  $("#task_title").focus().select()
 $ ->
-#  task_create_advanced_settings()
+  focus_on_ready_on_create_task()
+  #  task_create_advanced_settings()
   project_id = $('body').data('project_id')
 
   $('.backlog_column').sortable(
@@ -135,7 +135,7 @@ $ ->
       )
 
 
-#      $.get('update-sort.cfm', {fruitOrder:fruitOrder});
+    #      $.get('update-sort.cfm', {fruitOrder:fruitOrder});
   )
 
   $.ajaxSetup beforeSend: (xhr) ->
@@ -143,10 +143,9 @@ $ ->
 
   #  make_visible_2_backlog_button()
   labels_click_bind()
-#  send_form_on_select_assigned_to()
+  #  send_form_on_select_assigned_to()
 
   $('span.estimates img').live 'click', (e) ->
-
     column_and_place = $(this).parents(".us_column").data("column")
     points = $(this).attr("rel")
     task_id = $(this).parents(".accordion-group").data("taskid")
@@ -168,15 +167,13 @@ $ ->
     )
 
   update_some_test_smth = (data, column_and_place, url_location) ->
-
     if url_location.indexOf("/user_stories")
       project_id = $("body").data("project_id")
 
       switch column_and_place
-#        when 'icebox' then update_icebox_in_us_page(project_id)
+      #        when 'icebox' then update_icebox_in_us_page(project_id)
         when 'backlog' then update_backlog_in_us_page(project_id)
         when 'my_work' then update_my_work_in_us_page(project_id)
-
 
 
   $(".estimate_me_class select").change ->
@@ -188,18 +185,19 @@ $ ->
 
     form_of_estimation.find("input[type='text']").val(estimate_of_task)
 
-#    console.log(form_of_estimation.find("input[type='text']").val())
+    #    console.log(form_of_estimation.find("input[type='text']").val())
 
     form_of_estimation.submit()
 
 
   $(".add_project_block a").click (e) ->
-    $(".add_new_project_field").slideToggle("fast", -> $("#project_name").focus().select())
+    $(".add_new_project_field").toggleClass("h")
+    $("#project_name").focus().select()
     e.preventDefault()
 
   $(".accordion-body").on "shown", ->
     $(this).parents(".accordion").find("input[type=text]").focus().select()
-#    $("#discussion_title").focus().select()
+  #    $("#discussion_title").focus().select()
 
   if location.hash == "#comments"
     $(".accordion-group.existed_discussions #collapseTwo").collapse('show')
