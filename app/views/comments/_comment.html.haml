@@ -3,7 +3,7 @@
     = gravatar_image_tag(comment.user.email)
   -if current_user.eql? comment.user
     .pull-right
-      =link_to comment_path(comment), :method => "delete", :remote => true do |l|
+      =link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
         %i.icon-trash
   =auto_link(comment.comment, :html => { :target => '_blank' })
   .datetime

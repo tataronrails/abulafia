@@ -28,8 +28,19 @@
 //= jquery-ui.triggeredAutocomplete.js
 //= require select2
 
+
+function hide_removed_task(){
+    $(".alone_comment i.icon-trash").live("click", function(){
+        $(this).parents(".alone_comment").slideUp("slow")
+    })
+}
+
 $(document).ready(function () {
     $('textarea').autosize({append: "\n"});
+
+    hide_removed_task();
+
+
 
 
 });

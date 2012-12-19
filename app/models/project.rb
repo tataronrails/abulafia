@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
 
+
+
   include PublicActivity::Model
   tracked
 
@@ -15,6 +17,7 @@ class Project < ActiveRecord::Base
 
   validates :name, :presence => true, :length => { :minimum => 3 }
 
+  acts_as_paranoid
   acts_as_commentable
 
 

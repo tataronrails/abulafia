@@ -6,6 +6,7 @@ gem 'rails', '3.2.9'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem "acts_as_paranoid", "~>0.4.0"
 gem 'devise'
 gem 'devise_invitable'
 gem 'acts_as_commentable', '3.0.1'
