@@ -30,17 +30,17 @@
                 - if place != "icebox"
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                     - if t.status == 0
-                      %i.icon-time
+                      %i.icon-time{:title => "Estimate"}
                     - if t.status == 2
-                      %i.icon-check
+                      %i.icon-check{:title => "Finished"}
 
                     - if t.status == 1
-                      %i.icon-play
-                    =t.status_via_words
+                      %i.icon-play{:title => "Start"}
+                    -#=t.status_via_words
                 -else
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
-                    %i.icon-hand-left
-                    to backlog
+                    %i.icon-hand-left{:title => "Move to backlog"}
+                    -#to backlog
                 %span.estimates{:class =>"estimates_"+t.id.to_s}
                   -["0","1","2","3","5","8"].each do |a|
                     =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
