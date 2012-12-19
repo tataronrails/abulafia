@@ -3,6 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+#task_title{
+  color: #83AF9B !important;
+}
+
 .body_home{
   padding-top:80px;
 }
@@ -37,7 +41,7 @@
 }
 
 .selected_task {
-  border-left: 5px solid green !important;
+  border-left: 5px solid #83AF9B !important;
 }
 
 .us_column {

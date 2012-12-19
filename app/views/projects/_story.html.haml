@@ -17,19 +17,25 @@
         .row-fluid
           .span12
             .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px"}
-              -#=t.task_type
               =type_icon t.task_type
               - if t.estimate.present?
                 - estimate_of_task =  t.estimate
               - else
                 - estimate_of_task = 0
-              =image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
+              -#=image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
 
 
             -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
               .pull-right
                 - if place != "icebox"
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                    - if t.status == 0
+                      %i.icon-time
+                    - if t.status == 2
+                      %i.icon-check
+
+                    - if t.status == 1
+                      %i.icon-play
                     =t.status_via_words
                 -else
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
@@ -51,7 +57,7 @@
               =link_to t.title, task_path(t)
 
               - if t.discussion && t.discussion.comments.present?
-                %i.icon-comment-alt
+                %i.icon-comment-alt.light-gray
               %small
                 =t.assigned_to_initials
 

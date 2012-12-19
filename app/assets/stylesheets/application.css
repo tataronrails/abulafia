@@ -20,34 +20,52 @@
  .
  */
 
-
-body{
+body {
     background: url(/assets/012-subtle-light-patterns.jpg) !important;
 }
+
 .capitalize {
     text-transform: capitalize !important;
     color: #777 !important;
-    text-shadow: 2px 2px #fff!important;
+    text-shadow: 2px 2px #fff !important;
 }
 
 .h {
     display: none !important;
 }
 
+
+.brown{
+    color: #774F38;
+}
+
+.lead , .lead a{
+    color: #6A4A3C !important;
+}
+
 .orange {
-    color: orange;
+    color: #F9CDAD;
 }
 
 .red {
-    color: red;
+    color: #FC9D9A;
 }
 
 .light-gray {
     color: #ccc;
 }
 
-.yellowgreen {
-    color: #a47e3c;
+.green {
+    color: #83AF9B;
+}
+
+.label-success, .badge-success {
+    background-color: #F9CDAD !important;
+    color: #fff !important;
+}
+
+.label-info, .badge-info {
+    background-color: #83AF9B !important;
 }
 
 .activity_alone {

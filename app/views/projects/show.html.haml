@@ -64,7 +64,7 @@
       .controls
         .input-prepend
           %span.add-on
-            %i.icon-tasks
+            %i.icon-tasks.green
           = f.text_field :title, :placeholder => "Enter draft task", :class => "span11", :autocomplete =>  "off"
           = f.hidden_field :project_id, :value => @project.id
 
