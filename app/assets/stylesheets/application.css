@@ -20,12 +20,14 @@
  .
  */
 
+
 body{
     background: url(/assets/012-subtle-light-patterns.jpg) !important;
 }
 .capitalize {
     text-transform: capitalize !important;
-    color: #999 !important;
+    color: #777 !important;
+    text-shadow: 2px 2px #fff!important;
 }
 
 .h {
