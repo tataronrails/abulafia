@@ -20,27 +20,34 @@
  .
  */
 
-
-
-.h{
-    display:none !important;
+body{
+    background: url(/assets/012-subtle-light-patterns.jpg) !important;
 }
+.capitalize {
+    text-transform: capitalize !important;
+    color: #999 !important;
+}
+
+.h {
+    display: none !important;
+}
+
 .orange {
     color: orange;
 }
 
-.red{
-    color:red;
+.red {
+    color: red;
 }
 
-
-.light-gray{
-    color:#ccc;
+.light-gray {
+    color: #ccc;
 }
 
-.yellowgreen{
+.yellowgreen {
     color: #a47e3c;
 }
+
 .activity_alone {
     padding: 5px;
     border-bottom: 1px dotted #ccc;

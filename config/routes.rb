@@ -16,11 +16,13 @@ EOffice::Application.routes.draw do
   # resources :discussions, :has_many => :comments
 
   match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
+  get 'progress' => "projects#progress", :as => "progress"
 
   resources :discussions, :has_many => :comments
 
   resources :projects, :has_many => :comments do
     resources :discussions, :has_many => :comments
+
     post 'invite_user'
     get 'update_icebox'
     get 'update_backlog'

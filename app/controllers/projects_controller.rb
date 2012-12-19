@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
 
+  def progress
+    @activities = PublicActivity::Activity.order("updated_at DESC")
+  end
+
 
   def update_icebox
     project = Project.find(params[:project_id])
@@ -93,7 +97,6 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = current_user.projects
-    @activities = PublicActivity::Activity.order("updated_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb

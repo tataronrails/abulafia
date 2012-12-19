@@ -741,7 +741,7 @@ h4,
 h5,
 h6 {
     margin: 10px 0;
-    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-family: "Istok Web", "Arial Narrow Bold", sans-serif;
     font-weight: bold;
     line-height: 20px;
     color: #000000;
@@ -4459,7 +4459,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-search .search-query {
     margin-bottom: 0;
     padding: 4px 14px;
-    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-family: "Istok Web", "Arial Narrow Bold", sans-serif;
     font-size: 13px;
     font-weight: normal;
     line-height: 1;
@@ -6137,7 +6137,7 @@ hr {
 }
 
 .navbar {
-    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-family: "Istok Web", "Arial Narrow Bold", sans-serif;
     font-weight: bold;
 }
 
@@ -6283,7 +6283,7 @@ div.subnav .nav > li.active > a {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-family: "Istok Web", "Arial Narrow Bold", sans-serif;
     color: #000000;
     font-size: 15px;
     font-weight: bold;
@@ -6364,7 +6364,7 @@ div.subnav li.dropdown.open .dropdown-toggle:hover {
 
 legend {
     border-bottom: 2px solid #eeeeee;
-    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-family: "Istok Web", "Arial Narrow Bold", sans-serif;
     font-weight: bold;
     color: #000000;
 }
