@@ -1,7 +1,10 @@
-.row.span6.activity_alone
+.row.activity_alone
   %i.icon-trash
-  %i.icon-leaf
+  %i.icon-comment
   %small
     = distance_of_time_in_words_to_now(activity.created_at)
     ,
-    =link_to truncate(activity.trackable.name), project_path(activity.trackable.id) rescue nil
+    - if activity.trackable
+      =link_to truncate(activity.trackable.name), project_path(activity.trackable.id)
+    - else
+      Comment was removed

@@ -11,14 +11,6 @@
     = stylesheet_link_tag "application", :media => "all"
     %link{:href => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css", :rel => "stylesheet", :type => "text/css"}
 
-    :css
-      body {
-        padding-top: 80px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
 
     /[if lt IE 9]
       %script(src="http://html5shiv.googlecode.com/svn/trunk/html5.js")
@@ -38,8 +30,8 @@
   - papers << "shl.png"
   - papers << "shl_2X.png"
   -#%body{:style => "background: url(/assets/#{papers.sample})"}
-  %body
-    .navbar.navbar-fixed-top
+  %body{:class => (controller_name =="projects" && action_name == "index") ? "body_home" : "body"   }
+    .navbar.navbar-fixed-top{:class => (controller_name == "projects" && action_name == "index") ? "" : "h"}
       .navbar-inner
         .container
           %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
@@ -49,15 +41,14 @@
           =link_to "Abulafia", root_path, :class => "brand"
           .nav-collapse.collapse.navbar-responsive-collapse
             %ul.nav
-              -#%li= link_to "Home", root_path
               - if controller.controller_name == "projects"
                 %li.active
                   = link_to t( :projects), projects_path
               - else
                 %li
                   = link_to t( :projects), projects_path
-              -#%li= link_to "About", "#about"
-              -#%li= link_to "Contact", "#contact"
+              %li= link_to "About", "#about"
+              %li= link_to "Contact", "#contact"
             %p.navbar-text.pull-right
               - if user_signed_in?
                 Hello,
@@ -81,8 +72,8 @@
           = content_tag :h1, yield(:title) if show_title
           = yield
 
-        - unless action_name == "users_page"
-          .span4
+        - if action_name != "users_page"
+          .span4.pull-right
             -if @activities
               -for activity in @activities.first(20)
                 =render_activity(activity)
@@ -90,13 +81,12 @@
             - if controller_name == "projects" && action_name == "show"
               .users_stories
                 = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
-
-        .span4
-          =yield :right_column
+            -else
+              .span4
+                =yield :right_column
 
       -#%footer.navbar-fixed-bottom
       -#  = app_name
       -#  Copyright &copy;  2012. All Rights Reserved.
 
     = javascript_include_tag "application", controller_name
-    = controller_name

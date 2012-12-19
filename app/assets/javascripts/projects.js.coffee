@@ -41,10 +41,11 @@ window.update_estimates = (id_of_task, data) ->
   $(".estimates_" + id_of_task).hide()
   labels_click_bind()
 
-
 delete_story = () ->
   $('.accordion-group i.icon-trash').live "click", () ->
-    $(this).parents(".accordion-group").hide()
+    c = confirm("Sure?")
+    if c
+        $(this).parents(".accordion-group").slideUp("slow")
 
 window.open_task_modal = (title_of_task) ->
   $('#task_modal').modal('show')
@@ -104,20 +105,18 @@ labels_click_bind = () ->
           }
       )
 
-
 $(document).ajaxComplete (xhr, data, status) ->
-  $(".users_stories").effect("fade", "fast")
 
-  if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
-    $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
-    $("#task_title, #task_assigned_to").val("")
-    $("#task_title").focus()
+  unless status.type == "DELETE"
 
+      $(".users_stories").effect("fade", "fast")
+      if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
+        $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
+        $("#task_title, #task_assigned_to").val("")
+        $("#task_title").focus()
 
 focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
-
-
 
 $ ->
   delete_story()

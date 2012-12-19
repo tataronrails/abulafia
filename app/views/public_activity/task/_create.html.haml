@@ -1,13 +1,14 @@
-.row.span6.activity_alone
-  %i.icon-plus
-  %i.icon-tasks
-  %i.avatar_activites
-    -user = User.find(activity.trackable.owner_id)
-    =gravatar_image_tag(user.email)
-  %small
-    = distance_of_time_in_words_to_now(activity.created_at)
-    ,
-    =link_to truncate(activity.trackable.title), task_path(activity.trackable.id) rescue nil
+-if activity.trackable.present?
+  .row.activity_alone
+    %i.icon-plus
+    %i.icon-tasks
+    %i.avatar_activites
+      -user = User.find(activity.trackable.owner_id)
+      =gravatar_image_tag(user.email)
+    %small
+      = distance_of_time_in_words_to_now(activity.created_at)
+      ,
+      =link_to truncate(activity.trackable.title), task_path(activity.trackable.id) rescue nil
 
 
 -#.row-fluid.activity_alone

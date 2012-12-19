@@ -28,7 +28,6 @@
 
             -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
               .pull-right
-                111
                 - if place != "icebox"
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                     =t.status_via_words
@@ -40,9 +39,10 @@
                   -["0","1","2","3","5","8"].each do |a|
                     =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
             -#- else
-            .pull-right
-              =link_to(task_path(t), :method => "delete", :confirm => "Sure?", :remote => true) do |l|
-                %i.icon-trash
+            -unless ["icebox","backlog","my_work","current"].include?(place)
+              .pull-right
+                =link_to(task_path(t), :method => "delete", :remote => true) do |l|
+                  %i.icon-trash
 
             .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
               -#- if place == "icebox"
