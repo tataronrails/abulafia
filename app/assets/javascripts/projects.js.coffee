@@ -42,6 +42,10 @@ window.update_estimates = (id_of_task, data) ->
   labels_click_bind()
 
 
+delete_story = () ->
+  $('.accordion-group i.icon-trash').live "click", () ->
+    $(this).parents(".accordion-group").hide()
+
 window.open_task_modal = (title_of_task) ->
   $('#task_modal').modal('show')
   $('#task_modal .modal-header h3').html(title_of_task)
@@ -103,7 +107,6 @@ labels_click_bind = () ->
 
 $(document).ajaxComplete (xhr, data, status) ->
   $(".users_stories").effect("fade", "fast")
-  ;
 
   if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
     $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
@@ -117,6 +120,7 @@ focus_on_ready_on_create_task = () ->
 
 
 $ ->
+  delete_story()
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()
   project_id = $('body').data('project_id')

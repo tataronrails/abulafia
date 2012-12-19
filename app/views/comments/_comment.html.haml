@@ -1,0 +1,30 @@
+.alone_comment
+  .avatar
+    = gravatar_image_tag(comment.user.email)
+  -if current_user.eql? comment.user
+    .pull-right
+      =link_to comment_path(comment), :method => "delete", :remote => true do |l|
+        %i.icon-trash
+  =auto_link(comment.comment, :html => { :target => '_blank' })
+  .datetime
+    %small= distance_of_time_in_words_to_now(comment.created_at)
+
+-#- if c.comment.present?
+-#  .alone_comment
+-#    .avatar
+-#      = gravatar_image_tag(c.user.email)
+-#
+-#
+-#    -list_of_mentions_array = list_of_mentions(c.comment)
+-#    -@list_of_mentions = []
+-#
+-#    -list_of_mentions_array.each do |login|
+-#      -if User.where(:login => login).present?
+-#        -@list_of_mentions<< login
+-#
+-#
+-#    - @list_of_mentions.each do |login|
+-#      -#= c.comment.gsub(login, content_tag(:strong,login))
+-#    = auto_link(c.comment,:html => { :target => '_blank' })
+-#    .datetime
+-#      %small= distance_of_time_in_words_to_now(c.created_at)

@@ -1,5 +1,6 @@
 EOffice::Application.routes.draw do
   resources :column_orders
+  resources :comments
 
 
   resources :tasks, :has_many => :comments do

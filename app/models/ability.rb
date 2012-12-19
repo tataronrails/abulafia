@@ -8,14 +8,25 @@ class Ability
     can :read, Project do |project|
       project.users.include?( user )
     end
+
     can [:add_new_comment, :read], Discussion do |discussion|
       discussion.project.users.include?( user )
     end
+
     can :create, Discussion do |discussion|
       discussion.project.members.include?( user ) ||
           discussion.project.admins.include?( user )
     end
+
     can :create, Project
+    can :create, Comment
+
+    can :manage, Task
+
+
+    can :destroy, Comment do |comment|
+      comment.user == user
+    end
 
     can :manage, Project do |project|
       project.admins.include?( user )

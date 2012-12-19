@@ -2,9 +2,7 @@
   =content_for :right_column do |c|
     .lead
       Behavior
-
     =@task.behavior
-
 
 %ul.breadcrumb
   %li
@@ -59,5 +57,6 @@
 
 
 #comments_line
-  = render :partial => "comments", :locals => {:comments => @task.discussion.comments, :list_of_mentions => @list_of_mentions}
+  -#= render :partial => "comments", :locals => {:comments => @task.discussion.comments, :list_of_mentions => @list_of_mentions}
+  = render :partial => @task.discussion.comments
 

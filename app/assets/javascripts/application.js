@@ -30,6 +30,8 @@
 
 $(document).ready(function () {
     $('textarea').autosize({append: "\n"});
+
+
 });
 
 

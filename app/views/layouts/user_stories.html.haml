@@ -32,7 +32,8 @@
   - papers << "white_wall.png"
   - papers << "creampaper.png"
   - papers << "debut_light.png"
-  %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/#{papers.sample})"}
+  -#%body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/#{papers.sample})"}
+  %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/012-subtle-light-patterns.jpg)"}
     -#.navbar.navbar-fixed-top
     -#  .navbar-inner
     -#    .container-fluid
@@ -72,4 +73,4 @@
       -#  = app_name
       -#  Copyright &copy;  2012. All Rights Reserved.
 
-    = javascript_include_tag "application"
+    = javascript_include_tag "application", controller_name

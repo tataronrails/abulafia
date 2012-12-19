@@ -2,22 +2,36 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.users_stories .breadcrumb img{
+.users_stories .breadcrumb img {
   border-radius: 8px;
   opacity: .8;
 }
-.to_backlog{
+
+.to_backlog {
   //visibility: hidden;
 }
 
-.alone_story a{
-  color: #1a1a1a;
-  font-size: 13px;
+.alone_story {
+  a {
+    color: #1a1a1a;
+    font-size: 13px;
+    font-family: arial;
+  }
+
+
+
 }
 
-.selected_task{
-  border-left:5px solid green !important;
+.estimates_label{
+  font-family: arial !important;
+  font-weight: normal;
+
 }
+
+.selected_task {
+  border-left: 5px solid green !important;
+}
+
 .us_column {
   //background: url(/assets/dropzone_repeating_pattern.png) repeat-x scroll 0 0 #AEB6B9;
   //-moz-border-radius: 10px;

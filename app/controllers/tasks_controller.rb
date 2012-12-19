@@ -1,6 +1,23 @@
 class TasksController < ApplicationController
 
-  skip_authorization_check
+  load_and_authorize_resource :task
+
+  #skip_authorization_check
+
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    @project = @task.project
+
+    respond_to do |format|
+      #format.html { redirect_to projects_url }
+      #format.json { head :no_content }
+      format.js {
+        render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
+      }
+    end
+  end
+
 
   def update
     #raise params.to_json
@@ -139,7 +156,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :back }
       format.js {
-        render :partial => "comments", :locals => {:comments => task.discussion.comments}
+        render :partial => task.discussion.comments
       }
     end
   end
@@ -164,9 +181,9 @@ class TasksController < ApplicationController
       respond_to do |format|
         format.js {
           #if params[:assigned_to].present?
-            #gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
+          #gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
           #else
-            #gflash :success => "Alone task successfully created"
+          #gflash :success => "Alone task successfully created"
           #end
 
 

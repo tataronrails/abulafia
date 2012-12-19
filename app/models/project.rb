@@ -45,7 +45,7 @@ class Project < ActiveRecord::Base
   end
 
   def draft
-    self.tasks.where(:task_type => "5")
+    self.tasks.where(:task_type => "5").order("created_at DESC")
   end
 
   def my_work user
