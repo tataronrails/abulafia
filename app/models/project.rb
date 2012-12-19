@@ -1,25 +1,17 @@
 class Project < ActiveRecord::Base
-
-
-
   include PublicActivity::Model
-  tracked
-
-
   attr_accessible :desc, :name
-
-  #default_scope order('created_at DESC')
-
   has_many :discussions
   has_many :tasks
   has_many :project_memberships
   has_many :users, :through => :project_memberships
 
-  validates :name, :presence => true, :length => { :minimum => 3 }
+  validates :name, :presence => true, :length => {:minimum => 3}
 
   acts_as_paranoid
   acts_as_commentable
 
+  tracked
 
 
   # define project.admins, project.members ... methods

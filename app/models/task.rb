@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   acts_as_taggable
+  acts_as_paranoid
   attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior, :project_id
 
   belongs_to :project
@@ -12,6 +13,7 @@ class Task < ActiveRecord::Base
 
   include PublicActivity::Model
   tracked
+
 
 
   #acts_as_taggable_on :skills

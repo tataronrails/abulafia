@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219123432) do
+ActiveRecord::Schema.define(:version => 20121219124920) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20121219123432) do
     t.integer  "place",       :default => 0
     t.string   "task_type"
     t.text     "behavior"
+    t.time     "deleted_at"
   end
 
   create_table "users", :force => true do |t|
