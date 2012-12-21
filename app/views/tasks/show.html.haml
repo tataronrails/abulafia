@@ -12,25 +12,10 @@
     %span.divider /
   %li
     =link_to "User stories", project_user_stories_path(@task.project)
-.bs-docs-example.shadow
-  .avatar= gravatar_image_tag @assigned_to
-  %p.lead
-    =type_icon(@task.task_type) if @task.task_type
-    &nbsp;
-    #{@task.title}
-    =link_to edit_task_path(@task) do |l|
-      %i.icon-edit
-    - if @task.tag_list.present?
-      .row-fluid
-        .accordion-group.well-small
-          %i.icon-tags
-          %small
-            =@task.tag_list
-    - if @task.desc.present?
-      %hr
-      .small
-        %small= @task.desc
 
+
+
+.bs-docs-example.shadow
   - classes_to_add = ""
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
@@ -53,6 +38,27 @@
           %span
             %i.icon-warning-sign.red
             Not accepted yet
+
+
+  .avatar= gravatar_image_tag @assigned_to
+  %p.lead
+    =type_icon(@task.task_type) if @task.task_type
+    &nbsp;
+    #{@task.title}
+    =link_to edit_task_path(@task) do |l|
+      %i.icon-edit
+    - if @task.tag_list.present?
+      .row-fluid
+        .accordion-group.well-small
+          %i.icon-tags
+          %small
+            =@task.tag_list
+    - if @task.desc.present?
+      %hr
+      .small
+        %small= @task.desc
+
+
 .row-fluid
   .lead Discussion:
   =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
