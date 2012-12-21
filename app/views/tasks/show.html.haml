@@ -31,8 +31,12 @@
       .small
         %small= @task.desc
 
+  - classes_to_add = ""
+  - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
+  - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
-  .accept_task{:class => @task.accepted_to_start.present? ? "white_back" : "", :class => @task.assigned_to.present? ? "" : "h"}
+
+  .accept_task{:class => classes_to_add}
     - if @task.accepted_to_start.present?
       #accepted_time
         %i.icon-ok

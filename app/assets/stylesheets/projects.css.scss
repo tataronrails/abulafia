@@ -3,6 +3,18 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.accordion-group{
+  padding-top:4px;
+}
+
+
+.draft_class, .urgent_class {
+  background-color: transparent !important;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+
 #task_title{
   color: #83AF9B !important;
 }

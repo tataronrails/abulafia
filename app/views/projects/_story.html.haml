@@ -10,10 +10,10 @@
   -order.each do |o|
     -t = Task.find(o)
 
-
     - if t.title.present?
       -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
-      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} accordion_group_#{t.id}"}
+
+      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} #{place}_class accordion_group_#{t.id}"}
         .row-fluid
           .span12
             .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px"}
@@ -22,48 +22,41 @@
                 - estimate_of_task =  t.estimate
               - else
                 - estimate_of_task = 0
-              -#=image_tag "estimate_"+estimate_of_task.to_s+"pt_fibonacci.gif"
 
+            .span11
+              -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
+                .pull-right
+                  - if place != "icebox"
+                    .span2
+                      .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                        - if t.status == 0
+                          %i.icon-time{:title => "Estimate"}
+                        - if t.status == 2
+                          %i.icon-check{:title => "Finished"}
+                        - if t.status == 3
+                          %i.icon-github{:title => "Pushed"}
 
-            -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
-              .pull-right
-                - if place != "icebox"
+                        - if t.status == 1
+                          %i.icon-play{:title => "Start"}
+                  -else
+                    .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
+                      %i.icon-hand-left{:title => "Move to backlog"}
+                  %span.estimates{:class =>"estimates_"+t.id.to_s}
+                    -["0","1","2","3","5","8"].each do |a|
+                      =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+              -unless ["icebox","backlog","my_work","current"].include?(place)
+                .pull-right
+                  -if place == "draft"
+                    =link_to(edit_task_path(t)) do |l|
+                      %i.icon-edit
+                  =link_to(task_path(t), :method => "delete", :remote => true) do |l|
+                    %i.icon-trash
 
-                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                    - if t.status == 0
-                      %i.icon-time{:title => "Estimate"}
-                    - if t.status == 2
-                      %i.icon-check{:title => "Finished"}
-                    - if t.status == 3
-                      %i.icon-github{:title => "Pushed"}
+              .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
+                =link_to t.title, task_path(t)
 
-                    - if t.status == 1
-                      %i.icon-play{:title => "Start"}
-                    -#=t.status_via_words
-                -else
-                  .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
-                    %i.icon-hand-left{:title => "Move to backlog"}
-                    -#to backlog
-                %span.estimates{:class =>"estimates_"+t.id.to_s}
-                  -["0","1","2","3","5","8"].each do |a|
-                    =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
-            -#- else
-            -unless ["icebox","backlog","my_work","current"].include?(place)
-              .pull-right
-                -if place == "draft"
-                  =link_to(edit_task_path(t)) do |l|
-                    %i.icon-edit
-                =link_to(task_path(t), :method => "delete", :remote => true) do |l|
-                  %i.icon-trash
-
-            .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
-              -#- if place == "icebox"
-                -#%i.icon-hand-left{:title => "2 backlog", :class => "to_backlog"}
-              -#=link_to_function t.title, "window.open_task_modal('#{t.title}')", :rel => "tooltip", :data => {:toggle => "modal", 'original-title' => t.status_via_words, :placement => "top" }
-              =link_to t.title, task_path(t)
-
-              - if t.discussion && t.discussion.comments.present?
-                %i.icon-comment-alt.light-gray
-              %small
-                =t.assigned_to_initials
+                - if t.discussion && t.discussion.comments.present?
+                  %i.icon-comment-alt.light-gray
+                %small
+                  =t.assigned_to_initials
 
