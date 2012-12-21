@@ -85,11 +85,30 @@ labels_click_bind = () ->
       )
 
 
+
+
     if status == 0
       $(this).next().show().end().hide()
 
 
     if status == 1
+      task_id = $(this).parents(".accordion-group").data("taskid")
+      next_status =  parseInt(status, 10) + 1
+
+      $.ajax(
+        url: "/tasks/" + task_id + "/update_points"
+        type: "post",
+        data:
+          {'status': next_status, 'project_id': project_id}
+        headers:
+          {
+          'X-Transaction': 'POST Example',
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+          }
+      )
+
+    if status == 2
+
       task_id = $(this).parents(".accordion-group").data("taskid")
       next_status =  parseInt(status, 10) + 1
 

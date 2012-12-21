@@ -137,8 +137,10 @@ class TasksController < ApplicationController
         else
 
           if task.update_attributes(:start => Time.now, :estimate => points, :status => "1")
-            render :partial => "projects/stories_all", :locals => {:project => project, :user => current_user, :task => task}
+            render :nothing => true
+            #render :partial => "projects/stories_all", :locals => {:project => project, :user => current_user, :task => task}
           else
+
             render :js => "alert('error)"
           end
         end

@@ -28,11 +28,14 @@
             -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
               .pull-right
                 - if place != "icebox"
+
                   .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                     - if t.status == 0
                       %i.icon-time{:title => "Estimate"}
                     - if t.status == 2
                       %i.icon-check{:title => "Finished"}
+                    - if t.status == 3
+                      %i.icon-github{:title => "Pushed"}
 
                     - if t.status == 1
                       %i.icon-play{:title => "Start"}

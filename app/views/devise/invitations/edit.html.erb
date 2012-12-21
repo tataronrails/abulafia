@@ -11,9 +11,12 @@
       <%= f.password_field :password_confirmation, :placeholder => "Password confirmation" %></p>
 
     </div>
-      <%# f.text_field :first_name, :placeholder => "First name" %>
-      <%# f.text_field :second_name, :placeholder => "Second name" %>
-      <%# f.text_field :initials, :placeholder => "Initials" %>
+      <%= f.text_field :login, :placeholder => "login" %>
+
+      <%= f.text_field :first_name, :placeholder => "First name" %>
+      <%= f.text_field :second_name, :placeholder => "Second name" %>
+      <%= f.text_field :initials, :placeholder => "Initials" %>
+      <%= f.text_field :cell, :placeholder => "Phone number" %>
 
     <p><%= f.button t("devise.invitations.edit.submit_button"),  :class => "btn" %></p>
 <% end %>

@@ -31,7 +31,7 @@ class Task < ActiveRecord::Base
     a[0] = "estimate"
     a[1] = "start"
     a[2] = "finish"
-    a[3] = "deliver"
+    a[3] = "pushed"
     a[4] = "testing"
     a[5] = "reject"
     a[5] = "accept"

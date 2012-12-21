@@ -4,8 +4,8 @@ module ProjectsHelper
     a[0] = " "
     a[1] = "label-success"
     a[2] = "label-info"
-    a[3] = "label-success"
-    a[4] = "label-success"
+    a[3] = "label-inverse"
+    a[4] = "label-important"
 
     a[status]
   end

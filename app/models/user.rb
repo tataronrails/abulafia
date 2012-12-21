@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :login
 
 
-  before_create :create_login
+  #before_create :create_login
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :cell, :im, :desc, :initials, :hc_user_id, :login
