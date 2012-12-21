@@ -46,11 +46,17 @@
 
 }
 
+
+.estimates {
+  display: none;
+  white-space:nowrap;
+}
+
 .estimates_label{
   font-family: arial !important;
   font-weight: normal;
-
 }
+
 
 .selected_task {
   border-left: 5px solid #83AF9B !important;

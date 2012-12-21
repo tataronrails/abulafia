@@ -16,7 +16,7 @@
       .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} #{place}_class accordion_group_#{t.id}"}
         .row-fluid
           .span12
-            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px"}
+            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px;"}
               =type_icon t.task_type
               - if t.estimate.present?
                 - estimate_of_task =  t.estimate
@@ -41,6 +41,7 @@
                   -else
                     .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
                       %i.icon-hand-left{:title => "Move to backlog"}
+
                   %span.estimates{:class =>"estimates_"+t.id.to_s}
                     -["0","1","2","3","5","8"].each do |a|
                       =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a

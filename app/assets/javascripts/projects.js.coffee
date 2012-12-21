@@ -88,7 +88,9 @@ labels_click_bind = () ->
 
 
     if status == 0
-      $(this).next().show().end().hide()
+     $(this).parents(".accordion-group").find(".estimates").show()
+     $(this).hide()
+
 
 
     if status == 1
