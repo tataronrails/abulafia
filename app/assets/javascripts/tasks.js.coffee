@@ -46,7 +46,12 @@ task_type_detection = () ->
 
 $ ->
 
-  $("form textarea:first").focus().select()
+  $(document).ajaxComplete (xhr, data, status) ->
+    if status.url.indexOf("accept_to_start") > 0
+      $("#accept_me").slideUp("fast").text(data.responseText).slideDown("fast")
+
+
+  $("form textarea:first").focus().select() unless window.location.pathname.indexOf("/edit") > 0
 
   $("form:first")
     .bind "ajax:complete", (xhr, data, status) ->

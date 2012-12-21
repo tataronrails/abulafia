@@ -2,9 +2,56 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.ui-menu-item img { padding-right: 10px; width: 32px; height: 32px; }
-.ui-menu-item span { color: #444; font-size: 12px; vertical-align: top }
+.ui-menu-item img {
+  padding-right: 10px;
+  width: 32px;
+  height: 32px;
+}
 
-.h{
-  display:none;
+.ui-menu-item span {
+  color: #444;
+  font-size: 12px;
+  vertical-align: top
+}
+
+.h {
+  display: none;
+}
+
+.bs-docs-example {
+  background-color: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px 4px 0px 4px;
+  margin: 7px 0 20px;
+  padding: 20px 19px 14px;
+  position: relative;
+  box-shadow: 5px 5px 10px #888888;
+}
+
+.white_back{
+  background-color: white;
+}
+
+.accept_task {
+  border: 1px solid #DDDDDD;
+  border-top: none;
+
+  border-radius: 0px 0px 4px 4px;
+  padding: 7px;
+  margin: 15px 0 0 0;
+  position: absolute;
+  right: -1px;
+
+  -webkit-box-shadow: 0px 3px #ccc;
+  -moz-box-shadow: 0px 3px #ccc;
+  box-shadow: 0px 8px 10px #888888;
+  #accept_me {
+    font-size: 15px;
+  }
+
+  #accepted_time{
+    font-size: 12px;
+    color: #999;
+
+  }
 }

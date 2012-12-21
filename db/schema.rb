@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219124920) do
+ActiveRecord::Schema.define(:version => 20121221112044) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -96,20 +96,21 @@ ActiveRecord::Schema.define(:version => 20121219124920) do
 
   create_table "tasks", :force => true do |t|
     t.string   "title"
-    t.integer  "status",      :default => 0
+    t.integer  "status",            :default => 0
     t.integer  "owner_id"
     t.integer  "assigned_to"
     t.date     "start"
     t.date     "end"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "project_id"
     t.integer  "estimate"
     t.text     "desc"
-    t.integer  "place",       :default => 0
+    t.integer  "place",             :default => 0
     t.string   "task_type"
     t.text     "behavior"
     t.time     "deleted_at"
+    t.datetime "accepted_to_start"
   end
 
   create_table "users", :force => true do |t|

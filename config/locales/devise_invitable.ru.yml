@@ -6,11 +6,11 @@ en:
       updated: 'Your password was set successfully. You are now signed in.'
       no_invitations_remaining: "No invitations remaining"
       new:
-        header: "22Send invitation"
+        header: "Send invitation"
         submit_button: "Send an invitation"
       edit:
-        header: "33Set your password"
-        submit_button: "Set my password"
+        header: "Set your password"
+        submit_button: "Update my profile"
     mailer:
       invitation_instructions:
         subject: 'Invitation instructions'

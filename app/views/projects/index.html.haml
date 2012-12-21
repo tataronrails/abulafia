@@ -39,9 +39,9 @@
       -#%td
       -#  = project.desc
       %td
-        - begin
-          = truncate(project.discussions.first.comments.first.comment, :length => 12)
-        - rescue
+        -#- begin
+        -#  = truncate(project.discussions.first.comments.first.comment, :length => 12)
+        -#- rescue
       -#%td= link_to 'Show', project
       -#%td= link_to   'Edit', edit_project_path(project)
       %td

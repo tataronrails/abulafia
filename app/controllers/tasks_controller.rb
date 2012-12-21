@@ -4,6 +4,28 @@ class TasksController < ApplicationController
 
   #skip_authorization_check
 
+
+
+  def accept_to_start
+    task = Task.find(params[:task_id])
+    if task.update_attribute(:accepted_to_start, Time.now)
+      flash[:notice] = "Started"
+
+
+      respond_to do |format|
+
+        format.js {
+          render :text => "Accepted!"
+        }
+      end
+
+
+    else
+      flash[:notice] = "Error"
+    end
+
+  end
+
   def destroy
     @task = Task.find(params[:id])
     @task.destroy

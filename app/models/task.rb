@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   acts_as_taggable
   acts_as_paranoid
-  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior, :project_id
+  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior, :project_id, :desc
 
   belongs_to :project
   after_create :assign_discussion
@@ -66,6 +66,11 @@ class Task < ActiveRecord::Base
 
   def owner
     User.find(self.owner_id)
+  end
+
+  def assigned_to_user
+    User.find(self.assigned_to) rescue nil
+
   end
 
   private

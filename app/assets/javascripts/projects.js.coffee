@@ -222,7 +222,6 @@ $ ->
 
   $(".accordion-body").on "shown", ->
     $(this).parents(".accordion").find("input[type=text]").focus().select()
-  #    $("#discussion_title").focus().select()
 
   if location.hash == "#comments"
     $(".accordion-group.existed_discussions #collapseTwo").collapse('show')

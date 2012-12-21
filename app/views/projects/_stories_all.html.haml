@@ -8,14 +8,11 @@
     =link_to "User stories", project_user_stories_path(project)
   .pull-right
     -if @project.project_manager
-      %span{:title => "project mamager of project"}
+      %span{:title => "project manager of project"}
         =link_to user_profile_path(@project.project_manager) do |u|
           =gravatar_image_tag(@project.project_manager.email)
 
 -if project
-
-
-
   - if project.urgent.present?
     .lead.yellowgreen
       Urgent
@@ -27,19 +24,19 @@
       =link_to "Draft", project_user_stories_path(project )
     .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.draft, :place => "draft", :updated_task => nil}
 
-  - if project.my_work(current_user).present?
-    .lead
-      =link_to "My work", project_user_stories_path(project )
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user), :place => "my_work", :updated_task => nil}
-
-  - if project.backlog.present?
-    .lead
-      =link_to "Backlog", project_user_stories_path(project)
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog, :place => "backlog", :updated_task => nil}
+  -#- if project.my_work(current_user).present?
+  -#  .lead
+  -#    =link_to "My work", project_user_stories_path(project )
+  -#  .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user).first(3), :place => "my_work", :updated_task => nil}
+  -#
+  -#- if project.backlog.present?
+  -#  .lead
+  -#    =link_to "Backlog", project_user_stories_path(project)
+  -#  .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.backlog.first(3), :place => "backlog", :updated_task => nil}
 
   - if project.icebox.present?
     .lead
       =link_to "Icebox", project_user_stories_path(project)
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.icebox, :place => "icebox", :updated_task => nil}
+    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => project.icebox.first(3), :place => "icebox", :updated_task => nil}
 
 

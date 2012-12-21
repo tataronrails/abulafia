@@ -10,7 +10,7 @@ en:
         submit_button: "Send an invitation"
       edit:
         header: "Set your password"
-        submit_button: "Set my password"
+        submit_button: "Update my profile"
     mailer:
       invitation_instructions:
         subject: 'Invitation instructions'

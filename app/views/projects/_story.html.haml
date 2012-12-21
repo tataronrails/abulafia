@@ -50,6 +50,9 @@
             -#- else
             -unless ["icebox","backlog","my_work","current"].include?(place)
               .pull-right
+                -if place == "draft"
+                  =link_to(edit_task_path(t)) do |l|
+                    %i.icon-edit
                 =link_to(task_path(t), :method => "delete", :remote => true) do |l|
                   %i.icon-trash
 

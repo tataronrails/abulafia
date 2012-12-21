@@ -56,27 +56,20 @@
               =link_to "Anytime", "#", :data=>{:finish => "", :anytime => "true"}
             %li
               =link_to "Custom", "#", :data=>{:finish => (Time.now+1.month).to_s(:db).to_date, :default_text => "Custom"}
-          -#%button.btn.btn-small{:id => 3, :data=>{:class => "btn-warning"}}
-          -#  %l.icon-bullhorn
-          -#  Instruction
           %button.btn.btn-small{:id => 4, :data=>{:class => "btn-info"}}
             %l.icon-briefcase
             Self task
           %button.btn.btn-small{:id => 5, :data=>{:class => "btn-success"}}
             %l.icon-ok
-            Simple task
+            Draft
         =f.text_field :end, :placeholder => "Finish until...", :class => "h"
 
 
-
-
       =f.hidden_field :task_type
-      -#%p
-      -#  .checkbox
-      -#    %label.checkbox
-      -#      =check_box_tag 'user_story_type'
-      -#      User story type
-
+  .field
+    %i.icon-edit
+    Description
+    =f.text_area :desc, :class => "span8"
   .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
     %i.icon-sitemap
     Behavior
@@ -94,6 +87,12 @@
       %span.add-on
         %i.icon-user
       = collection_select(:task, :assigned_to, @task.project.users, :id, :login, :prompt => true)
+  .field
+    =f.label "Change project"
+    .input-prepend
+      %span.add-on
+        %i.icon-leaf
+      = collection_select(:task, :project_id, current_user.projects, :id, :name, :prompt => true)
 
 
   -#.field

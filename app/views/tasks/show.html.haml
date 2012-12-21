@@ -3,7 +3,6 @@
     .lead
       Behavior
     =@task.behavior
-
 %ul.breadcrumb
   %li
     =link_to "Home", root_path
@@ -13,21 +12,12 @@
     %span.divider /
   %li
     =link_to "User stories", project_user_stories_path(@task.project)
-
--#.page-header
--#  %h3
--#= @task.project.name
-
--#.bs-docs-example.discussion_show
 .bs-docs-example.shadow
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
-
     =type_icon(@task.task_type) if @task.task_type
     &nbsp;
     #{@task.title}
-
-    &nbsp;
     =link_to edit_task_path(@task) do |l|
       %i.icon-edit
     - if @task.tag_list.present?
@@ -36,12 +26,35 @@
           %i.icon-tags
           %small
             =@task.tag_list
+    - if @task.desc.present?
+      %hr
+      .small
+        %small= @task.desc
 
+
+  .accept_task{:class => @task.accepted_to_start.present? ? "white_back" : "", :class => @task.assigned_to.present? ? "" : "h"}
+    - if @task.accepted_to_start.present?
+      #accepted_time
+        %i.icon-ok
+        Accepted:
+        =distance_of_time_in_words_to_now(@task.accepted_to_start)
+    - else
+      #accept_me
+        - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
+          =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+            %i.icon-thumbs-up
+            &nbsp;
+            Accept to start
+        - else
+          %span
+            %i.icon-warning-sign.red
+            Not accepted yet
 .row-fluid
   .lead Discussion:
   =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
     =hidden_field_tag "user_id", current_user.id
     =hidden_field_tag "id", @task.id
+
     =text_area_tag "task[comment]", "", :class => "span12"
     .row-fluid
       =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
