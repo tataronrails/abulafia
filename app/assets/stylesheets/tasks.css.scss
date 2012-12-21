@@ -26,6 +26,11 @@
   padding: 20px 19px 14px;
   //position: relative;
   box-shadow: 5px 5px 10px #888888;
+  transform:rotate(deg);
+  -ms-transform:rotate(2deg); /* IE 9 */
+  -moz-transform:rotate(2deg); /* Firefox */
+  -webkit-transform:rotate(2deg); /* Safari and Chrome */
+  -o-transform:rotate(2deg); /* Opera */
 
 
 }
@@ -37,11 +42,7 @@
 
 
 .accept_task {
-  //transform:rotate(deg);
-  //-ms-transform:rotate(90deg); /* IE 9 */
-  //-moz-transform:rotate(90deg); /* Firefox */
-  //-webkit-transform:rotate(90deg); /* Safari and Chrome */
-  //-o-transform:rotate(90deg); /* Opera */
+
 
 
   border: 1px solid #DDDDDD;
