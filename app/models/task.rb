@@ -56,7 +56,13 @@ class Task < ActiveRecord::Base
   def assigned_to_initials
     begin
       id = self.assigned_to
-      User.where(:id => id).first.login[0..1]
+
+      if User.find(id).initials.present?
+        User.find(id).initials
+      else
+        User.find(id).login
+      end
+
     rescue
       ""
     end

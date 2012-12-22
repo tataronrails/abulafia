@@ -36,7 +36,7 @@ class Project < ActiveRecord::Base
 
 
   def urgent
-    self.tasks.where(:task_type => "3")
+    self.tasks.where(:task_type => "3").order("end")
   end
 
   def draft
