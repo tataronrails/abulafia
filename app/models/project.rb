@@ -1,12 +1,19 @@
 class Project < ActiveRecord::Base
   include PublicActivity::Model
-  attr_accessible :desc, :name
+  attr_accessible :desc, :name, :is_department
   has_many :discussions
   has_many :tasks
   has_many :project_memberships
   has_many :users, :through => :project_memberships
 
   validates :name, :presence => true, :length => {:minimum => 3}
+
+  default_scope order(" created_at DESC")
+  scope :without_departments, where(:is_department => false)
+  scope :only_departments, where(:is_department => true)
+
+
+
 
   acts_as_paranoid
   acts_as_commentable
