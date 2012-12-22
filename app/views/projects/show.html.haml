@@ -54,9 +54,15 @@
 -comments_array.each do |comm|
   .row-fluid
     .span1
-      .avatar= gravatar_image_tag comm.user.email
+      .row-fluid
+        .avatar
+          = gravatar_image_tag comm.user.email
+
 
     .span7
+      .row-fluid
+        %small
+          =distance_of_time_in_words_to_now comm.created_at
       -task = comm.commentable.discussable
       =link_to task_path(task) do
         =truncate(comm.comment, :length => 50)
