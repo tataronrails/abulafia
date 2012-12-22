@@ -14,6 +14,8 @@ class Task < ActiveRecord::Base
   include PublicActivity::Model
   tracked
 
+  scope :not_finished, where("end > Time.now")
+
 
 
   #acts_as_taggable_on :skills
@@ -25,6 +27,10 @@ class Task < ActiveRecord::Base
   def tagging_list
     tag_list
   end
+
+  #def not_finished
+  #
+  #end
 
   def status_via_words
     a = []

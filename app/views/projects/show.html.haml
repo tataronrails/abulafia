@@ -40,6 +40,29 @@
 эти ключи в начале делают задачу с типом Фича, Баг, Работенка.
 Пример: #bug Сделать пример использования бага или #bug, Это также работает
 
+
+%hr/
+-comments_array = []
+- Comment.order(:created_at).all.first(5).each do |c|
+  -begin
+    - if c.commentable.discussable.project == @project
+      - comments_array << c
+  -rescue
+
+%table
+  %tr
+  -comments_array.each do |c|
+    %tr
+      %td
+        .avatar= gravatar_image_tag c.user.email
+
+      %td
+        =link_to task_path(c.commentable.discussable) do
+          =truncate(c.comment)
+          .title
+            %strong= truncate(c.commentable.discussable.title)
+      %td
+
 #accordion3.accordion.h
   .accordion-group
     .accordion-heading
