@@ -49,19 +49,18 @@
       - comments_array << c
   -rescue
 
-%table
-  %tr
-  -comments_array.each do |c|
-    %tr
-      %td
-        .avatar= gravatar_image_tag c.user.email
+-comments_array.each do |c|
+  .span1
+    .avatar= gravatar_image_tag c.user.email
 
-      %td
-        =link_to task_path(c.commentable.discussable) do
-          =truncate(c.comment)
-          .title
-            %strong= truncate(c.commentable.discussable.title)
-      %td
+  -task = c.commentable.discussable
+  =link_to task_path(task) do
+    =truncate(c.comment)
+    .title
+      %small
+        =type_icon task.task_type
+        = truncate(task.title)
+  %hr/
 
 #accordion3.accordion.h
   .accordion-group
