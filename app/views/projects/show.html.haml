@@ -42,8 +42,10 @@
 
 
 %hr/
+.lead
+  Discussions
 -comments_array = []
-- Comment.order(:created_at).all.first(5).each do |c|
+- Comment.order(:created_at).all.first(10).each do |c|
   -begin
     - if c.commentable.discussable.project == @project
       - comments_array << c
