@@ -1,3 +1,7 @@
+.red.pull-right
+  %i.icon-trash
+  =link_to "Archive", project_path(@project), :method => "delete", :confirm => "Sure to delete?"
+
 = form_for @project do |f|
   - if @project.errors.any?
     #error_explanation
