@@ -107,6 +107,18 @@ body {
 
 }
 
+
+.list_of_discussion_history{
+    padding:0 0 10px 0;
+}
+
+.opacity60{
+    opacity: .6;
+}
+.opacity40{
+    opacity: .4;
+}
+
 i.avatar_activites img {
     width: 20px;
     padding: 0 7px 0 3px;
@@ -114,6 +126,15 @@ i.avatar_activites img {
     /*float: left;*/
     /*margin: 0 10px 0 0;*/
     /*vertical-align: bottom;*/
+
+}
+
+.avatar20 img {
+    border-radius: 100px 100px 100px 100px;
+    width: 20px;
+    float: left;
+    margin: 0 10px 0 0;
+    vertical-align: bottom;
 
 }
 
