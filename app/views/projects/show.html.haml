@@ -51,17 +51,19 @@
       - comments_array << c
   -rescue
 
--comments_array.each do |c|
-  .span1
-    .avatar= gravatar_image_tag c.user.email
+-comments_array.each do |comm|
+  .row-fluid
+    .span1
+      .avatar= gravatar_image_tag comm.user.email
 
-  -task = c.commentable.discussable
-  =link_to task_path(task) do
-    =truncate(c.comment)
-    .title
-      %small
-        =type_icon task.task_type
-        = truncate(task.title)
+    .span7
+      -task = comm.commentable.discussable
+      =link_to task_path(task) do
+        =truncate(comm.comment, :length => 50)
+        .title
+          %small
+            =type_icon task.task_type
+            = truncate(task.title, :length => 25)
   %hr/
 
 #accordion3.accordion.h
