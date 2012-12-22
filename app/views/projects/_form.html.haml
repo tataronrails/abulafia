@@ -12,5 +12,8 @@
   .field
     = f.label :desc
     = f.text_area :desc
+    .checkbox
+      =f.check_box :is_department
+      is department
   .actions
     = f.submit 'Save', {:class => "btn"}
