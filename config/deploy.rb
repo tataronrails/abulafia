@@ -40,6 +40,13 @@ namespace :deploy do
     #run "touch #{File.join(current_path, "thin stop -p7004 && thin start -p7004 -e production -d")}"
   end
 
+  desc "Restart the Thin processes"
+  task :restart do
+    run <<-CMD
+      cd ~/www/apps/abu_production/current; bundle exec thin restart
+    CMD
+  end
+
   task :update_shared_symlinks do
     shared_files.each do |path|
       run "rm -rf #{File.join(release_path, path)}"
