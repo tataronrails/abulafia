@@ -8,6 +8,8 @@ class Comment < ActiveRecord::Base
 
   default_scope :order => 'created_at DESC'
 
+  validates_length_of :comment, :minimum => 2
+
   include PublicActivity::Model
   tracked
 

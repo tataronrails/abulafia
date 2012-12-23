@@ -29,18 +29,34 @@
 //= require select2
 
 
-function hide_removed_task(){
-    $(".alone_comment i.icon-trash").live("click", function(){
+function hide_removed_task() {
+    $(".alone_comment i.icon-trash").live("click", function () {
         $(this).parents(".alone_comment").slideUp("slow")
     })
 }
 
+
+function in_duscussion_too_small_length() {
+
+    $("#task_comment").parents("form:first").on("submit", function(e){
+        text = $(this).find("textarea:first").val();
+        if(text.length < 2){
+            alert("That's all?");
+            return false;
+        }
+    })
+
+
+}
+
 $(document).ready(function () {
-    $('textarea').autosize({append: "\n"});
+    $('textarea').autosize({append:"\n"});
+
+    if ($("#task_comment").length > 0) {
+        in_duscussion_too_small_length();
+    }
 
     hide_removed_task();
-
-
 
 
 });
