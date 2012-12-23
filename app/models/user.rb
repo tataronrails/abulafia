@@ -22,6 +22,15 @@ class User < ActiveRecord::Base
     self.project_memberships.where(:project_id => project_id).first.role.text
   end
 
+  def fio
+    if self.first_name.present? && self.second_name.present?
+      [self.first_name, self.second_name].join(" ")
+    else
+      self.login
+    end
+
+  end
+
 
   private
   def create_login
