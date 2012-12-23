@@ -44,6 +44,7 @@ namespace :deploy do
   task :restart do
     run <<-CMD
       cd ~/www/apps/abu_production/current; bundle exec thin restart
+      cd ~/www/apps/abu_production/current; thin stop -p7004 && thin start -p7004 -e production -d
     CMD
   end
 
