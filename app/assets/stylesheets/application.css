@@ -67,8 +67,8 @@ body {
     background-image: -moz-linear-gradient(top, #83AF9B, #48705E) !important;
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#83AF9B), to(#48705E)) !important;
     background-image: -webkit-linear-gradient(top, #83AF9B, #48705E) !important;
-    background-image: -o-linear-gradient(top, ##83AF9B, #48705E) !important;
-    background-image: linear-gradient(to bottom, ##83AF9B, #48705E) !important;
+    background-image: -o-linear-gradient(top, #83AF9B, #48705E) !important;
+    background-image: linear-gradient(to bottom, #83AF9B, #48705E) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ff26c755', endColorstr = '#ff22b24c', GradientType = 0);
     border-color: #83AF9B #83AF9B #83AF9B;
