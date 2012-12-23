@@ -59,6 +59,14 @@ body {
     color: #83AF9B;
 }
 
+.btn-success {
+    background-color: #83AF9B !important;
+    background-image: linear-gradient(to bottom, #83AF9B, #83AF9B) !important;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
 .label-success, .badge-success {
     background-color: #F9CDAD !important;
     color: #fff !important;

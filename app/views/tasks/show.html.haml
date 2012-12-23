@@ -62,15 +62,16 @@
 
     =text_area_tag "task[comment]", "", :class => "span12"
     .row-fluid
-      =submit_tag "Comment", :class => "btn", :disable_with => 'loading...'
+      =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
+      .info.pull-right
+        %i.icon-external-link
+        %small= link_to "Как пользоваться Markdown?", "http://rukeba.com/blog/2009/02/28/markdown-sintaksis-po-russki/", :target => "_blank"
+
     %p
     .row-fluid
-      %i.icon-paper-clip
-      =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
-
-
-
-
+      %small
+        %i.icon-paper-clip
+        =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 
 
