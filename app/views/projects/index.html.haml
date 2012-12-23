@@ -14,8 +14,6 @@
           %ul
             - @project.errors.full_messages.each do |msg|
               %li= msg
-
-
       .field
         = f.text_field :name, :placeholder => "Create new project", :autocomplete => "off"
       .field
@@ -28,24 +26,44 @@
           = f.button 'Save', :class => "btn"
 
 
+  -list_of_project_managers = []
 
-%table.table.table-hover
-  %tr
-    -#%th Name
-    -#%th Desc
-    -#%th
-    -#%th
+  -#-@projects.without_departments.each do |project|
+  -#  -list_of_project_managers << project.project_manager
 
-  - @projects.without_departments.each do |project|
-    %tr
-      %td
+  -list_of_project_managers = @projects.without_departments.map{|project| project.project_manager}
+  -list_of_project_managers.compact!.uniq!
+
+  -list_of_project_managers.each do |pm|
+    %h4
+      =gravatar_image_tag pm.email
+      = pm.email
+
+    %blockquote
+
+      -pm.projects.each do |project|
         - if project.is_department
           %h4
             %i.icon-certificate
             = link_to project.name, project
-        - else
-          %i.icon-leaf
-          = link_to project.name, project
+          - else
+            %i.icon-leaf
+            = link_to project.name, project
+          %hr
+
+
+
+  -#- @projects.without_departments.each do |project|
+
+
+    -#- if project.is_department
+    -#  %h4
+    -#    %i.icon-certificate
+    -#    = link_to project.name, project
+    -#- else
+    -#  %i.icon-leaf
+    -#  = link_to project.name, project
+    -#%hr
 
 .lead
   Departments
