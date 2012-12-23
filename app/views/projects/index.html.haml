@@ -43,15 +43,10 @@
     %blockquote
 
       -pm.projects.each do |project|
-        - if project.project_manager && project.is_department == false
+        - if project.project_manager && project.is_department == false && project.project_manager == pm
           .project_alone
             %i.icon-leaf
             = link_to project.name, project
-
-
-
-
-
 
   - @projects.without_departments.each do |project|
     - if project.project_manager.nil?
