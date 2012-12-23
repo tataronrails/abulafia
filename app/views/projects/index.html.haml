@@ -36,15 +36,17 @@
 
   -list_of_project_managers.each do |pm|
     .lead
-      =gravatar_image_tag pm.email
+      .avatar
+        =gravatar_image_tag pm.email
       = pm.fio
 
     %blockquote
 
       -pm.projects.each do |project|
-        .project_alone
-          %i.icon-leaf
-          = link_to project.name, project
+        - if project.project_manager && project.is_department == false
+          .project_alone
+            %i.icon-leaf
+            = link_to project.name, project
 
 
 
@@ -53,9 +55,9 @@
 
   - @projects.without_departments.each do |project|
     - if project.project_manager.nil?
-      %i.icon-leaf
-      = link_to project.name, project
-      %hr
+      .project_alone
+        %i.icon-leaf
+        = link_to project.name, project
 
 .lead
   Departments
