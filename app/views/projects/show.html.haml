@@ -18,10 +18,10 @@
   .pull-right
     .span7
       =link_to users_list_path(@project) do |u|
-        .badge
-          Users [
-          = @project.users.count
-          ]
+        %nobr
+          .badge
+            %i.icon-wrench
+            = @project.users.count
 .lead
   Tasks
 = form_for @task , :remote => true do |f|

@@ -38,6 +38,7 @@ GEM
     best_in_place (2.0.2)
       jquery-rails
       rails (~> 3.1)
+    bluecloth (2.2.0)
     bootstrap-datepicker-rails (0.6.32)
       railties (>= 3.0)
     bootstrapped (2.0.4)
@@ -202,6 +203,7 @@ DEPENDENCIES
   acts_as_commentable (= 3.0.1)
   acts_as_paranoid (~> 0.4.0)
   best_in_place
+  bluecloth
   bootstrap-datepicker-rails
   bootstrapped
   cancan

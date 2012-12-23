@@ -1,13 +1,17 @@
 .alone_comment
-  .avatar
-    = gravatar_image_tag(comment.user.email)
-  -if current_user.eql? comment.user
-    .pull-right
-      =link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
-        %i.icon-trash
-  =auto_link(comment.comment, :html => { :target => '_blank' })
-  .datetime
-    %small= distance_of_time_in_words_to_now(comment.created_at)
+  .row-fluid
+    .span1
+      .avatar
+        = gravatar_image_tag(comment.user.email)
+    .span11
+      -if current_user.eql? comment.user
+        .pull-right
+          =link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
+            %i.icon-trash
+      .datetime
+        %small= distance_of_time_in_words_to_now(comment.created_at)
+      :markdown
+        #{auto_link(comment.comment, :html => { :target => '_blank' })}
 
 -#- if c.comment.present?
 -#  .alone_comment

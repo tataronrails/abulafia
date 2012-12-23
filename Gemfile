@@ -18,7 +18,7 @@ gem "select2-rails"
 gem 'public_activity'
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem 'bootstrap-datepicker-rails'
-
+gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
 
