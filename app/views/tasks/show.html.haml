@@ -19,22 +19,32 @@
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
   .accept_task{:class => classes_to_add}
-    - if @task.accepted_to_start.present?
-      #accepted_time
-        %i.icon-ok
-        Accepted:
-        =distance_of_time_in_words_to_now(@task.accepted_to_start)
-    - else
-      #accept_me
-        - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
+    #accepted_time
+      -#если в задаче есть поле начал
+
+      - if @task.accepted_to_start.present?
+        - if current_user.eql? @task.assigned_to_user
           =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
             %i.icon-thumbs-up
             &nbsp;
-            Accept to start
+            Is work complete?
         - else
-          %span
-            %i.icon-warning-sign.red
-            Not accepted yet
+          %i.icon-ok
+          Accepted:
+          =distance_of_time_in_words_to_now(@task.accepted_to_start)
+
+
+      -#-else
+      -#  #accept_me
+      -#    - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
+      -#      =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+      -#        %i.icon-thumbs-up
+      -#        &nbsp;
+      -#        Accept to start
+      -#    - else
+      -#      %span
+      -#        %i.icon-warning-sign.red
+      -#        Not accepted yet
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
     =type_icon(@task.task_type) if @task.task_type

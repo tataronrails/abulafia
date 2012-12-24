@@ -86,7 +86,6 @@ labels_click_bind = () ->
 
 
 
-
     if status == 0
      $(this).parents(".accordion-group").find(".estimates").show()
      $(this).hide()
@@ -125,6 +124,34 @@ labels_click_bind = () ->
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
           }
       )
+
+    #pushed
+    if status == 3
+
+      task_id = $(this).parents(".accordion-group").data("taskid")
+      next_status =  parseInt(status, 10) + 1
+
+      $.ajax(
+        url: "/tasks/" + task_id + "/update_points"
+        type: "post",
+        data:
+          {'status': next_status, 'project_id': project_id}
+        headers:
+          {
+          'X-Transaction': 'POST Example',
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+          }
+      )
+
+    #testing
+    if status == 4
+      task_id = $(this).parents(".accordion-group").data("taskid")
+      hours = $(this).parents(".accordion-group").find(".hours_"+task_id)
+      console.log hours
+      hours.removeClass("h")
+      hours.find("input#hours_worked_on_task").focus()
+      $(this).hide()
+
 
 $(document).ajaxComplete (xhr, data, status) ->
 

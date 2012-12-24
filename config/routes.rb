@@ -13,6 +13,7 @@ EOffice::Application.routes.draw do
   end
 
   match "tasks/update_order" => "tasks#update_order"
+  get "story/:id" => "tasks#show", :as => "story_to_show"
 
 
   # resources :discussions, :has_many => :comments

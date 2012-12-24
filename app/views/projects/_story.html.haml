@@ -31,12 +31,21 @@
                       .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                         - if t.status == 0
                           %i.icon-time{:title => "Estimate"}
+                          Estimate
                         - if t.status == 2
                           %i.icon-check{:title => "Finished"}
+                          Finish
                         - if t.status == 3
                           %i.icon-github{:title => "Pushed"}
+                          Push
                         - if t.status == 1
                           %i.icon-play{:title => "Start"}
+                        - if t.status == 4
+                          %i.icon-share-alt{:title => "Testing"}
+                          Test
+                        - if t.status == 5
+                          %i.icon-play{:title => "Done"}
+                          Done
                   -else
                     .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
                       %i.icon-hand-left{:title => "Move to backlog"}
@@ -44,6 +53,12 @@
                   %span.estimates{:class =>"estimates_"+t.id.to_s}
                     -["0","1","2","3","5","8"].each do |a|
                       =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+
+                  %div.hours.h{:class =>"span3 pull-right hours_"+t.id.to_s, :style =>"border:0px solid red"}
+                    -#-form_tag task_update_points_path(t) do |f|
+                    -#  =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
+
+
               -unless ["icebox","backlog","my_work","current"].include?(place)
                 .pull-right.span1
                   -if place == "draft"
