@@ -2,7 +2,8 @@
   =content_for :right_column do |c|
     .lead
       Behavior
-    =@task.behavior
+    :markdown
+      #{@task.behavior}
 %ul.breadcrumb
   %li
     =link_to "Home", root_path
