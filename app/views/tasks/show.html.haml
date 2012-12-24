@@ -50,7 +50,9 @@
             =@task.tag_list
     - if @task.desc.present?
       .small
-        %small= @task.desc
+        %small
+          :markdown
+            #{@task.desc}
 
 
 
