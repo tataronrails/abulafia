@@ -25,28 +25,32 @@
         .actions
           = f.button 'Save', :class => "btn"
 
-
   -list_of_project_managers = []
 
   -#-@projects.without_departments.each do |project|
   -#  -list_of_project_managers << project.project_manager
 
   -list_of_project_managers = @projects.without_departments.map{|project| project.project_manager}
-  -list_of_project_managers.compact!.uniq!
+  -list_of_project_managers.compact!
+  -#= raise list_of_project_managers.to_json
+  -if list_of_project_managers.any?
+    -#= raise list_of_project_managers.compact!.to_json
+    -list_of_project_managers.uniq!
+    -#list_of_project_managers.compact!
 
-  -list_of_project_managers.each do |pm|
-    .lead
-      .avatar
-        =gravatar_image_tag pm.email
-      = pm.fio
+    -list_of_project_managers.each do |pm|
+      .lead
+        .avatar
+          =gravatar_image_tag pm.email
+        = pm.fio
 
-    %blockquote
+      %blockquote
 
-      -pm.projects.each do |project|
-        - if project.project_manager && project.is_department == false && project.project_manager == pm
-          .project_alone
-            %i.icon-leaf
-            = link_to project.name, project
+        -pm.projects.each do |project|
+          - if project.project_manager && project.is_department == false && project.project_manager == pm
+            .project_alone
+              %i.icon-leaf
+              = link_to project.name, project
 
   - @projects.without_departments.each do |project|
     - if project.project_manager.nil?

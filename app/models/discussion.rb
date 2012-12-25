@@ -11,7 +11,7 @@ class Discussion < ActiveRecord::Base
   acts_as_commentable
 
   include PublicActivity::Model
-  tracked
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   default_scope order('created_at DESC')
 

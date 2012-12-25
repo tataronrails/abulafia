@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-
   load_and_authorize_resource :task
 
   #skip_authorization_check
@@ -41,6 +40,9 @@ class TasksController < ApplicationController
     #params[:task].delete(:tagging_list)
 
     #raise params.to_json
+
+
+
 
 
     @task = Task.find(params[:id])

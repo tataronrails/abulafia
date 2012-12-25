@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :project_memberships
 
 
+  ACTIVITY_INTERVAL=10.minute
+
+
   def role_in_project project_id
     self.project_memberships.where(:project_id => project_id).first.role.text
   end
@@ -29,6 +32,11 @@ class User < ActiveRecord::Base
       self.login
     end
 
+  end
+
+  def is_online?
+    last_activity = PublicActivity::Activity.where(owner_id: self).order('created_at desc').first
+    last_activity.present? && (Time.now - last_activity.created_at) <  ACTIVITY_INTERVAL
   end
 
 
