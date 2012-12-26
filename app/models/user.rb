@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :project_memberships
 
 
-  ACTIVITY_INTERVAL=10.minute
+  ACTIVITY_INTERVAL=10.minutes
 
 
   def role_in_project project_id

@@ -1,1 +1,0 @@
-BOTCONFIG = YAML.load_file Rails.root.join('config','bot.yml')
