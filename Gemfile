@@ -37,6 +37,8 @@ gem 'cancan'
 gem 'enumerize'
 gem 'devise-russian'
 gem 'russian'
+
+gem 'xmpp4r'
  
 # Gems used only for assets and not required
 # in production environments by default.

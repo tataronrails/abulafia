@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
   acts_as_paranoid
   acts_as_commentable
 
-  tracked
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
 
 
   # define project.admins, project.members ... methods

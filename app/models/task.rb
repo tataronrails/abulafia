@@ -4,15 +4,17 @@ class Task < ActiveRecord::Base
   attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior, :project_id, :desc
 
   belongs_to :project
+
   after_create :assign_discussion
   before_create :parse_text_to_add_tags_and_type
+  after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
 
   has_one :discussion, :as => :discussable
 
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
 
   scope :not_finished, where("end > Time.now")
 
@@ -130,5 +132,13 @@ class Task < ActiveRecord::Base
     self.create_discussion!(:title => self.title)
     #
     make_simple_task
+  end
+
+  def notify_assigned_user
+    unless self.assigned_to_was == self.assigned_to
+      assigned_user = User.find(self.assigned_to)
+      jb = JabberBot.new( :user => assigned_user, :message =>  "new task assigned to you  #{self.title} in project #{self.project.name}")
+      jb.send_message
+    end
   end
 end
