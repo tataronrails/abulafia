@@ -13,13 +13,27 @@
 
 
 - if order.present?
+  - if place == "current_work" && order.count > 0
+    .accordion-group{:class => "toggle_done_tasks"}
+      .row-fluid
+        .span12
+          .span1{:style => "padding-left:3px;"}
+            %i.icon-tasks
+          .span10
+            %h4
+              Done
+              =Task.find(order).map(&:status).delete_if{|t| t != 6}.count
+              tasks
+              %i.icon-chevron-down
+
   -order.each do |o|
     -t = Task.find(o)
 
     - if t.title.present?
       -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
 
-      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => "#{selected_class} #{place}_class accordion_group_#{t.id}"}
+      - class_for_store = t.status == 6 ? "done_story" : ""
+      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => class_for_store+" #{selected_class} #{place}_class accordion_group_#{t.id}"}
         .row-fluid
           .span12
             .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px;"}
@@ -33,11 +47,12 @@
               -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
                 .pull-right
                   - if place != "icebox"
-                    .st
-                      s:=t.status
-                      |
-                      p:
-                      =t.place
+                    -#.st
+                    -#  s:
+                    -#  =t.status
+                    -#  |
+                    -#  p:
+                    -#  =t.place
                     - if t.status < 5
 
                       .span2
@@ -65,8 +80,8 @@
                           .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
                             %i.icon-question-sign{:title => "Accept or Reject?"}
                             =link_to_function "Accept", "window.accept_task(#{t.id})"
-                            |
-                            =link_to "Reject", "#"
+                            -#|
+                            -#=link_to "Reject", "#"
                       - else
                         .span2
                           .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
@@ -85,10 +100,10 @@
 
                   %div.hours.h{:class =>"span3 pull-right hours_"+t.id.to_s, :style =>"border:0px solid red"}
                     =form_tag task_update_hours_spend_on_task_path(t), :remote => true do |f|
-                      =number_field_tag :hours_worked_on_task, "1", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
+                      =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
 
 
-              -unless ["icebox","backlog","my_work","current"].include?(place)
+              -unless ["icebox","backlog","current_work"].include?(place)
                 .pull-right.span1
                   -if place == "draft"
                     =link_to(edit_task_path(t)) do |l|

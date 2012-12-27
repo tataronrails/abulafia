@@ -37,7 +37,7 @@ task_type_detection = () ->
 
   if end_val.length > 0
     $(".btn-group.other_toolbox button span#instruction_text").text(end_val)
-    console.log $(activate_me)
+#    console.log $(activate_me)
 
 
 

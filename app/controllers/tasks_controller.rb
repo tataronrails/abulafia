@@ -114,7 +114,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.js {
         if task.update_attributes(:place => 1)
-          render :js => "console.log(#{position_array}); window.update_icebox_in_us_page(#{project_id}); window.update_backlog_in_us_page(#{project_id},#{task_id});"
+          render :js => "window.update_icebox_in_us_page(#{project_id}); window.update_backlog_in_us_page(#{project_id},#{task_id});"
         end
       }
     end
@@ -145,7 +145,7 @@ class TasksController < ApplicationController
       format.js {
 
         if task.save!
-          render :js => "window.update_my_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
+          render :js => "window.update_current_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
         else
           render :js => "alert('error)"
         end
@@ -181,7 +181,7 @@ class TasksController < ApplicationController
             #render :partial => "projects/stories_all", :locals => {:project => project, :user => current_user, :task => task}
 
             #render :js => "#{task.valid?.to_json}"
-            render :js => "window.update_my_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
+            render :js => "window.update_current_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
           else
             render :js => "alert('error)"
           end

@@ -30,7 +30,8 @@ EOffice::Application.routes.draw do
     post 'invite_user'
     get 'update_icebox'
     get 'update_backlog'
-    get 'update_my_work'
+    #get 'update_my_work'
+    get 'update_current_work'
     get "user_stories", "user_stories"
     #resource 'users'
   end

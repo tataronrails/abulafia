@@ -41,6 +41,15 @@ class Project < ActiveRecord::Base
     pm
   end
 
+  #
+  #a[0] = "estimate"
+  #a[1] = "start"
+  #a[2] = "finish"
+  #a[3] = "pushed"
+  #a[4] = "testing"
+  #a[5] = "accept/reject"
+
+
 
   def urgent
     self.tasks.where(:task_type => "3").order("end")
@@ -50,9 +59,13 @@ class Project < ActiveRecord::Base
     self.tasks.where(:task_type => "5").order("created_at DESC")
   end
 
-  def my_work user
-    self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
+  def current_work
+    self.tasks.where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
   end
+  #
+  #def my_work user
+  #  self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
+  #end
 
   def icebox
     self.tasks.where(:place => 0)

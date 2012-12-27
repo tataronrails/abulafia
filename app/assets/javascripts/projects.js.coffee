@@ -3,20 +3,37 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
-window.accept_task = (task_id) ->
-  project_id = $('body').data('project_id')
 
-  $.ajax(
-    url: "/tasks/" + task_id + "/update_points"
-    type: "post",
-    data:
-      {'status': 6, 'project_id': project_id}
-    headers:
-      {
-      'X-Transaction': 'POST Example',
-      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-      }
-  )
+hide_done_stories = () ->
+  done_stories = $(".done_story").length
+
+
+  if done_stories > 0
+    $(".done_story").slideUp("slow")
+
+  $(".toggle_done_tasks").click () ->
+    $(".done_story").slideToggle("slow")
+
+
+
+
+window.accept_task = (task_id) ->
+  c = confirm("Sure?")
+  if c
+    project_id = $('body').data('project_id')
+
+    $.ajax(
+      url: "/tasks/" + task_id + "/update_points"
+      type: "post",
+      data:
+        {'status': 6, 'project_id': project_id}
+      headers:
+        {
+        'X-Transaction': 'POST Example',
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+        }
+    )
+#  hide_done_stories()
 
 
 
@@ -30,10 +47,11 @@ update_column_in_us_page = (proj_id, column_name, task_id) ->
       { 'task_id': task_id}
     success: (data) ->
       column_element = $("." + column_name + "_column")
-      console.log column_element
+#      console.log column_element
       column_element.fadeTo("fast", ".6",-> column_element.html(data)).fadeTo("fast", "1")
-      ;
+
   )
+
 
 
 window.update_icebox_in_us_page = (proj_id) ->
@@ -45,8 +63,13 @@ window.update_backlog_in_us_page = (proj_id, task_id) ->
 
   $(".accordion-group").sortable()
 
+
+
 window.update_my_work_in_us_page = (proj_id) ->
   update_column_in_us_page(proj_id, "my_work")
+
+window.update_current_work_in_us_page = (proj_id) ->
+  update_column_in_us_page(proj_id, "current_work")
 
 
 window.update_estimates = (id_of_task, data) ->
@@ -157,7 +180,7 @@ labels_click_bind = () ->
           }
       )
 
-    console.log(hours_worked_on_task) if hours_worked_on_task
+#    console.log(hours_worked_on_task) if hours_worked_on_task
 
     #testing
     if status == 4
@@ -167,7 +190,7 @@ labels_click_bind = () ->
 
       task_id = $(this).parents(".accordion-group").data("taskid")
       hours = $(this).parents(".accordion-group").find(".hours_" + task_id)
-      console.log hours
+#      console.log hours
       hours.removeClass("h")
       hours.find("input#hours_worked_on_task").focus()
       $(this).hide()
@@ -186,6 +209,7 @@ focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
 
 $ ->
+#  hide_done_stories()
   delete_story()
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()
@@ -244,9 +268,10 @@ $ ->
       project_id = $("body").data("project_id")
 
       switch column_and_place
-      #        when 'icebox' then update_icebox_in_us_page(project_id)
+        when 'icebox' then update_icebox_in_us_page(project_id)
         when 'backlog' then update_backlog_in_us_page(project_id)
-        when 'my_work' then update_my_work_in_us_page(project_id)
+#        when 'my_work' then update_my_work_in_us_page(project_id)
+        when 'current_work' then update_current_work_in_us_page(project_id)
 
 
   $(".estimate_me_class select").change ->
