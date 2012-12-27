@@ -143,14 +143,23 @@ labels_click_bind = () ->
           }
       )
 
+    console.log(hours_worked_on_task) if hours_worked_on_task
+
     #testing
     if status == 4
+
+      task_id = $(this).parents(".accordion-group").data("taskid")
+      next_status =  parseInt(status, 10) + 1
+
       task_id = $(this).parents(".accordion-group").data("taskid")
       hours = $(this).parents(".accordion-group").find(".hours_"+task_id)
       console.log hours
       hours.removeClass("h")
       hours.find("input#hours_worked_on_task").focus()
       $(this).hide()
+
+
+
 
 
 $(document).ajaxComplete (xhr, data, status) ->

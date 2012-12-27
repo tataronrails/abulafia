@@ -123,14 +123,12 @@ class TasksController < ApplicationController
 
 
   def update_points
-    raise params.to_json
-
+    hours_worked_on_task = params[:hours_worked_on_task]
     points = params[:points]
     task_id = params[:task_id]
 
     task = Task.find(task_id)
 
-    #tasks = task.project.tasks
     project = task.project
 
 
@@ -145,9 +143,16 @@ class TasksController < ApplicationController
             task.assigned_to = current_user.id #if any user pressed START, then task will assign to this user
           end
 
+          #if params[:hours_worked_on_task]
+          #  task.hours_worked_on_task = hours_worked_on_task.to_i
+          #end
+
+          #raise task.valid?.to_json
 
           if task.save!
             #render :partial => "projects/stories_all", :locals => {:project => project, :user => current_user, :task => task}
+
+            #render :js => "#{task.valid?.to_json}"
             render :js => "window.update_my_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
           else
             render :js => "alert('error)"
@@ -158,13 +163,13 @@ class TasksController < ApplicationController
             render :nothing => true
             #render :partial => "projects/stories_all", :locals => {:project => project, :user => current_user, :task => task}
           else
-
             render :js => "alert('error)"
           end
         end
       }
     end
   end
+
   #
   #def add_new_comment
   #
