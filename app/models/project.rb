@@ -55,11 +55,12 @@ class Project < ActiveRecord::Base
   end
 
   def icebox
-    self.tasks.where(:place => 0).where("task_type != 5").where("task_type != 3")
+    self.tasks.where(:place => 0)
+    #.where("task_type != 5").where("task_type != 3")
   end
 
   def backlog
-    self.tasks.where(:place => 1).where("task_type !=5").where("task_type !=3")
+    self.tasks.where("place = 1 AND task_type !=5 AND task_type !=3 AND task_type !=6")
   end
 
 end

@@ -42,9 +42,6 @@ class TasksController < ApplicationController
     #raise params.to_json
 
 
-
-
-
     @task = Task.find(params[:id])
 
     respond_to do |format|
@@ -124,8 +121,40 @@ class TasksController < ApplicationController
   end
 
 
-  def update_points
+  def update_hours_spend_on_task
     hours_worked_on_task = params[:hours_worked_on_task]
+    task_id = params[:task_id]
+
+
+    task = Task.find(task_id)
+    project = task.project
+
+    task.hours_worked_on_task = hours_worked_on_task.to_i
+    task.status = 5
+
+    column_order_before = ColumnOrder.where(:project_id => project.id, :place_id => 1).first
+    column_order = column_order_before.position_array.split(",")
+    column_order.delete(task_id)
+
+    column_order2 = column_order.join(",")
+
+    column_order_before.update_attribute(:position_array, column_order2)
+
+
+    respond_to do |format|
+      format.js {
+
+        if task.save!
+          render :js => "window.update_my_work_in_us_page(#{project.id}); window.update_backlog_in_us_page(#{project.id});"
+        else
+          render :js => "alert('error)"
+        end
+      }
+    end
+  end
+
+
+  def update_points
     points = params[:points]
     task_id = params[:task_id]
 
@@ -145,9 +174,6 @@ class TasksController < ApplicationController
             task.assigned_to = current_user.id #if any user pressed START, then task will assign to this user
           end
 
-          #if params[:hours_worked_on_task]
-          #  task.hours_worked_on_task = hours_worked_on_task.to_i
-          #end
 
           #raise task.valid?.to_json
 

@@ -6,6 +6,8 @@ module ProjectsHelper
     a[2] = "label-info"
     a[3] = "label-inverse"
     a[4] = "label-important"
+    a[5] = "label-info"
+    a[6] = "label"
 
     a[status]
   end

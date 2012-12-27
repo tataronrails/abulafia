@@ -41,8 +41,8 @@ class Task < ActiveRecord::Base
     a[2] = "finish"
     a[3] = "pushed"
     a[4] = "testing"
-    a[5] = "reject"
-    a[5] = "accept"
+    a[5] = "accept/reject"
+    #a[5] = "accept"
 
     a[self.status]
   end

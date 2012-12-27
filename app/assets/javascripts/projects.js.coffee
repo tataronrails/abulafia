@@ -3,6 +3,22 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+window.accept_task = (task_id) ->
+  project_id = $('body').data('project_id')
+
+  $.ajax(
+    url: "/tasks/" + task_id + "/update_points"
+    type: "post",
+    data:
+      {'status': 6, 'project_id': project_id}
+    headers:
+      {
+      'X-Transaction': 'POST Example',
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+      }
+  )
+
+
 
 #make_visible_2_backlog_button = (e) ->
 #  $(".icebox_column .accordion-group").hover (=> console.log e), (=> console.log 2)
@@ -45,7 +61,7 @@ delete_story = () ->
   $('.accordion-group i.icon-trash').live "click", () ->
     c = confirm("Sure?")
     if c
-        $(this).parents(".accordion-group").slideUp("slow")
+      $(this).parents(".accordion-group").slideUp("slow")
 
 window.open_task_modal = (title_of_task) ->
   $('#task_modal').modal('show')
@@ -85,11 +101,9 @@ labels_click_bind = () ->
       )
 
 
-
     if status == 0
-     $(this).parents(".accordion-group").find(".estimates").show()
-     $(this).hide()
-
+      $(this).parents(".accordion-group").find(".estimates").show()
+      $(this).hide()
 
 
     if status == 1
@@ -152,25 +166,21 @@ labels_click_bind = () ->
       next_status =  parseInt(status, 10) + 1
 
       task_id = $(this).parents(".accordion-group").data("taskid")
-      hours = $(this).parents(".accordion-group").find(".hours_"+task_id)
+      hours = $(this).parents(".accordion-group").find(".hours_" + task_id)
       console.log hours
       hours.removeClass("h")
       hours.find("input#hours_worked_on_task").focus()
       $(this).hide()
 
 
-
-
-
 $(document).ajaxComplete (xhr, data, status) ->
-
   unless status.type == "DELETE"
 
-      $(".users_stories").effect("fade", "fast")
-      if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
-        $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
-        $("#task_title, #task_assigned_to").val("")
-        $("#task_title").focus()
+    $(".users_stories").effect("fade", "fast")
+    if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
+      $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
+      $("#task_title, #task_assigned_to").val("")
+      $("#task_title").focus()
 
 focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
