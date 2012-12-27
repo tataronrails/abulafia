@@ -1,8 +1,6 @@
 class TasksController < ApplicationController
   load_and_authorize_resource :task
 
-  #skip_authorization_check
-
   def accept_to_start
     task = Task.find(params[:task_id])
     if task.update_attribute(:accepted_to_start, Time.now)
@@ -25,8 +23,6 @@ class TasksController < ApplicationController
     @project = @task.project
 
     respond_to do |format|
-      #format.html { redirect_to projects_url }
-      #format.json { head :no_content }
       format.js {
         render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
       }
@@ -35,13 +31,6 @@ class TasksController < ApplicationController
 
 
   def update
-    #raise params.to_json
-
-    #params[:task].delete(:tagging_list)
-
-    #raise params.to_json
-
-
     @task = Task.find(params[:id])
 
     respond_to do |format|
@@ -66,7 +55,6 @@ class TasksController < ApplicationController
 
     order = ColumnOrder.find_or_initialize_by_project_id(project.id)
     order.position_array = position_array
-
     task = project.backlog.first
 
 
@@ -77,8 +65,6 @@ class TasksController < ApplicationController
         }
       end
     end
-
-
   end
 
   def to_backlog
@@ -86,15 +72,11 @@ class TasksController < ApplicationController
     task = Task.find(task_id)
     project_id = task.project.id
 
-
     if ColumnOrder.where(:project_id => project_id).present?
       position_array_1 = ColumnOrder.where(:project_id => project_id).first.position_array
       position_array = [position_array_1].unshift(task_id).join(",")
 
     else
-      #position_array_1 = Project.find(project_id).backlog.map(&:id)
-      #position_array_1.delete(task_id)
-      #position_array = position_array_1.unshift(task_id).join(",")
       array_position = []
       array_position[0] = task_id.to_i
       position_array = array_position[0]
@@ -107,9 +89,6 @@ class TasksController < ApplicationController
     order.project_id = project_id
 
     order.save!
-
-    #raise order.position_array.to_json
-
 
     respond_to do |format|
       format.js {
