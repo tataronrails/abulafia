@@ -7,5 +7,5 @@
       =link_to "Projects", projects_path
       %span.divider /
 .row-fluid
-  -for activity in @activities.first(40)
+  -for activity in @activities.first(100)
     =render_activity(activity)
