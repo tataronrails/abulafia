@@ -46,13 +46,16 @@
             .span11
               -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
                 .pull-right
+                  .st
+                    s:
+                    =t.status
+                    |
+                    p:
+                    =t.place
+                    tt:
+                    =t.task_type
                   - if place != "icebox"
-                    -#.st
-                    -#  s:
-                    -#  =t.status
-                    -#  |
-                    -#  p:
-                    -#  =t.place
+
                     - if t.status < 5
 
                       .span2

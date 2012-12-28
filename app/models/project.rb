@@ -68,7 +68,7 @@ class Project < ActiveRecord::Base
   #end
 
   def icebox
-    self.tasks.where(:place => 0)
+    self.tasks.where(:place => 0).where("task_type != 5")
     #.where("task_type != 5").where("task_type != 3")
   end
 
