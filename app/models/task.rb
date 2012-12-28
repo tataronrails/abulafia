@@ -124,7 +124,6 @@ class Task < ActiveRecord::Base
 
 
   def make_simple_task
-
     self.update_attributes(:task_type => "5") unless self.task_type.present?
   end
 
@@ -139,9 +138,9 @@ class Task < ActiveRecord::Base
       assigned_user = User.find(self.assigned_to)
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
-      jb.send_message
+      jb.delay.send_message
     end
   end
-  handle_asynchronously :notify_assigned_user
+  #handle_asynchronously :notify_assigned_user
 
 end
