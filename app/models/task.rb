@@ -137,8 +137,11 @@ class Task < ActiveRecord::Base
   def notify_assigned_user
     unless self.assigned_to_was == self.assigned_to
       assigned_user = User.find(self.assigned_to)
-      jb = JabberBot.new( :user => assigned_user, :message =>  "new task assigned to you:  \"#{self.title}\" in project \"#{self.project.name}\" http://abulafia.ru/tasks/#{self.id}")
+      jb = JabberBot.new(:user => assigned_user)
+      jb.message_for_task(self)
       jb.send_message
     end
   end
+  handle_asynchronously :notify_assigned_user
+
 end

@@ -39,6 +39,7 @@ gem 'devise-russian'
 gem 'russian'
 
 gem 'xmpp4r'
+gem 'delayed_job_active_record'
  
 # Gems used only for assets and not required
 # in production environments by default.
