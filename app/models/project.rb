@@ -82,7 +82,7 @@ class Project < ActiveRecord::Base
   end
 
   def backlog
-    self.tasks.where("place = 1 AND task_type !=5 AND task_type !=3 AND task_type !=6")
+    self.tasks.where(:place => 1).where("task_type NOT IN (5,3)")
   end
 
 end
