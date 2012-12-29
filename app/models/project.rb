@@ -41,7 +41,7 @@ class Project < ActiveRecord::Base
     pm
   end
 
-  #
+  # status_via_words
   #a[0] = "estimate"
   #a[1] = "start"
   #a[2] = "finish"
@@ -49,7 +49,7 @@ class Project < ActiveRecord::Base
   #a[4] = "testing"
   #a[5] = "accept/reject"
 
-  #
+  #type_via_words
   #a = []
   #a[0] = "feature"
   #a[1] = "bug"
@@ -82,7 +82,7 @@ class Project < ActiveRecord::Base
   end
 
   def backlog
-    self.tasks.where(:place => 1).where("task_type NOT IN (5,3)")
+    self.tasks.where(:place => 1).where("task_type NOT IN (5,3,4,6)")
   end
 
 end
