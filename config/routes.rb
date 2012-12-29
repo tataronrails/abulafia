@@ -9,6 +9,7 @@ EOffice::Application.routes.draw do
     post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
     post "update_points" => "tasks#update_points", :as => "update_points"
     post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
+    post "finish_work" => "tasks#finish_work", :as => "finish_work"
 
     #post "update_order" => "tasks#update_order", :as => "update_order"
   end

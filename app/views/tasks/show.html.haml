@@ -13,38 +13,42 @@
     %span.divider /
   %li
     =link_to "User stories", project_user_stories_path(@task.project)
+
 .bs-docs-example.shadow
   - classes_to_add = ""
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
-  .accept_task{:class => classes_to_add}
-    #accepted_time
-      -#если в задаче есть поле начал
 
-      - if @task.accepted_to_start.present?
-        - if current_user.eql? @task.assigned_to_user
-          =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
-            %i.icon-thumbs-up
-            &nbsp;
-            Is work complete?
-        - else
-          %i.icon-ok
-          Accepted:
-          =distance_of_time_in_words_to_now(@task.accepted_to_start)
+  -#if not done and not user story
+  -unless [0,1,2].include?(@task.task_type.to_i)
+    - unless @task.finished_at.present?
+      .accept_task{:class => classes_to_add}
+        #accepted_time
+          -#если в задаче есть поле начал
+          - if @task.accepted_to_start.present?
+            - if current_user.eql? @task.assigned_to_user
+              =link_to task_finish_work_path(@task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
+                %i.icon-question-sign
+                &nbsp;
+                Is work complete?
+            - else
+              %i.icon-ok
+              Accepted:
+              =distance_of_time_in_words_to_now(@task.accepted_to_start)
 
+          -else
+            #accept_me
+              - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
+                =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+                  %i.icon-thumbs-up
+                  &nbsp;
+                  Accept to start
+              - else
+                %span
+                  %i.icon-warning-sign.red
+                  Not accepted yet
 
-      -#-else
-      -#  #accept_me
-      -#    - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
-      -#      =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
-      -#        %i.icon-thumbs-up
-      -#        &nbsp;
-      -#        Accept to start
-      -#    - else
-      -#      %span
-      -#        %i.icon-warning-sign.red
-      -#        Not accepted yet
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
     =type_icon(@task.task_type) if @task.task_type
@@ -59,14 +63,24 @@
           %i.icon-tags
           %small
             =@task.tag_list
+    .clear
     - if @task.desc.present?
       .small
         %small
           :markdown
             #{@task.desc}
-
-
-
+    - if @task.accepted_to_start
+      %small
+        -if @task.accepted_to_start
+          %i.icon-thumbs-up
+          %em
+            Accepted to start:
+            =distance_of_time_in_words_to_now @task.accepted_to_start
+        - if @task.finished_at
+          .done
+            %i.icon-thumbs-up
+            Done at:
+            =distance_of_time_in_words_to_now @task.finished_at
 .row-fluid
   .lead Discussion:
   =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|

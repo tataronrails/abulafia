@@ -14,7 +14,22 @@ class TasksController < ApplicationController
     else
       flash[:notice] = "Error"
     end
+  end
 
+  def finish_work
+    task = Task.find(params[:task_id])
+    if task.update_attribute(:finished_at, Time.now)
+      flash[:notice] = "Finished"
+      respond_to do |format|
+
+        format.js {
+          render :text => "Done!"
+        }
+      end
+
+    else
+      flash[:notice] = "Error"
+    end
   end
 
   def destroy

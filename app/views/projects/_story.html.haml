@@ -114,21 +114,25 @@
                   =link_to(task_path(t), :method => "delete", :remote => true) do |l|
                     %i.icon-trash
               .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
-                =link_to t.title, task_path(t)
+                -if t.finished_at.nil?
+                  =link_to t.title, task_path(t)
 
-                - if t.discussion && t.discussion.comments.present?
-                  %i.icon-comment-alt.light-gray
-                .row-fluid
-                  %small
-                    =t.assigned_to_initials
-                    -if t.end.present?
-                      |
-                      %span
-                        =distance_of_time_in_words_to_now (t.end)
-                    - if place == "urgent"
-                      - unless t.accepted_to_start.present?
+                  - if t.discussion && t.discussion.comments.present?
+                    %i.icon-comment-alt.light-gray
+                  .row-fluid
+                    %small
+                      =t.assigned_to_initials
+                      -if t.end.present?
                         |
-                        %i.icon-warning-sign.red
-                        not accepted
-                        ,
-                        %i.icon-envelope{:title => "remind via hipchat"}
+                        %span
+                          =distance_of_time_in_words_to_now (t.end)
+                      - if place == "urgent"
+                        - unless t.accepted_to_start.present?
+                          |
+                          %i.icon-warning-sign.red
+                          not accepted
+                          ,
+                          %i.icon-envelope{:title => "remind via hipchat"}
+                -else
+                  .done_title= link_to t.title, task_path(t)
+

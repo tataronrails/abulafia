@@ -2,27 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
-.done_story{
+.done_story {
   background: url(/assets/diagonal_waves.png);
 }
 
-
-.toggle_done_tasks{
+.toggle_done_tasks {
   cursor: pointer;
 }
 
-
-
-.accordion-group .estimates_label a{
-  color:white !important;
+.done_title {
+  text-decoration:line-through !important
 }
 
-.accordion-group{
-  padding-top:4px;
+.accordion-group .estimates_label a {
+  color: white !important;
 }
 
+.accordion-group {
+  padding-top: 4px;
+}
 
 .draft_class, .urgent_class {
   background-color: transparent !important;
@@ -30,16 +28,16 @@
   border-bottom: 1px solid #ccc;
 }
 
-
-#task_title{
+#task_title {
   color: #83AF9B !important;
 }
 
-.body_home{
-  padding-top:80px;
+.body_home {
+  padding-top: 80px;
 }
-.body{
-  padding-top:20px;
+
+.body {
+  padding-top: 20px;
 }
 
 .users_stories .breadcrumb img {
@@ -62,10 +60,10 @@
 
 .estimates {
   display: none;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
-.estimates_label{
+.estimates_label {
   font-family: arial !important;
   font-weight: normal;
 }
