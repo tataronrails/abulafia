@@ -1,6 +1,6 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
-#require 'capistrano/ext/multistage'
+require 'capistrano/ext/multistage'
 #require "whenever/capistrano"
 #require 'hipchat/capistrano'
 require "delayed/recipes"

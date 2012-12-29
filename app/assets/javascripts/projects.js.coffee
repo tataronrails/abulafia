@@ -3,20 +3,29 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+filter_task_types = () ->
+  $(".list_of_vis_links .btn-group a").click ->
+    $(this).toggleClass("active")
+
+    ttype = $(this).attr("id")
+
+    switch ttype
+      when "feature" then $(".accordion-group .icon-star-empty").parents(".accordion-group").slideToggle()
+      when "bug" then $(".accordion-group .icon-bolt").parents(".accordion-group").slideToggle()
+      when "chore" then $(".accordion-group .icon-cogs").parents(".accordion-group").slideToggle()
+      when "story" then $(".accordion-group .icon-star-half").parents(".accordion-group").slideToggle()
+
+
+
 
 hide_done_stories = () ->
   $(".toggle_done_tasks").live "click", () ->
     console.log $(".done_story:hidden").length
 
     if $(".done_story:hidden").length > 0
-      $(".done_story").slideDown("slow")
+      $(".done_story").slideDown("fast")
     else
-      $(".done_story").slideUp("slow")
-
-
-#    $(".done_story").slideToggle("slow")
-
-
+      $(".done_story").slideUp("fast")
 
 
 window.accept_task = (task_id) ->
@@ -211,6 +220,7 @@ focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
 
 $ ->
+  filter_task_types()
   hide_done_stories()
   delete_story()
   focus_on_ready_on_create_task()

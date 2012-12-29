@@ -11,7 +11,7 @@
     = stylesheet_link_tag "application", :media => "all"
     :css
       body {
-        padding-top: 20px;
+        padding-top: 30px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -34,43 +34,26 @@
   - papers << "debut_light.png"
   -#%body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/#{papers.sample})"}
   %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/012-subtle-light-patterns.jpg)"}
-    -#.navbar.navbar-fixed-top
-    -#  .navbar-inner
-    -#    .container-fluid
-    -#      %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
-    -#        %span.icon-bar
-    -#        %span.icon-bar
-    -#        %span.icon-bar
-    -#      =link_to "Abulafia", root_path, :class => "brand"
-    -#      .nav-collapse.collapse.navbar-responsive-collapse
-    -#        %ul.nav
-    -#          %li= link_to "Home", root_path
-    -#          - if controller.controller_name == "projects"
-    -#            %li.active
-    -#              = link_to t( :projects), projects_path
-    -#          - else
-    -#            %li
-    -#              = link_to t( :projects), projects_path
-    -#          %li= link_to "About", "#about"
-    -#          %li= link_to "Contact", "#contact"
-    -#        %p.navbar-text.pull-right
-    -#          - if user_signed_in?
-    -#            Logged in as
-    -#            = link_to current_user.email, "#"
-    -#            |
-    -#            = link_to "Sign out", destroy_user_session_path
-    -#          - else
-    -#            = link_to "Sign in", new_user_session_path
+    .navbar-fixed-top{:style => "padding: 10px;"}
+      .row-fluid
+        .span3.pull-right
+          .list_of_vis_links{:style => "text-align:right"}
+            Filter:
+            .btn-group
+              =link_to "#", :class => "btn active", :id =>"feature" do
+                %i.icon-star-empty.orange
+              =link_to "#", :class => "btn active", :id => "bug" do
+                %i.icon-bolt.red
+              =link_to "#", :class => "btn active", :id => "chore" do
+                %i.icon-cogs
+              =link_to "#", :class => "btn active", :id => "story" do
+                %i.icon-star-half
+
     .container-fluid
       .row-fluid
         - if flash[:alert] || flash[:notice]
           = gflash
         = content_tag :h1, yield(:title) if show_title
         = yield
-
-
-      -#%footer.navbar-fixed-bottom
-      -#  = app_name
-      -#  Copyright &copy;  2012. All Rights Reserved.
 
     = javascript_include_tag "application", controller_name
