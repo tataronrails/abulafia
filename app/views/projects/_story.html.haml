@@ -27,112 +27,113 @@
               %i.icon-chevron-down
 
   -order.each do |o|
-    -t = Task.find(o)
+    - if Task.find(o)
+      -t = Task.find(o)
 
-    - if t.title.present?
-      -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
+      - if t.title.present?
+        -(updated_task.present? && updated_task.to_i == t.id) ? selected_class = "selected_task" : "nil"
 
-      - class_for_store = t.status == 6 ? "done_story" : ""
-      .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => class_for_store+" #{selected_class} #{place}_class accordion_group_#{t.id}"}
-        .row-fluid
-          .span12
-            .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px;"}
-              =type_icon t.task_type
-              - if t.estimate.present?
-                - estimate_of_task =  t.estimate
-              - else
-                - estimate_of_task = 0
+        - class_for_store = t.status == 6 ? "done_story" : ""
+        .accordion-group{:id => t.id, :data => {:taskid => t.id}, :class => class_for_store+" #{selected_class} #{place}_class accordion_group_#{t.id}"}
+          .row-fluid
+            .span12
+              .span1{:id => "image_of_estimates_vertical_#{t.id.to_s}", :style => "padding-left:3px;"}
+                =type_icon t.task_type
+                - if t.estimate.present?
+                  - estimate_of_task =  t.estimate
+                - else
+                  - estimate_of_task = 0
 
-            .span11
-              -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
-                .pull-right
-                  .st
-                    s:
-                    =t.status
-                    |
-                    p:
-                    =t.place
-                    tt:
-                    =t.task_type
-                  - if place != "icebox"
+              .span11
+                -unless (controller_name = "projects" && action_name == "show") || (controller_name = "tasks" && action_name == "create")|| (controller_name = "tasks" && action_name == "destroy")
+                  .pull-right
+                    -#.st
+                    -#  s:
+                    -#  =t.status
+                    -#  |
+                    -#  p:
+                    -#  =t.place
+                    -#  tt:
+                    -#  =t.task_type
+                    - if place != "icebox"
 
-                    - if t.status < 5
+                      - if t.status < 5
 
-                      .span2
-                        .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                          - if t.status == 0
-                            %i.icon-time{:title => "Estimate"}
-                            Estimate
-                          - if t.status == 2
-                            %i.icon-check{:title => "Finished"}
-                            Finish
-                          - if t.status == 3
-                            %i.icon-github{:title => "Pushed"}
-                            Push
-                          - if t.status == 1
-                            %i.icon-play{:title => "Start"}
-                          - if t.status == 4
-                            %i.icon-share-alt{:title => "Testing"}
-                            Test
-                          -#- if t.status == 6
-                          -#  %i.icon-question-sign{:title => "Accept or Reject?"}
-                          -#  AcceptReject
+                        .span2
+                          .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                            - if t.status == 0
+                              %i.icon-time{:title => "Estimate"}
+                              Estimate
+                            - if t.status == 2
+                              %i.icon-check{:title => "Finished"}
+                              Finish
+                            - if t.status == 3
+                              %i.icon-github{:title => "Pushed"}
+                              Push
+                            - if t.status == 1
+                              %i.icon-play{:title => "Start"}
+                            - if t.status == 4
+                              %i.icon-share-alt{:title => "Testing"}
+                              Test
+                            -#- if t.status == 6
+                            -#  %i.icon-question-sign{:title => "Accept or Reject?"}
+                            -#  AcceptReject
+                      -else
+                        - if t.status == 5
+                          .span2
+                            .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                              %i.icon-question-sign{:title => "Accept or Reject?"}
+                              =link_to_function "Accept", "window.accept_task(#{t.id})"
+                              -#|
+                              -#=link_to "Reject", "#"
+                        - else
+                          .span2
+                            .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
+                              Done in
+                              =t.hours_worked_on_task
+                              h
+
+
                     -else
-                      - if t.status == 5
-                        .span2
-                          .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                            %i.icon-question-sign{:title => "Accept or Reject?"}
-                            =link_to_function "Accept", "window.accept_task(#{t.id})"
-                            -#|
-                            -#=link_to "Reject", "#"
-                      - else
-                        .span2
-                          .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(t.status), :data => {:status => t.status}}
-                            Done in
-                            =t.hours_worked_on_task
-                            h
+                      .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
+                        %i.icon-hand-left{:title => "Move to backlog"}
+
+                    %span.estimates{:class =>"estimates_"+t.id.to_s}
+                      -["0","1","2","3","5","8"].each do |a|
+                        =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
+
+                    %div.hours.h{:class =>"span3 pull-right hours_"+t.id.to_s, :style =>"border:0px solid red"}
+                      =form_tag task_update_hours_spend_on_task_path(t), :remote => true do |f|
+                        =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
 
 
-                  -else
-                    .label.estimates_label{:id => "estimates_label_"+t.id.to_s, :class => label_color(0), :data => {:status => 'to_backlog'}}
-                      %i.icon-hand-left{:title => "Move to backlog"}
+                -unless ["icebox","backlog","current_work"].include?(place)
+                  .pull-right.span1
+                    -if place == "draft"
+                      =link_to(edit_task_path(t)) do |l|
+                        %i.icon-edit
+                    =link_to(task_path(t), :method => "delete", :remote => true) do |l|
+                      %i.icon-trash
+                .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
+                  -if t.finished_at.nil?
+                    =link_to t.title, task_path(t)
 
-                  %span.estimates{:class =>"estimates_"+t.id.to_s}
-                    -["0","1","2","3","5","8"].each do |a|
-                      =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
-
-                  %div.hours.h{:class =>"span3 pull-right hours_"+t.id.to_s, :style =>"border:0px solid red"}
-                    =form_tag task_update_hours_spend_on_task_path(t), :remote => true do |f|
-                      =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
-
-
-              -unless ["icebox","backlog","current_work"].include?(place)
-                .pull-right.span1
-                  -if place == "draft"
-                    =link_to(edit_task_path(t)) do |l|
-                      %i.icon-edit
-                  =link_to(task_path(t), :method => "delete", :remote => true) do |l|
-                    %i.icon-trash
-              .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
-                -if t.finished_at.nil?
-                  =link_to t.title, task_path(t)
-
-                  - if t.discussion && t.discussion.comments.present?
-                    %i.icon-comment-alt.light-gray
-                  .row-fluid
-                    %small
-                      =t.assigned_to_initials
-                      -if t.end.present?
-                        |
-                        %span
-                          =distance_of_time_in_words_to_now (t.end)
-                      - if place == "urgent"
-                        - unless t.accepted_to_start.present?
+                    - if t.discussion && t.discussion.comments.present?
+                      %i.icon-comment-alt.light-gray
+                    .row-fluid
+                      %small
+                        =t.assigned_to_initials
+                        -if t.end.present?
                           |
-                          %i.icon-warning-sign.red
-                          not accepted
-                          ,
-                          %i.icon-envelope{:title => "remind via hipchat"}
-                -else
-                  .done_title= link_to t.title, task_path(t)
+                          %span
+                            =distance_of_time_in_words_to_now (t.end)
+                        - if place == "urgent"
+                          - unless t.accepted_to_start.present?
+                            |
+                            %i.icon-warning-sign.red
+                            not accepted
+                            ,
+                            %i.icon-envelope{:title => "remind via hipchat"}
+                  -else
+                    .done_title= link_to t.title, task_path(t)
 
