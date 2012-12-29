@@ -11,6 +11,9 @@
 .lead
   %i.icon-edit
   Edit task
+  - if current_user == @task.owner
+    =link_to task_path(@task), :confirm => "Sure?", :method => "delete" do
+      %i.icon-trash
 
 = render 'form'
 

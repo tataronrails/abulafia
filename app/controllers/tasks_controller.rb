@@ -41,6 +41,9 @@ class TasksController < ApplicationController
       format.js {
         render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
       }
+      format.html{
+        redirect_to project_path(@project)
+      }
     end
   end
 
