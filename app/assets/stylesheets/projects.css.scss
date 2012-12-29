@@ -11,7 +11,11 @@
 }
 
 .done_title {
-  text-decoration:line-through !important
+  text-decoration:line-through !important;
+  color: #c5c5c5;
+  a{
+    color: #999 !important;
+  }
 }
 
 .accordion-group .estimates_label a {

@@ -50,13 +50,12 @@ class Project < ActiveRecord::Base
   #a[5] = "accept/reject"
 
 
-
   def urgent
     self.tasks.where(:task_type => "3").order("end")
   end
 
   def draft
-    self.tasks.where(:task_type => "5").order("created_at DESC")
+    self.tasks.where(:task_type => "5").order("finished_at").order("created_at DESC")
   end
 
   def current_work
