@@ -5,14 +5,16 @@
 
 
 hide_done_stories = () ->
-  done_stories = $(".done_story").length
+  $(".toggle_done_tasks").live "click", () ->
+    console.log $(".done_story:hidden").length
+
+    if $(".done_story:hidden").length > 0
+      $(".done_story").slideDown("slow")
+    else
+      $(".done_story").slideUp("slow")
 
 
-  if done_stories > 0
-    $(".done_story").slideUp("slow")
-
-  $(".toggle_done_tasks").click () ->
-    $(".done_story").slideToggle("slow")
+#    $(".done_story").slideToggle("slow")
 
 
 
@@ -209,7 +211,7 @@ focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
 
 $ ->
-#  hide_done_stories()
+  hide_done_stories()
   delete_story()
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()
