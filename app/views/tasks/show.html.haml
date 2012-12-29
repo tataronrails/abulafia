@@ -13,7 +13,14 @@
     %span.divider /
   %li
     =link_to "User stories", project_user_stories_path(@task.project)
-
+%small
+  Assigned by #{@task.owner.fio}
+  -if @task.estimate
+    .estimate
+      Estimate: #{@task.estimate} points
+  .worked
+    -if @task.hours_worked_on_task
+      Hours work on: #{@task.hours_worked_on_task} h
 .bs-docs-example.shadow
   - classes_to_add = ""
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
