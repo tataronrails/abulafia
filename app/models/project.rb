@@ -49,6 +49,16 @@ class Project < ActiveRecord::Base
   #a[4] = "testing"
   #a[5] = "accept/reject"
 
+  #
+  #a = []
+  #a[0] = "feature"
+  #a[1] = "bug"
+  #a[2] = "chore"
+  #a[3] = "instruction"
+  #a[4] = "self_task"
+  #a[5] = "easy_task"
+  #a[6] = "story"
+
 
   def urgent
     self.tasks.where(:task_type => "3").order("end")
@@ -67,7 +77,7 @@ class Project < ActiveRecord::Base
   #end
 
   def icebox
-    self.tasks.where(:place => 0).where("task_type != 5")
+    self.tasks.where(:place => 0).where("task_type IN (0,1,2,6)")
     #.where("task_type != 5").where("task_type != 3")
   end
 
