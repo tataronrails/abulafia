@@ -27,7 +27,7 @@
               %i.icon-chevron-down
 
   -order.each do |o|
-    - if Task..exists?(o)
+    - if Task.exists?(o)
       -t = Task.find(o)
 
       - if t.title.present?
