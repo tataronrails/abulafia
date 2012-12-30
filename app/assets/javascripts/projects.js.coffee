@@ -10,10 +10,10 @@ filter_task_types = () ->
     ttype = $(this).attr("id")
 
     switch ttype
-      when "feature" then $(".accordion-group .icon-star-empty").parents(".accordion-group").slideToggle()
-      when "bug" then $(".accordion-group .icon-bolt").parents(".accordion-group").slideToggle()
-      when "chore" then $(".accordion-group .icon-cogs").parents(".accordion-group").slideToggle()
-      when "story" then $(".accordion-group .icon-star-half").parents(".accordion-group").slideToggle()
+      when "feature" then $(".accordion-group .icon-star-empty").parents(".accordion-group").slideToggle("fast")
+      when "bug" then $(".accordion-group .icon-bolt").parents(".accordion-group").slideToggle("fast")
+      when "chore" then $(".accordion-group .icon-cogs").parents(".accordion-group").slideToggle("fast")
+      when "story" then $(".accordion-group .icon-star-half").parents(".accordion-group").slideToggle("fast")
 
 
 
