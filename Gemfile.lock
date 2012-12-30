@@ -215,6 +215,7 @@ DEPENDENCIES
   cancan
   capistrano
   coffee-rails (~> 3.2.1)
+  daemons
   delayed_job_active_record
   devise
   devise-russian
