@@ -12,33 +12,35 @@ class JabberBot
   end
 
   def send_message
-    login = KEYS['bot']['gmail'][0]
-    pass = KEYS['bot']['gmail'][1]
-    gtalk_bot = Jabber::Client::new(Jabber::JID::new(login))
-    gtalk_bot.connect
-    gtalk_bot.auth(pass)
+    if self.user.present?
+      login = KEYS['bot']['gmail'][0]
+      pass = KEYS['bot']['gmail'][1]
+      gtalk_bot = Jabber::Client::new(Jabber::JID::new(login))
+      gtalk_bot.connect
+      gtalk_bot.auth(pass)
 
-    login = KEYS['bot']['hipchat'][0]
-    pass = KEYS['bot']['hipchat'][1]
-    hipchat_bot = Jabber::Client::new(Jabber::JID::new(login))
-    hipchat_bot.connect
-    hipchat_bot.auth(pass)
+      login = KEYS['bot']['hipchat'][0]
+      pass = KEYS['bot']['hipchat'][1]
+      hipchat_bot = Jabber::Client::new(Jabber::JID::new(login))
+      hipchat_bot.connect
+      hipchat_bot.auth(pass)
 
-    self.user.each  do |u|
-      if u.hc_user_id.nil?
-        robot = gtalk_bot
-        adress = u.email
-      else
-        robot = hipchat_bot
-        adress ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
+      self.user.each  do |u|
+        if u.hc_user_id.nil?
+          robot = gtalk_bot
+          adress = u.email
+        else
+          robot = hipchat_bot
+          adress ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
+        end
+        message = Jabber::Message::new(adress, self.message)
+        message.set_type(:chat)
+        robot.send message
       end
-      message = Jabber::Message::new(adress, self.message)
-      message.set_type(:chat)
-      robot.send message
-    end
 
-    gtalk_bot.close!
-    hipchat_bot.close!
+      gtalk_bot.close
+      hipchat_bot.close
+    end
   end
 
 
