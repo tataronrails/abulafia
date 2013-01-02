@@ -28,13 +28,16 @@ class Comment < ActiveRecord::Base
   def notify
     if self.commentable.is_a? Discussion
       users_notify_discuss = self.commentable.notificable_users(self.user)
+      users_to_notify = []
       users_notify_discuss.each do |user_in_project|
         unless user_in_project.is_online?
-          jb = JabberBot.new(:user => user_in_project)
-          jb.message_for_comment(self)
-          jb.send_message
+          users_to_notify.push  user_in_project
+
         end
       end
+      jb = JabberBot.new(:user => users_to_notify)
+      jb.message_for_comment(self)
+      jb.send_message
     end
   end
   handle_asynchronously :notify
