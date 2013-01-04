@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :comments
 
 
-  ACTIVITY_INTERVAL=10.minutes
+  ACTIVITY_INTERVAL=0.minutes
 
 
   def role_in_project project_id

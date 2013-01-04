@@ -38,8 +38,9 @@ class Comment < ActiveRecord::Base
       jb = JabberBot.new(:user => users_to_notify)
       jb.message_for_comment(self)
       jb.send_message
+      #jb.delay.send_message
     end
   end
-  handle_asynchronously :notify
+  #handle_asynchronously :notify
 
 end
