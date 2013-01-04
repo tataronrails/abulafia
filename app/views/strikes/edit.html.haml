@@ -1,0 +1,14 @@
+%h4.green Edit strike
+=form_for @strike do |f|
+  =f.text_area :desc, :placeholder => "Skrike reason"
+  %p
+  =f.label "task id"
+  =f.number_field :task_id, :placeholder => "task id"
+  %br
+  =f.hidden_field :assigned_by, :placeholder => "by", :value => current_user.id
+  =f.label "Assigned_to:"
+  =f.collection_select :user_id, @users, :id, :fio
+  =f.label "when"
+  =f.text_field :date_of_assignment, :placeholder => "date", :value => Time.now.to_s(:db)
+  %br
+  =f.button :class => "btn btn-success", :html => {:type => "submit"}

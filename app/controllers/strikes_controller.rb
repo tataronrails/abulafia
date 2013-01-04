@@ -31,4 +31,25 @@ class StrikesController < ApplicationController
       }
     end
   end
+
+
+
+  def update
+    @strike = Strike.find(params[:id])
+
+    respond_to do |format|
+      if @strike.update_attributes(params[:strike])
+        format.html { redirect_to strikes_path, notice: 'Strike was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to strikes_path, notice: 'Strike was not updated.' }
+        format.json { render json: @strike.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def edit
+    @strike = Strike.find(params[:id])
+    @users = User.all
+  end
 end
