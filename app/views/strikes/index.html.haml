@@ -1,0 +1,39 @@
+
+%table.table.span12
+  %tr
+    %th
+      %i.icon-bell-alt
+    %th
+      To
+    %th
+      By
+    %th
+      Reason
+    %th
+      Task
+  -@strikes.each do |s|
+    %tr
+      %td.span1
+        -if s.active_or_not
+          %i.icon-bell-alt.orange
+        -else
+          %i.icon-bell-alt
+
+
+      %td.span4
+        -user = User.find(s.user_id)
+        .avatar20
+          =gravatar_image_tag user.email
+        .fio
+          =user.fio
+      %td.span3
+        =User.find(s.assigned_by).fio
+      %td.span3
+        =truncate s.desc
+      %td.span3
+        -if Task.exists?(s.task_id)
+          -@task = Task.find(s.task_id)
+          =link_to task_path(s.task_id)  do
+            =@task.title
+
+

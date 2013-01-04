@@ -217,7 +217,10 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
     @project_users = @task.project.users.map(&:login)
-    @assigned_to = User.find(@task.assigned_to).email if @task.assigned_to
+    assigned_to_user = User.find(@task.assigned_to)
+
+    @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
+    @strikes = Strike.where(:user_id => assigned_to_user.id, :task_id => @task.id).all
   end
 
   def create

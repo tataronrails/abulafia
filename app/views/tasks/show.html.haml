@@ -1,3 +1,5 @@
+
+
 - if @task.task_type == "0" &&  @task.behavior.present?
   =content_for :right_column do |c|
     .lead
@@ -6,6 +8,7 @@
       #{@task.behavior}
 %ul.breadcrumb
   %li
+    %i.icon-home
     =link_to "Home", root_path
     %span.divider /
   %li
@@ -21,6 +24,24 @@
   .worked
     -if @task.hours_worked_on_task
       Hours work on: #{@task.hours_worked_on_task} h
+
+  - if @strikes
+    %p
+      -@strikes.each do |s|
+        %h4
+          .red
+            %i.icon-bell-alt
+            =s.desc
+          %blockquote
+            %small
+              =distance_of_time_in_words_to_now s.created_at
+              ,
+              by:
+              =User.find(s.assigned_by).fio
+              - if s.active_or_not
+                %i.icon-eye-open.red
+              -else
+                %i.icon-eye-close
 .bs-docs-example.shadow
   - classes_to_add = ""
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""

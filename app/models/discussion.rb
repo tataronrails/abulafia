@@ -20,8 +20,6 @@ class Discussion < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-
-
   validates :title, :presence => true, :length => { :minimum => 5 }
 
   def notificable_users(ignored_user)

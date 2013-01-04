@@ -6,6 +6,14 @@
   %li
     =link_to "Contacts", contacts_list_path
 
+
+
+-#%i.icon-bell-alt.red
+-#-@user.strikes.each do |s|
+-#  =s.desc
+-#  ,
+-#  =distance_of_time_in_words_to_now s.created_at
+
 .row
   .span2
     =gravatar_image_tag(@user.email,  :class => 'img-rounded', :gravatar => { :size => 150 })
@@ -61,7 +69,27 @@
         %small
           =distance_of_time_in_words_to_now(@user.last_sign_in_at)
           ago
+  %tr
+    %td
+      Strikes
+    %td
+      -@user.strikes.count.times do
+        %i.icon-bell-alt.orange
+      =link_to "#" do
+        %i.icon-plus.green.toggle_create_strike
 
+
+.new_strike
+  %h4 Create strike
+  =form_for @user.strikes.new do |f|
+    =f.text_area :desc, :placeholder => "Skrike reason"
+    %p
+    =f.number_field :task_id, :placeholder => "task id"
+    %br
+    =f.hidden_field :assigned_by, :placeholder => "by", :value => current_user.id
+    =f.hidden_field :user_id, :placeholder => "to", :value => @user.id
+    %br
+    =f.button :class => "btn btn-success", :html => {:type => "submit"}
 
 
 

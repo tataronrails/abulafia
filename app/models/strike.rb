@@ -1,6 +1,6 @@
 class Strike < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :assigned_by, :desc
+  attr_accessible :assigned_by, :desc, :task_id, :user_id
 
   has_one :discussion, :as => :discussable
   after_create :assign_discussion
@@ -9,6 +9,6 @@ class Strike < ActiveRecord::Base
 
   private
   def assign_discussion
-    self.create_discussion!(:title => self.title)
+    self.create_discussion!(:title => self.desc[0,10])
   end
 end

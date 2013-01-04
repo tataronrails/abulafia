@@ -21,6 +21,8 @@ class Ability
     can :create, Project
     can :create, Comment
 
+    can :read, Strike
+    can :create, Strike
     can :manage, Task
     can :manage, User
 

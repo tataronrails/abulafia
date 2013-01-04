@@ -30,8 +30,9 @@
   - papers << "shl.png"
   - papers << "shl_2X.png"
   -#%body{:style => "background: url(/assets/#{papers.sample})"}
-  %body{:class => (controller_name =="projects" && action_name == "index") ? "body_home" : "body"   }
-    .navbar.navbar-fixed-top{:class => (controller_name == "projects" && action_name == "index") ? "" : "h"}
+  -#%body{:class => (controller_name =="projects" && action_name == "index") ? "body_home" : "body"   }
+  %body.body_home
+    .navbar.navbar-fixed-top
       .navbar-inner{:style => "background: url(/assets/debut_light.png)"}
         .container
           %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
@@ -55,6 +56,11 @@
                   = link_to contacts_list_path, :class =>"capitalize" do
                     %i.icon-group
                     Contacts
+
+                %li
+                  = link_to strikes_path, :class =>"capitalize" do
+                    %i.icon-bell-alt
+                    Skrikes
             %p.navbar-text.pull-right
               - if user_signed_in?
                 Hello,
