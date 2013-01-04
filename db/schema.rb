@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104191028) do
+ActiveRecord::Schema.define(:version => 20130104202437) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -99,9 +99,10 @@ ActiveRecord::Schema.define(:version => 20130104191028) do
     t.integer  "assigned_by"
     t.integer  "task_id"
     t.integer  "user_id"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "active_or_not", :default => true
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "active_or_not",      :default => true
+    t.datetime "date_of_assignment"
   end
 
   add_index "strikes", ["task_id"], :name => "index_strikes_on_task_id"

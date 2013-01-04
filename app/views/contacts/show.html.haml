@@ -89,7 +89,7 @@
     =f.hidden_field :assigned_by, :placeholder => "by", :value => current_user.id
     =f.hidden_field :user_id, :placeholder => "to", :value => @user.id
     =f.label "when"
-    =f.text_field :created_at, :placeholder => "date", :value => Time.now.to_s(:db)
+    =f.text_field :date_of_assignment, :placeholder => "date", :value => Time.now.to_s(:db)
     %br
     =f.button :class => "btn btn-success", :html => {:type => "submit"}
 
