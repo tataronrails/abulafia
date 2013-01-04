@@ -11,6 +11,8 @@
       Reason
     %th
       Task
+    %th
+      %i.icon-trash
   -@strikes.each do |s|
     %tr
       %td.span1
@@ -35,5 +37,8 @@
           -@task = Task.find(s.task_id)
           =link_to task_path(s.task_id)  do
             =@task.title
+      %td.span1
+        =link_to stike_path(s.id), :method => "delete", :confirm => "Sure?" do
+          %i.icon-trash
 
 
