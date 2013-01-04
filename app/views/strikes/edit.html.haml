@@ -1,5 +1,5 @@
 %h4.green Edit strike
-=form_for @strike.order("date_of_assignment DESC") do |f|
+=form_for @strike do |f|
   =f.text_area :desc, :placeholder => "Skrike reason"
   %p
   =f.label "task id"
