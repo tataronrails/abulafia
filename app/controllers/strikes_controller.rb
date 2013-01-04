@@ -16,4 +16,19 @@ class StrikesController < ApplicationController
       end
     end
   end
+
+
+  def destroy
+    @strike = Strike.find(params[:id])
+    @strike.destroy
+
+    respond_to do |format|
+      format.html {
+        redirect_to :back, :notice => "Strike removed!"
+      }
+      format.html{
+        redirect_to project_path(@project)
+      }
+    end
+  end
 end
