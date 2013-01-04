@@ -1,0 +1,67 @@
+%ul.breadcrumb
+  %li
+    %i.icon-home
+    =link_to "Abulafia", root_path
+    %span.divider /
+  %li
+    =link_to "Contacts", contacts_list_path
+
+.row
+  .span2
+    =gravatar_image_tag(@user.email,  :class => 'img-rounded', :gravatar => { :size => 150 })
+  .span3
+    =@user.desc
+%p
+
+%table.table.table-striped
+  %tr
+    %td
+      name:
+    %td
+      =@user.fio
+  %tr
+    %td
+      e-mail:
+    %td
+      =@user.email
+  %tr
+    %td
+      login:
+    %td
+      =@user.login
+  %tr
+    %td
+      initials:
+    %td
+      =@user.initials
+  %tr
+    %td
+      cell:
+    %td
+      =@user.cell
+  %tr
+    %td
+      IM:
+    %td
+      =@user.im
+  %tr
+    %td
+      hip chat user_id:
+    %td
+      =@user.hc_user_id
+
+  %tr
+    %td
+      Last sign in
+    %td
+      -unless @invitation_accepted_list.include?(@user.email) || @user.email == current_user.email
+        %small
+          Not accepted invitation yet
+      - else
+        %small
+          =distance_of_time_in_words_to_now(@user.last_sign_in_at)
+          ago
+
+
+
+

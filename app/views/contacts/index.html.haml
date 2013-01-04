@@ -1,0 +1,24 @@
+%ul.breadcrumb
+  %li
+    %i.icon-home
+    =link_to "Abulafia", root_path
+    %span.divider /
+  %li.active
+    Contacts
+
+-@users.each do |u|
+  %table.table.table-striped
+    %tr.span12
+      %td.span1
+        .avatar
+          =gravatar_image_tag u.email
+      %td.span3
+        =link_to u.fio, contact_page_path(u)
+      %td.span3
+        =u.login
+      %td.span3
+        =u.email
+      %td
+        =link_to contact_destroy_path(u), :method => "delete", :confirm => "Sure, you want to destroy user #{u.login}?" do
+          %i.icon-trash
+

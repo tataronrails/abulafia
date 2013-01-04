@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :project_memberships
   has_many :projects, :through => :project_memberships
   has_many :comments
+  has_many :strikes
 
 
   ACTIVITY_INTERVAL=10.minutes

@@ -221,7 +221,7 @@ focus_on_ready_on_create_task = () ->
 
 $ ->
   filter_task_types()
-  hide_done_stories()
+#  hide_done_stories()
   delete_story()
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()

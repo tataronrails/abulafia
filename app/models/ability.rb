@@ -22,6 +22,7 @@ class Ability
     can :create, Comment
 
     can :manage, Task
+    can :manage, User
 
 
     can :destroy, Comment do |comment|

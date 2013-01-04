@@ -1,4 +1,7 @@
 EOffice::Application.routes.draw do
+  resources :strikes
+
+
   resources :column_orders
   resources :comments
 
@@ -23,6 +26,16 @@ EOffice::Application.routes.draw do
   match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
   get 'progress' => "projects#progress", :as => "progress"
 
+
+
+  get 'contacts' => "contacts#index", :as => "contacts_list"
+  get 'contacts/:id' => "contacts#show", :as => "contact_page"
+  delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
+
+
+
+  #get 'contacts/:login' => "contacts#show", :as => "contact_login_page"
+
   resources :discussions, :has_many => :comments
 
   resources :projects, :has_many => :comments do
@@ -41,6 +54,7 @@ EOffice::Application.routes.draw do
   devise_for :users, :controllers => {:invitations => 'users/invitations'} do
     get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
     get 'projects/:project_id/:user_id/kick_out_users' => 'projects#kick_out_users', :as => "kick_out_users"
+    get 'projects/:project_id/:user_id/reinvite_user' => 'projects#reinvite_user', :as => "reinvite_user"
   end
 
 

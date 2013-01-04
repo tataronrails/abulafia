@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229145056) do
+ActiveRecord::Schema.define(:version => 20130104093911) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(:version => 20121229145056) do
     t.time     "deleted_at"
     t.boolean  "is_department"
   end
+
+  create_table "strikes", :force => true do |t|
+    t.text     "desc"
+    t.integer  "assigned_by"
+    t.integer  "task_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "strikes", ["task_id"], :name => "index_strikes_on_task_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

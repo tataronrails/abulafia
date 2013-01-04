@@ -1,0 +1,2 @@
+class StrikesController < ApplicationController
+end
