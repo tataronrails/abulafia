@@ -34,7 +34,7 @@
             =s.desc
           %blockquote
             %small
-              =distance_of_time_in_words_to_now s.created_at
+              =distance_of_time_in_words_to_now s.date_of_assignment
               ,
               by:
               =User.find(s.assigned_by).fio
