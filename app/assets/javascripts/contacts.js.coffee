@@ -5,7 +5,6 @@
 
 
 $ ->
-  alert 1
   $(".toggle_create_strike").click (e) ->
     e.preventDefault()
     $(".new_strike").toggle()
