@@ -26,8 +26,14 @@ EOffice::Application.routes.draw do
   match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
   get 'progress' => "projects#progress", :as => "progress"
 
+
+
   get 'contacts' => "contacts#index", :as => "contacts_list"
   get 'contacts/:id' => "contacts#show", :as => "contact_page"
+  delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
+
+
+
   #get 'contacts/:login' => "contacts#show", :as => "contact_login_page"
 
   resources :discussions, :has_many => :comments
