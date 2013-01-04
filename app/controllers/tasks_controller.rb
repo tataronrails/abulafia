@@ -41,7 +41,7 @@ class TasksController < ApplicationController
       format.js {
         render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
       }
-      format.html{
+      format.html {
         redirect_to project_path(@project)
       }
     end
@@ -218,12 +218,11 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @project_users = @task.project.users.map(&:login)
 
-    raise @task.to_json
-
-    assigned_to_user = User.find(@task.assigned_to)
-
-    @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
-    @strikes = Strike.where(:user_id => assigned_to_user.id, :task_id => @task.id).order("date_of_assignment DESC")
+    if @task.assigned_to
+      assigned_to_user = User.find(@task.assigned_to)
+      @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
+      @strikes = Strike.where(:user_id => assigned_to_user.id, :task_id => @task.id).order("date_of_assignment DESC")
+    end
   end
 
   def create
