@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   skip_authorization_check
 
   def index
-    @users = User.all
+    @users = User.order("first_name ASC")
   end
 
   def show

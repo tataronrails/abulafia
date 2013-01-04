@@ -8,13 +8,13 @@
 
 -@users.each do |u|
   %table.table.table-striped
-    %tr
-      %td.span1
-        .avatar20
+    %tr.span12
+      %td.span2
+        .avatar
           =gravatar_image_tag u.email
       %td.span3
         =link_to u.fio, contact_page_path(u)
-      %td.span2
+      %td.span3
         =u.login
-      %td
+      %td.span3
         =u.email
