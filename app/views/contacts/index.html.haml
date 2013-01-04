@@ -1,0 +1,20 @@
+%ul.breadcrumb
+  %li
+    %i.icon-home
+    =link_to "Abulafia", root_path
+    %span.divider /
+  %li.active
+    Contacts
+
+-@users.each do |u|
+  %table.table.table-striped
+    %tr
+      %td.span1
+        .avatar20
+          =gravatar_image_tag u.email
+      %td.span3
+        =link_to u.fio, contact_page_path(u)
+      %td.span2
+        =u.login
+      %td
+        =u.email
