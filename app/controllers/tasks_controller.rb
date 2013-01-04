@@ -217,6 +217,9 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
     @project_users = @task.project.users.map(&:login)
+
+    raise @task.to_json
+
     assigned_to_user = User.find(@task.assigned_to)
 
     @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
