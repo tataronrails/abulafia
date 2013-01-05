@@ -21,6 +21,9 @@ gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
 
+gem 'activeadmin'
+gem "meta_search",    '>= 1.1.0.pre'
+
 gem "rails_autolink"
 gem "best_in_place"
 
