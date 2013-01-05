@@ -1,6 +1,13 @@
 // Place all the styles related to the projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h4 {
+  color:#6A4A3C !important;
+  a{
+    color:#6A4A3C !important;
+    font-weight: normal;
+  }
+}
 
 .done_story {
   background: url(/assets/diagonal_waves.png);
@@ -11,9 +18,9 @@
 }
 
 .done_title {
-  text-decoration:line-through !important;
+  text-decoration: line-through !important;
   color: #c5c5c5;
-  a{
+  a {
     color: #999 !important;
   }
 }
