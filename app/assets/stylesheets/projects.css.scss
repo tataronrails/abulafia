@@ -9,6 +9,13 @@ h4 {
   }
 }
 
+
+.nav_shadow{
+  //-moz-box-shadow: 10px 10px 5px #888;
+  //-webkit-box-shadow: 10px 10px 5px #888;
+  //box-shadow: 10px 10px 5px #888;
+}
+
 .done_story {
   background: url(/assets/diagonal_waves.png);
 }
@@ -44,7 +51,7 @@ h4 {
 }
 
 .body_home {
-  //padding-top: 80px;
+  padding-top: 80px;
 }
 
 .body {
