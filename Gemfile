@@ -22,6 +22,7 @@ gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
 
 gem 'activeadmin'
+#gem 'activeadmin-cancan'
 gem "meta_search",    '>= 1.1.0.pre'
 
 gem "rails_autolink"
