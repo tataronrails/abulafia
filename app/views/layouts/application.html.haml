@@ -31,45 +31,44 @@
   - papers << "shl_2X.png"
   -#%body{:style => "background: url(/assets/#{papers.sample})"}
   -#%body{:class => (controller_name =="projects" && action_name == "index") ? "body_home" : "body"   }
-  %body.body_home
-    .navbar.navbar-fixed-top
+  %body
+    .navbar
       .navbar-inner{:style => "background: url(/assets/debut_light.png)"}
-        .container
-          %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
-          =link_to "Abulafia", root_path, :class => "brand capitalize"
-          .nav-collapse.collapse.navbar-responsive-collapse
-            %ul.nav.capitalize
-              -#- if controller.controller_name == "projects"
-              -#  %li.active
-              -#    = link_to t( :projects), projects_path, :class =>"capitalize"
-              -#- else
-              -#  %li
-              -#    = link_to t( :projects), projects_path, :class =>"capitalize"
+        %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
+        =link_to "Abulafia", root_path, :class => "brand capitalize"
+        .nav-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.capitalize
+            -#- if controller.controller_name == "projects"
+            -#  %li.active
+            -#    = link_to t( :projects), projects_path, :class =>"capitalize"
+            -#- else
+            -#  %li
+            -#    = link_to t( :projects), projects_path, :class =>"capitalize"
+            %li
+
+              = link_to progress_path, :class =>"capitalize" do
+                %i.icon-dashboard
+                Progress
+
+            -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
               %li
+                = link_to contacts_list_path, :class =>"capitalize" do
+                  %i.icon-group
+                  Contacts
 
-                = link_to progress_path, :class =>"capitalize" do
-                  %i.icon-dashboard
-                  Progress
-
-              -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
-                %li
-                  = link_to contacts_list_path, :class =>"capitalize" do
-                    %i.icon-group
-                    Contacts
-
-                %li
-                  = link_to strikes_path, :class =>"capitalize" do
-                    %i.icon-bell-alt
-                    Strikes
-            %p.navbar-text.pull-right
-              - if user_signed_in?
-                Hello,
-                = link_to current_user.login, edit_user_registration_path, :tile => "Edit profile"
-                = link_to destroy_user_session_path do |l|
-                  %i.icon-signout{:title => "Sign out"}
-              - else
-                = link_to new_user_session_path do |l|
-                  %i.icon-signin{:title => "Sign in"}
+              %li
+                = link_to strikes_path, :class =>"capitalize" do
+                  %i.icon-bell-alt
+                  Strikes
+          %p.navbar-text.pull-right
+            - if user_signed_in?
+              Hello,
+              = link_to current_user.login, edit_user_registration_path, :tile => "Edit profile"
+              = link_to destroy_user_session_path do |l|
+                %i.icon-signout{:title => "Sign out"}
+            - else
+              = link_to new_user_session_path do |l|
+                %i.icon-signin{:title => "Sign in"}
 
     .container
       .row
