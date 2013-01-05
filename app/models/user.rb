@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :login
 
+  validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
+
 
   #before_create :create_login
 

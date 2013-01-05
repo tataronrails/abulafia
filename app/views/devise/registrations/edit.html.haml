@@ -21,7 +21,12 @@
     .row
       = f.label :initials
       = f.text_field :initials, :placeholder => "Initials", :size => 4
-    .row= f.phone_field :cell, :placeholder => "Cell"
+    .row
+      =f.label "Phone"
+      = f.phone_field :cell, :placeholder => "Cell"
+    .row
+      =f.label "skype"
+      = f.phone_field :im, :placeholder => "Skype"
     .row
       =f.text_area :desc
 

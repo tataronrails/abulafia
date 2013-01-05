@@ -6,23 +6,23 @@
 
     <div class="well">
 
-    <%= f.password_field :password, :placeholder => "Password" %>
-    <p>
-      <%= f.password_field :password_confirmation, :placeholder => "Password confirmation" %></p>
+      <%= f.password_field :password, :placeholder => "Password" %>
+      <p>
+        <%= f.password_field :password_confirmation, :placeholder => "Password confirmation" %></p>
 
     </div>
-      <%= f.text_field :login, :placeholder => "login" %> *
+    <%= f.text_field :login, :placeholder => "login" %> *
     <p>
-      <%= f.text_field :first_name, :placeholder => "First name" %>
-       </p>
-      <%= f.text_field :second_name, :placeholder => "Second name" %>
-      </p>
+      <%= f.text_field :first_name, :placeholder => "First name" %> *
+    </p>
+    <%= f.text_field :second_name, :placeholder => "Second name" %> *
+    </p>
     <p>
-      <%= f.text_field :initials, :placeholder => "Initials" %>
+      <%= f.text_field :initials, :placeholder => "Initials" %> *
     </p>
-      <%= f.text_field :cell, :placeholder => "Phone number" %>
+    <%= f.text_field :cell, :placeholder => "Phone number" %> *
     </p>
-      <%= f.text_field :im, :placeholder => "Skype" %>
+    <%= f.text_field :im, :placeholder => "Skype" %> *
 
-    <p><%= f.button t("devise.invitations.edit.submit_button"),  :class => "btn" %></p>
+    <p><%= f.button t("devise.invitations.edit.submit_button"), :class => "btn" %></p>
 <% end %>
