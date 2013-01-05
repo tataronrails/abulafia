@@ -49,9 +49,8 @@
         -pm.projects.each do |project|
           - if project.project_manager && project.is_department == false && project.project_manager == pm
             .project_alone
-              %h4
-                %i.icon-leaf
-                = link_to project.name, project
+              %i.icon-leaf
+              = link_to project.name, project
               %blockquote
                 -project.users.each do |u|
                   =gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
@@ -62,9 +61,8 @@
   - @projects.without_departments.each do |project|
     - if project.project_manager.nil?
       .project_alone
-        %h4
-          %i.icon-leaf
-          = link_to project.name, project
+        %i.icon-leaf
+        = link_to project.name, project
         %blockquote
           -project.users.each do |u|
             =gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
