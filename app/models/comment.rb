@@ -37,9 +37,9 @@ class Comment < ActiveRecord::Base
         end
       end
 
-      if Rails.env.eql? "development"
-        users_to_notify = [User.first]
-      end
+      #if Rails.env.eql? "development"
+      #  users_to_notify = [User.first]
+      #end
 
 
       Rails.logger.info "--- users to notify---"
