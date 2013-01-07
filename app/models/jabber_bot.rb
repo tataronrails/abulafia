@@ -29,15 +29,13 @@ class JabberBot
 
       client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
 
-      #begin
-      Rails.logger.debug  "**** *** ***"
-      Rails.logger.debug  hipchat_bot.auth(pass)
-      #rescue
-      #  Rails.logger.error "Error bot autorization. #{Exception.to_json}"
-      #  client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
-      #
-      #end
-
+      begin
+        Rails.logger.debug "**** *** ***"
+        Rails.logger.debug hipchat_bot.auth(pass)
+      rescue Jabber::ClientAuthenticationFailure
+        Rails.logger.error "Error bot autorization. #{Exception.to_json}"
+        client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
+      end
 
 
       self.user.each do |u|
@@ -66,12 +64,14 @@ class JabberBot
           client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
 
           #send notification via email
+
+          BotMailer.send_email(u, self.message).deliver
         else
 
           Rails.logger.error "Bot error, not IOError bot error exception"
           Rails.logger.info "Mail but bot"
 
-          Rails.logger.debug BotMailer.assigned_user_message(u, "bla bla bla bla").deliver
+          Rails.logger.debug BotMailer.send_email(u, "bla bla bla bla").deliver
 
         end
 
