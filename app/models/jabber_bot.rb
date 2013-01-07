@@ -31,7 +31,19 @@ class JabberBot
       #raise self.user.count
 
 
+
+
+      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+
+
+
+
       p u = self.user
+
+      u.to_json
+
+      client['abulafia'].send('bot', "List of users:#{u.to_yaml}; class: #{u.class.to_json}", :color => 'green')
+
       p robot = hipchat_bot
       p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
 
