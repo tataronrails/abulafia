@@ -31,18 +31,12 @@ class JabberBot
 
       begin
         hipchat_bot.auth(pass)
-      rescue Exception
-        Rails.logger.error "Error sending message. #{Exception.to_json}"
+      rescue
+        Rails.logger.error "Error bot autorization. #{Exception.to_json}"
+        client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
+
       end
 
-
-      #if auth
-      #  client['abulafia'].send('bot', "Message delivered successfully )", :color => 'yellow')
-      #else
-      #  client['abulafia'].send('!!!bot error', "Error: #{auth.to_json}", :color => 'red', :notify => true)
-      #end
-
-      #raise self.user.count
 
 
       self.user.each do |u|
@@ -74,6 +68,8 @@ class JabberBot
         else
 
           Rails.logger.error "Bot error, not IOError bot error exception"
+
+          BotMailer.assigned_user_message(@user).deliver
 
         end
 
