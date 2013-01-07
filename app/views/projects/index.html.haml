@@ -52,7 +52,7 @@
               %i.icon-leaf
               = link_to project.name, project
               -project.users.each do |u|
-                =gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
+                =gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
 
 
 
@@ -63,7 +63,7 @@
         %i.icon-leaf
         = link_to project.name, project
         -project.users.each do |u|
-          =gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
+          =gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
 
 .lead
   Departments
