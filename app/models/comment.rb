@@ -38,6 +38,9 @@ class Comment < ActiveRecord::Base
         #end
       end
 
+
+      #raise users_to_notify.to_json
+
       #if Rails.env.eql? "development"
       #  users_to_notify = [User.first]
       #end
