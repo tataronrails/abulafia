@@ -138,7 +138,7 @@ class Task < ActiveRecord::Base
       jb.message_for_task(self)
       #jb.delay.send_message
       #begin
-      Rails.info.info jb.send_message
+      Rails.logger.info jb.send_message
       #rescue Exception
       #  Rails.logger.error "notify_assigned_user problem: #{Exception.to_json}"
       #end
