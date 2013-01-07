@@ -53,22 +53,20 @@
           .avatar
             =gravatar_image_tag(u.email)
         .span9
-          =u.email
+          =truncate u.fio
+          -#%h4= u.login
           %br
-          %h4= u.login
-          %br
-          Role:
-          =u.role_in_project(@project)
-          %br
-          first name:
-          =u.first_name
-          %br/
-          second_name:
-          =u.second_name
-          =u.login
-          %br
-          Phone:
-          %hr
+          as
+          =truncate u.role_in_project(@project)
+          -#first name:
+          -#=u.first_name
+          -#%br/
+          -#second_name:
+          -#=u.second_name
+          -#=u.login
+          -#%br
+          -#Phone:
+          %p
           -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
             %small
               Not accepted invitation yet
