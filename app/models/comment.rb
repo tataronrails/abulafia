@@ -26,18 +26,29 @@ class Comment < ActiveRecord::Base
 
 
   def notify
+    Rails.logger.debug "*** notify -> Comment.rb ***"
     if self.commentable.is_a? Discussion
       users_notify_discuss = self.commentable.notificable_users(self.user)
       users_to_notify = []
+
       users_notify_discuss.each do |user_in_project|
         unless user_in_project.is_online?
           users_to_notify.push  user_in_project
-
         end
       end
-      jb = JabberBot.new(:user => users_to_notify)
-      jb.message_for_comment(self)
-      jb.send_message
+
+      if Rails.env.eql? "development"
+        users_to_notify = [User.first]
+      end
+
+
+      Rails.logger.info "--- users to notify---"
+      Rails.logger.info users_to_notify.to_json
+
+      Rails.logger.info "--- jabber bot init ---"
+      Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
+      Rails.logger.debug jb.message_for_comment(self)
+      Rails.logger.debug jb.send_message
       #jb.delay.send_message
     end
   end

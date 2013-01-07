@@ -25,6 +25,9 @@ gem "meta_search",    '>= 1.1.0.pre'
 
 gem "rails_autolink"
 gem "best_in_place"
+gem 'better_logging'
+gem 'hipchat'
+#gem 'hipchat-api'
 
 gem 'haml'
 gem 'haml-rails'

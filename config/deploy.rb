@@ -2,7 +2,7 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 require 'capistrano/ext/multistage'
 #require "whenever/capistrano"
-#require 'hipchat/capistrano'
+require 'hipchat/capistrano'
 require "delayed/recipes"
 
 set :application,   "abulafia"
@@ -26,11 +26,11 @@ set :scm, :git
 set :git_shallow_clone, 1
 set :group_writable, false
 #
-#set :hipchat_token, "e16b19301200ef0c786472f0e34d9d"
-#set :hipchat_room_name, "Project - IQ300"
-#set :hipchat_announce, false
-#set :hipchat_color, 'green'
-#set :hipchat_failed_color, 'red'
+set :hipchat_token, "94ecc0337c81806c0d784ab0352ee7"
+set :hipchat_room_name, "abulafia"
+set :hipchat_announce, false
+set :hipchat_color, 'green'
+set :hipchat_failed_color, 'red'
 
 namespace :deploy do
   task :start do ; end

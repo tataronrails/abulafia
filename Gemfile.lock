@@ -38,6 +38,7 @@ GEM
     best_in_place (2.0.2)
       jquery-rails
       rails (~> 3.1)
+    better_logging (1.0.3)
     bluecloth (2.2.0)
     bootstrap-datepicker-rails (0.6.32)
       railties (>= 3.0)
@@ -94,6 +95,9 @@ GEM
       railties (>= 3.1, < 4.1)
     highline (1.6.15)
     hike (1.2.1)
+    hipchat (0.7.0)
+      httparty
+      httparty
     hipchat-api (1.0.5)
       httparty
     httparty (0.9.0)
@@ -214,6 +218,7 @@ DEPENDENCIES
   acts_as_commentable (= 3.0.1)
   acts_as_paranoid (~> 0.4.0)
   best_in_place
+  better_logging
   bluecloth
   bootstrap-datepicker-rails
   bootstrapped
@@ -230,6 +235,7 @@ DEPENDENCIES
   gritter (= 1.0.2)
   haml
   haml-rails
+  hipchat
   hipchat-api
   jquery-rails
   meta_search (>= 1.1.0.pre)
