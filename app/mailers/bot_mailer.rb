@@ -1,5 +1,5 @@
 class BotMailer < ActionMailer::Base
-  default from: "botofabulafia@gmail.com"
+  default from: "botofabulafia+#{4.times.map{ Random.rand(67575867) }.join("")}@gmail.com"
 
 
   def send_email(user, message)
