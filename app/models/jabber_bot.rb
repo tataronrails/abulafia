@@ -50,7 +50,14 @@ class JabberBot
 
         p message = Jabber::Message::new(address, self.message)
         p message.set_type(:chat)
-        p robot.send message
+
+        begin
+          p robot.send message
+        rescue Exception
+          Rails.logger.error "Send notification error: #{Exception.to_json}"
+        end
+
+
       end
 
 
