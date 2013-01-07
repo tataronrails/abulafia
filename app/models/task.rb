@@ -140,8 +140,8 @@ class Task < ActiveRecord::Base
       assigned_user.push User.find(self.assigned_to)
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
-      jb.delay.send_message
-      #p jb.send_message
+      #jb.delay.send_message
+      p jb.send_message
     end
   end
 
