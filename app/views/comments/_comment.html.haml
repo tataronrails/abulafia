@@ -2,7 +2,7 @@
   .row-fluid
     .span1
       .avatar
-        = gravatar_image_tag(comment.user.email)
+        = gravatar_image_tag(comment.user.email) if comment.user.present?
     .span11
       -if current_user.eql? comment.user
         .pull-right
