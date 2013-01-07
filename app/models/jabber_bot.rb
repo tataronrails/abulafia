@@ -34,7 +34,7 @@ class JabberBot
         Rails.logger.debug hipchat_bot.auth(pass)
       rescue Jabber::ClientAuthenticationFailure
         Rails.logger.error "Error bot autorization. #{Exception.to_json}"
-        client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
+        client['abulafia'].send('Bot is down', "Authorization problems, delivered via email", :color => 'red', :notify => true)
       end
 
 
@@ -61,7 +61,7 @@ class JabberBot
 
         rescue IOError
           Rails.logger.error "!!!!!!! IOError bot error"
-          client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
+          #client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
 
           #send notification via email
 
