@@ -60,11 +60,15 @@ class JabberBot
         p message = Jabber::Message::new(address, self.message)
         p message.set_type(:chat)
 
-        #begin
-        sending_robot = robot.send(message)
+        begin
+          sending_robot = robot.send(message)
 
-        client['abulafia'].send('bot', "Send notification OK! <br />  To: #{u.login}, <br/>  Message: '#{self.message}'", :color => 'green')
-        client['abulafia'].send('bot', sending_robot.to_json, :color => 'green')
+          client['abulafia'].send('bot', "Send notification OK! <br />  To: #{u.login}, <br/>  Message: '#{self.message}'", :color => 'green')
+          client['abulafia'].send('bot', sending_robot.to_json, :color => 'green')
+
+        rescue IOError
+          Rails.logger.error "IOError bot error"
+        end
 
 
         #rescue Exception
