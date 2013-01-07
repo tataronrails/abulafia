@@ -26,17 +26,23 @@ class JabberBot
       pass = KEYS['bot']['hipchat'][1]
       hipchat_bot = Jabber::Client::new(Jabber::JID::new(login))
       hipchat_bot.connect
-      hipchat_bot.auth(pass)
+
+      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+
+      auth = hipchat_bot.auth(pass)
+
+
+      if auth
+        client['abulafia'].send('bot', "Message delivered successfully )", :color => 'yellow')
+      else
+        client['abulafia'].send('!!!bot error', "Error: #{auth.to_json}", :color => 'red', :notify => true)
+      end
 
       #raise self.user.count
 
 
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-
-
       self.user.each do |u|
-
-        client['abulafia'].send('bot', "List of users:#{u.to_yaml}", :color => 'yellow')
+        client['abulafia'].send('bot', "List of users to notify #{u.login}", :color => 'yellow')
         client['abulafia'].send('bot', "List of users class object:#{u.class.to_yaml}", :color => 'yellow')
 
         p robot = hipchat_bot
@@ -76,14 +82,34 @@ class JabberBot
   end
 
   def message_for_task(task)
+
     self.message = "new task assigned to you:  \"#{task.title}\" in project " +
         " \"#{task.project.name}\" #{get_task_url(task)}"
+
+
+    #begin
+    #  client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+    #  client['abulafia'].send('new task assigned to you', self.message, :color => 'yellow')
+    #rescue Exception
+    #  Rails.logger.error "Send Message error in: message_for_comment."
+    #  Rails.logger.error Exception.to_json
+    #end
+
   end
 
   def message_for_comment(comment)
-    self.message = "new comment in discuss  \"#{comment.commentable.title}\" in" +
+    self.message = "new comm. in disc.  \"#{comment.commentable.title}\" in" +
         " project \"#{comment.commentable.discussable.project.name}\" " +
         " #{get_task_url(comment.commentable.discussable)}"
+
+    #begin
+    #  client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+    #  client['abulafia'].send('new comment in disc.', self.message, :color => 'yellow')
+    #rescue Exception
+    #  Rails.logger.error "Send Message error in: message_for_comment"
+    #  Rails.logger.error Exception.to_json
+    #end
+
   end
 
 end
