@@ -29,13 +29,14 @@ class JabberBot
 
       client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
 
-      begin
-        hipchat_bot.auth(pass)
-      rescue
-        Rails.logger.error "Error bot autorization. #{Exception.to_json}"
-        client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
-
-      end
+      #begin
+      Rails.logger.debug  "**** *** ***"
+      Rails.logger.debug  hipchat_bot.auth(pass)
+      #rescue
+      #  Rails.logger.error "Error bot autorization. #{Exception.to_json}"
+      #  client['abulafia'].send('bot', "BOT is down! Authorization problems", :color => 'red', :notify => true)
+      #
+      #end
 
 
 
