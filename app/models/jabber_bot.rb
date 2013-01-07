@@ -109,20 +109,11 @@ class JabberBot
     "http://#{get_host}#{task_url(task, :only_path => true)}"
   end
 
+
   def message_for_task(task)
 
     self.message = "Task assigned to you: \"#{task.title}\" in project " +
         " \"#{task.project.name}\" #{get_task_url(task)}"
-
-
-    begin
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-      client['abulafia'].send('new task assigned to you', self.message, :color => 'yellow')
-    rescue Exception
-      Rails.logger.error "Send Message error in: message_for_comment."
-      Rails.logger.error Exception.to_json
-    end
-
   end
 
   def message_for_comment(comment)

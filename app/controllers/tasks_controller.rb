@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   load_and_authorize_resource :task
 
   def accept_to_start
-    task = Task.find(params[:task_id])
+
     if task.update_attribute(:accepted_to_start, Time.now)
       flash[:notice] = "Started"
       respond_to do |format|
@@ -14,6 +14,10 @@ class TasksController < ApplicationController
     else
       flash[:notice] = "Error"
     end
+
+
+
+
   end
 
   def finish_work
