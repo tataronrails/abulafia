@@ -140,10 +140,8 @@ class Task < ActiveRecord::Base
       begin
         jb.send_message
       rescue Exception
-        Rails.logger.error "notify_assigned_user problem"
-
+        Rails.logger.error "notify_assigned_user problem: #{Exception.to_json}"
       end
-
     end
   end
 
