@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
   validates_length_of :comment, :minimum => 2
 
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  tracked owner: Proc.new { |controller, model| controller.current_user }
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -31,10 +31,11 @@ class Comment < ActiveRecord::Base
       users_notify_discuss = self.commentable.notificable_users(self.user)
       users_to_notify = []
 
+
       users_notify_discuss.each do |user_in_project|
-        unless user_in_project.is_online?
-          users_to_notify.push  user_in_project
-        end
+        #unless user_in_project.is_online?
+        users_to_notify.push user_in_project
+        #end
       end
 
       #if Rails.env.eql? "development"
