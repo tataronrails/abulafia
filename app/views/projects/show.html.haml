@@ -56,7 +56,7 @@
     .pull-right
       .row-fluid
         .avatar20.opacity40
-          = gravatar_image_tag comm.user.email
+          = gravatar_image_tag comm.user.email if comm.user.present?
     .span11
       .time.pull-right
         %small
