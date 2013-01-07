@@ -124,11 +124,13 @@ class JabberBot
   def message_for_task(task)
 
     self.message = "Task assigned to you: \"#{task.title}\" in project " +
-        " \"#{task.project.name}\" #{get_task_url(task)}"
+        " \"#{task.project.name}\", "+
+        "by #{task.owner.fio}, "+
+        "url: #{get_task_url(task)}"
   end
 
   def message_for_comment(comment)
-    self.message = "New comment \"#{comment.comment}\""+
+    self.message = " New comment \"#{comment.comment}\""+
         ", Discussion: \"#{comment.commentable.title}\""+
         ", Project: \"#{comment.commentable.discussable.project.name}\"" +
         ", Url: #{get_task_url(comment.commentable.discussable)}"
