@@ -121,20 +121,6 @@ class JabberBot
         ", Discussion: \"#{comment.commentable.title}\""+
         ", Project: \"#{comment.commentable.discussable.project.name}\"" +
         ", Url: #{get_task_url(comment.commentable.discussable)}"
-    #self.message = "new comm. in disc.  <b>#{comment.commentable.title}</b> in" +
-    #    "<br /> Project <b>#{comment.commentable.discussable.project.name}</b> " +
-    #    "<br /> Url: #{get_task_url(comment.commentable.discussable)}"+
-    #    "<br /> Body: <b>#{comment.comment}</b>"
-
-
-    begin
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-      client['abulafia'].send('new comment in disc.', self.message, :color => 'yellow')
-    rescue Exception
-      Rails.logger.error "Send Message error in: message_for_comment"
-      Rails.logger.error Exception.to_json
-    end
-
   end
 
 end
