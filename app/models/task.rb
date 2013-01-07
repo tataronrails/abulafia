@@ -137,11 +137,11 @@ class Task < ActiveRecord::Base
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
       #jb.delay.send_message
-      begin
-        jb.send_message
-      rescue Exception
-        Rails.logger.error "notify_assigned_user problem: #{Exception.to_json}"
-      end
+      #begin
+      Rails.info.info jb.send_message
+      #rescue Exception
+      #  Rails.logger.error "notify_assigned_user problem: #{Exception.to_json}"
+      #end
     end
   end
 
