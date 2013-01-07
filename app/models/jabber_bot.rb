@@ -69,6 +69,12 @@ class JabberBot
         rescue IOError
           Rails.logger.error "!!!!!!! IOError bot error"
           client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
+
+          #send notification via email
+        else
+
+          Rails.logger.error "Bot error, not IOError bot error exception"
+
         end
 
 
