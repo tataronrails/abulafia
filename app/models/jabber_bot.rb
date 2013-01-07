@@ -60,23 +60,24 @@ class JabberBot
         p message = Jabber::Message::new(address, self.message)
         p message.set_type(:chat)
 
-        begin
-          p robot.send message
+        #begin
+        sending_robot = robot.send(message)
 
-          client['abulafia'].send('bot', "Send notification OK! <br />  To: #{u.login}, <br/>  Message: '#{self.message}'", :color => 'green')
-
-
-        rescue Exception
-          Rails.logger.error "Send notification error: #{Exception.to_json}"
+        client['abulafia'].send('bot', "Send notification OK! <br />  To: #{u.login}, <br/>  Message: '#{self.message}'", :color => 'green')
+        client['abulafia'].send('bot', sending_robot.to_json, :color => 'green')
 
 
-          begin
-            client['abulafia'].send('bot', "Send notification error: #{Exception.to_json}", :color => 'red')
-          rescue Exception
-            Rails.logger.error "Error sending message. #{Exception.to_json}"
-          end
-
-        end
+        #rescue Exception
+        #  Rails.logger.error "Send notification error jabber_bot::send_message : #{Exception.to_json}"
+        #
+        #
+        #  begin
+        #    client['abulafia'].send('bot', "Send notification error: #{Exception.to_json}", :color => 'red')
+        #  rescue Exception
+        #    Rails.logger.error "Error sending message. #{Exception.to_json}"
+        #  end
+        #
+        #end
 
 
       end
