@@ -6,6 +6,6 @@
       = distance_of_time_in_words_to_now(activity.created_at)
       ,
       - if activity.trackable
-        =link_to truncate(activity.trackable.name), project_path(activity.trackable.id) rescue nil
+        =link_to (activity.trackable.name), project_path(activity.trackable.id) rescue nil
       - else
         Comment was removed

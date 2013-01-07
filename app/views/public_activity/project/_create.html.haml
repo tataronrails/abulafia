@@ -4,4 +4,4 @@
   %small
     = distance_of_time_in_words_to_now(activity.created_at)
     ,
-    =link_to truncate(activity.trackable.name), project_path(activity.trackable.id) rescue nil
+    =link_to (activity.trackable.name), project_path(activity.trackable.id) rescue nil

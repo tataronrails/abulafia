@@ -11,9 +11,9 @@
         = distance_of_time_in_words_to_now(activity.created_at)
         ,
         - if activity.trackable.commentable.discussable.class.to_s == "Task"
-          =link_to truncate(activity.trackable.comment), task_path(activity.trackable.commentable.discussable.id) rescue nil
+          =link_to (activity.trackable.comment), task_path(activity.trackable.commentable.discussable.id) rescue nil
         - else
-          =link_to truncate(activity.trackable.comment), discussion_path(activity.trackable.commentable.id) rescue nil
+          =link_to (activity.trackable.comment), discussion_path(activity.trackable.commentable.id) rescue nil
 
 
 
