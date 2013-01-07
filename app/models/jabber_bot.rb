@@ -68,8 +68,9 @@ class JabberBot
         else
 
           Rails.logger.error "Bot error, not IOError bot error exception"
+          Rails.logger.info "Mail but bot"
 
-          BotMailer.assigned_user_message(@user).deliver
+          Rails.logger.debug BotMailer.assigned_user_message(self.user, "bla bla bla bla").deliver
 
         end
 
