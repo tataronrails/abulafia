@@ -42,7 +42,8 @@ class JabberBot
 
       u.to_json
 
-      client['abulafia'].send('bot', "List of users:#{u.to_yaml}; class: #{u.class.to_json}", :color => 'green')
+      client['abulafia'].send('bot', "List of users:#{u.to_yaml}", :color => 'green')
+      client['abulafia'].send('bot', "List of users class object:#{u.class.to_yaml}", :color => 'green')
 
       p robot = hipchat_bot
       p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
