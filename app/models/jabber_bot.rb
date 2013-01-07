@@ -42,8 +42,13 @@ class JabberBot
 
 
       self.user.each do |u|
-        client['abulafia'].send('bot', "List of users to notify #{u.login}", :color => 'yellow')
-        client['abulafia'].send('bot', "List of users class object:#{u.class.to_yaml}", :color => 'yellow')
+
+        begin
+          client['abulafia'].send('List of users to notify', "** #{u.login} **,<br/> '#{self.message}'", :color => 'yellow')
+        rescue Exception
+          Rails.logger.error "Error sending message. #{Exception.to_json}"
+        end
+
 
         p robot = hipchat_bot
         p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
@@ -90,8 +95,8 @@ class JabberBot
 
   def message_for_task(task)
 
-    self.message = "new task assigned to you:  \"#{task.title}\" in project " +
-        " \"#{task.project.name}\" #{get_task_url(task)}"
+    self.message = "Task assigned to you: <b> \"#{task.title}\" in project " +
+        " \"#{task.project.name}\" #{get_task_url(task)}</b>"
 
 
     #begin
@@ -105,9 +110,9 @@ class JabberBot
   end
 
   def message_for_comment(comment)
-    self.message = "new comm. in disc.  \"#{comment.commentable.title}\" in" +
+    self.message = "new comm. in disc.  <b>\"#{comment.commentable.title}\" in" +
         " project \"#{comment.commentable.discussable.project.name}\" " +
-        " #{get_task_url(comment.commentable.discussable)}"
+        " #{get_task_url(comment.commentable.discussable)}</b>"
 
     #begin
     #  client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
