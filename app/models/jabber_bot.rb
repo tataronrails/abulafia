@@ -31,26 +31,21 @@ class JabberBot
       #raise self.user.count
 
 
-
-
       client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
 
 
+      self.user.each do |u|
 
+        client['abulafia'].send('bot', "List of users:#{u.to_yaml}", :color => 'yellow')
+        client['abulafia'].send('bot', "List of users class object:#{u.class.to_yaml}", :color => 'yellow')
 
-      p u = self.user
+        p robot = hipchat_bot
+        p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
 
-      u.to_json
-
-      client['abulafia'].send('bot', "List of users:#{u.to_yaml}", :color => 'green')
-      client['abulafia'].send('bot', "List of users class object:#{u.class.to_yaml}", :color => 'green')
-
-      p robot = hipchat_bot
-      p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
-
-      p message = Jabber::Message::new(address, self.message)
-      p message.set_type(:chat)
-      p robot.send message
+        p message = Jabber::Message::new(address, self.message)
+        p message.set_type(:chat)
+        p robot.send message
+      end
 
 
       #self.user.each  do |u|
