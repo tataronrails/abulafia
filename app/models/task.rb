@@ -134,7 +134,7 @@ class Task < ActiveRecord::Base
   end
 
   def notify_assigned_user
-    Rails.debug "*** notify_assigned_user -> Task.rb ***"
+    Rails.logger.debug "*** notify_assigned_user -> Task.rb ***"
     unless self.assigned_to_was == self.assigned_to
       assigned_user = []
       assigned_user.push User.find(self.assigned_to)
