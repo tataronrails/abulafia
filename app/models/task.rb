@@ -14,10 +14,9 @@ class Task < ActiveRecord::Base
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  tracked owner: Proc.new { |controller, model| controller.current_user }
 
   scope :not_finished, where("end > Time.now")
-
 
 
   #acts_as_taggable_on :skills
@@ -77,7 +76,6 @@ class Task < ActiveRecord::Base
   end
 
 
-
   def owner
     User.find(self.owner_id)
   end
@@ -121,8 +119,6 @@ class Task < ActiveRecord::Base
   end
 
 
-
-
   def make_simple_task
     self.update_attributes(:task_type => "5") unless self.task_type.present?
   end
@@ -141,7 +137,13 @@ class Task < ActiveRecord::Base
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
       #jb.delay.send_message
-      p jb.send_message
+      begin
+        jb.send_message
+      rescue Exception
+        Rails.logger.error "notify_assigned_user problem"
+
+      end
+
     end
   end
 
