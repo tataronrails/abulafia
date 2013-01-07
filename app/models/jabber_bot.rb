@@ -48,11 +48,11 @@ class JabberBot
         end
 
 
-        p robot = hipchat_bot
-        p address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
+        robot = hipchat_bot
+        address ="#{KEYS['bot']['hipchat'][2]}_#{u.hc_user_id}@#{KEYS['bot']['hipchat'][3]}"
 
-        p message = Jabber::Message::new(address, self.message)
-        p message.set_type(:chat)
+        message = Jabber::Message::new(address, self.message)
+        message.set_type(:chat)
 
         begin
           sending_robot = robot.send(message)
