@@ -1,0 +1,11 @@
+bot:
+  hipchat:
+    host:
+    company:
+    password:
+    jid:
+      -
+      -
+  gmail:
+    -
+    -

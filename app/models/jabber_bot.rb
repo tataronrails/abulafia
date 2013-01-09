@@ -38,10 +38,6 @@ class JabberBot
     end
   end
 
-
-
-
-
   def send_message
     Rails.logger.debug "**** Send message ****"
     if self.user.present?
@@ -55,8 +51,14 @@ class JabberBot
         end
 
         if u.hc_user_id.nil?
-          raise "send mail!"
-          # email send
+          #email send
+          begin
+            client['abulafia'].send('bot', "send mail becouse no hipchat id", :color => 'yellow', :notify => true)
+            BotMailer.send_email(u, self.message).deliver
+          rescue
+            Rails.logger.error "ERROR send!"
+            client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
+          end
         else
           address ="#{KEYS['bot']['hipchat']['company']}_#{u.hc_user_id}@#{KEYS['bot']['hipchat']['host']}"
           message = Jabber::Message::new(address, self.message)
@@ -82,7 +84,15 @@ class JabberBot
           end
           if @mail_flag
             # email send
-            raise "send mail!"
+            begin
+              Rails.logger.error "bots is down!!!"
+              client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
+              client['abulafia'].send('bot', "send mail", :color => 'yellow', :notify => true)
+              BotMailer.send_email(u, self.message).deliver
+            rescue
+              Rails.logger.error "ERROR send!"
+              client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
+            end
           end
         end
         #begin
