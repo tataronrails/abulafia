@@ -3,7 +3,12 @@ class TasksController < ApplicationController
 
   def accept_to_start
 
+    task = Task.find(params[:task_id])
+
     if task.update_attribute(:accepted_to_start, Time.now)
+      #TODO: hc notofication here
+
+
       flash[:notice] = "Started"
       respond_to do |format|
 
