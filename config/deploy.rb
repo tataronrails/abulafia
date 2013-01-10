@@ -45,7 +45,7 @@ namespace :deploy do
   desc "Restart the Thin processes"
   task :restart do
     run <<-CMD
-      cd ~/www/apps/abu_production/current; bundle exec thin stop -p7004 && bundle exec thin start -p7004 -e production -d
+      cd ~/www/apps/#{application}_#{branch}/current; bundle exec thin stop -p#{thin_port} && bundle exec thin start -p#{thin_port} -e production -d
     CMD
   end
 
