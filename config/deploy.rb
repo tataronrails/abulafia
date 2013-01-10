@@ -16,6 +16,7 @@ set :use_sudo, false
 
 set :stages, %w(edge staging production)
 set :default_stage, 'edge'
+
 #set :default_stage, 'production'
 
 #set :whenever_command, "bundle exec whenever"
