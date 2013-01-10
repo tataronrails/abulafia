@@ -14,8 +14,9 @@ set :shared_files,  %w(config/database.yml config/keys.yml config/email.yml)
 set :rvm_ruby_string, "1.9.3@e-office"
 set :use_sudo, false
 
-set :stages, %w(staging production)
-set :default_stage, 'production'
+set :stages, %w(edge staging production)
+set :default_stage, 'edge'
+#set :default_stage, 'production'
 
 #set :whenever_command, "bundle exec whenever"
 
