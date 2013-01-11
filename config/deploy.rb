@@ -6,7 +6,8 @@ require 'hipchat/capistrano'
 require "delayed/recipes"
 
 set :application,   "abulafia"
-set :repository,    "git@github.com:tataronrails/abulafia.git"
+set :repository,    "git@bitbucket.org:almazom/abulafia.git"
+#set :repository,    "git@github.com:tataronrails/abulafia.git"
 set :rails_env,     :production
 set :deploy_via,    :remote_cache # :checkout
 set :shared_files,  %w(config/database.yml config/keys.yml config/email.yml)
