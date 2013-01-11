@@ -14,8 +14,6 @@ EOffice::Application.routes.draw do
     post "update_points" => "tasks#update_points", :as => "update_points"
     post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
     post "finish_work" => "tasks#finish_work", :as => "finish_work"
-
-    #post "update_order" => "tasks#update_order", :as => "update_order"
   end
 
   match "tasks/update_order" => "tasks#update_order"
@@ -28,11 +26,9 @@ EOffice::Application.routes.draw do
   get 'progress' => "projects#progress", :as => "progress"
 
 
-
   get 'contacts' => "contacts#index", :as => "contacts_list"
   get 'contacts/:id' => "contacts#show", :as => "contact_page"
   delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
-
 
 
   #get 'contacts/:login' => "contacts#show", :as => "contact_login_page"
@@ -40,15 +36,21 @@ EOffice::Application.routes.draw do
   resources :discussions, :has_many => :comments
 
   resources :projects, :has_many => :comments do
-    resources :discussions, :has_many => :comments
+    resources :tasks, :has_many => :comments do
+      post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+      post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
+      post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
+      post "update_points" => "tasks#update_points", :as => "update_points"
+      post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
+      post "finish_work" => "tasks#finish_work", :as => "finish_work"
+    end
 
+    resources :discussions, :has_many => :comments
     post 'invite_user'
     get 'update_icebox'
     get 'update_backlog'
-    #get 'update_my_work'
     get 'update_current_work'
     get "user_stories", "user_stories"
-    #resource 'users'
   end
 
 
