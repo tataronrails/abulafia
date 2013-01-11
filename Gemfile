@@ -28,6 +28,7 @@ gem "best_in_place"
 gem 'better_logging'
 gem 'hipchat'
 #gem 'hipchat-api'
+gem 'yaml_db'
 
 gem 'haml'
 gem 'haml-rails'

@@ -209,6 +209,7 @@ GEM
     warden (1.2.1)
       rack (>= 1.0)
     xmpp4r (0.5)
+    yaml_db (0.2.3)
 
 PLATFORMS
   ruby
@@ -251,3 +252,4 @@ DEPENDENCIES
   thin
   uglifier (>= 1.0.3)
   xmpp4r
+  yaml_db
