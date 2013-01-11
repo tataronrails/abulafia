@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
   validates_length_of :comment, :minimum => 2
 
   include PublicActivity::Model
-  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model| raise self.to_json} )
+  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  model.commentable.discussable.project })
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.

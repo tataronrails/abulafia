@@ -5,8 +5,6 @@ class Strike < ActiveRecord::Base
   has_one :discussion, :as => :discussable
   after_create :assign_discussion
 
-
-
   private
   def assign_discussion
     self.create_discussion!(:title => self.desc[0,10])

@@ -1,6 +1,4 @@
 class Discussion < ActiveRecord::Base
-
-
   belongs_to :project
   #belongs_to :task
   has_many :users, :through => :comments, :uniq => true
@@ -8,13 +6,13 @@ class Discussion < ActiveRecord::Base
   belongs_to :discussable, :polymorphic => true
   attr_accessible :title, :project_id, :desc
 
-  ACTUAL_TIME = 0.day
+  ACTUAL_TIME = 3.day
 
 
   acts_as_commentable
 
-  include PublicActivity::Model
-  tracked owner: Proc.new { |controller, model| controller.current_user }
+  #include PublicActivity::Model
+  #tracked owner: Proc.new { |controller, model| controller.current_user }
 
   default_scope order('created_at DESC')
 
@@ -27,16 +25,16 @@ class Discussion < ActiveRecord::Base
       project = self.discussable
     end
 
-    #if self.comments.count == 1
-    if project.present?
-      project.users.where("users.id <> ?", ignored_user)
-      #else
-      #  []
+    if self.comments.count == 1
+      if project.present?
+        project.users.where("users.id <> ?", ignored_user)
+      else
+        []
+      end
+    else
+      self.users.joins(:comments).where("comments.created_at > ? AND comments.commentable_id = ? " +
+                                            "AND comments.commentable_type = ? AND users.id <> ?",
+                                        Time.now - ACTUAL_TIME, self, "Discussion", ignored_user)
     end
-    #else
-    #self.users.joins(:comments).where("comments.created_at > ? AND comments.commentable_id = ? " +
-    #                                  "AND comments.commentable_type = ? AND users.id <> ?",
-    #                                  Time.now - ACTUAL_TIME, self, "Discussion", ignored_user)
-    #end
   end
 end

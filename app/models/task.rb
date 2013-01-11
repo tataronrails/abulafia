@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked owner: Proc.new { |controller, model| controller.current_user }
+  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  model.project })
 
   scope :not_finished, where("end > Time.now")
 
