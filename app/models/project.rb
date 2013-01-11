@@ -13,12 +13,12 @@ class Project < ActiveRecord::Base
   scope :only_departments, where(:is_department => true)
 
 
-
-
   acts_as_paranoid
   acts_as_commentable
 
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  #tracked owner: Proc.new{ |controller, model| controller.current_user }
+  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model| model })
+
 
 
   # define project.admins, project.members ... methods
