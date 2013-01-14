@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
-
   validates_uniqueness_of :login
-
   validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
 
+
+  after_create :assign_discussion_to_user
 
   #before_create :create_login
 
@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :project_memberships
   has_many :comments
   has_many :strikes
+  has_one :discussion, :as => :discussable
 
 
   ACTIVITY_INTERVAL=0.minutes
@@ -51,13 +52,8 @@ class User < ActiveRecord::Base
 
 
 
-
-
-  #
-  #
-  #def initials
-  #    self.email.split("@").first[0..2]
-  #end
-
+  def assign_discussion_to_user
+    self.create_discussion!(:title => self.login)
+  end
 
 end

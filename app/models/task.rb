@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  model.project })
+  tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   scope :not_finished, where("end > Time.now")
 
@@ -136,7 +136,7 @@ class Task < ActiveRecord::Base
       assigned_user.push User.find(self.assigned_to)
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
-      Rails.logger.info  jb.send_message
+      Rails.logger.info jb.send_message
       #begin
       #Rails.logger.info jb.send_message
       #rescue Exception

@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-
+  acts_as_paranoid
   include ActsAsCommentable::Comment
 
 
@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
   validates_length_of :comment, :minimum => 2
 
   include PublicActivity::Model
-  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  model.commentable.discussable.project })
+  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  if model.kind_of?(Task); model.commentable.discussable.project; end; })
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -46,14 +46,14 @@ class Comment < ActiveRecord::Base
       #end
 
 
-      Rails.logger.info "--- users to notify---"
-      Rails.logger.info users_to_notify.to_json
-
-      Rails.logger.info "--- jabber bot init ---"
-      Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
-      Rails.logger.debug jb.message_for_comment(self)
+      #Rails.logger.info "--- users to notify---"
+      #Rails.logger.info users_to_notify.to_json
+      #
+      #Rails.logger.info "--- jabber bot init ---"
+      #Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
+      #Rails.logger.debug jb.message_for_comment(self)
       #Rails.logger.debug jb.send_message
-      Rails.logger.debug jb.send_message
+      #Rails.logger.debug jb.send_message
     end
   end
   # handle_asynchronously :notify

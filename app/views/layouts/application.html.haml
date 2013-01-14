@@ -79,8 +79,6 @@
           - div_column = "span8"
         %div{:class =>div_column}
 
-
-
           = content_tag :h1, yield(:title) if show_title
           = yield
 
@@ -93,8 +91,5 @@
               .span4
                 =yield :right_column
 
-      -#%footer.navbar-fixed-bottom
-      -#  = app_name
-      -#  Copyright &copy;  2012. All Rights Reserved.
 
     = javascript_include_tag "application", controller_name

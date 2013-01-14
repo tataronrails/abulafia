@@ -47,7 +47,6 @@
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
 
-  -#if not done and not user story
   -unless [0,1,2].include?(@task.task_type.to_i)
     - unless @task.finished_at.present?
       .accept_task{:class => classes_to_add}
@@ -129,8 +128,6 @@
         =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 
-
 #comments_line
-  -#= render :partial => "comments", :locals => {:comments => @task.discussion.comments, :list_of_mentions => @list_of_mentions}
   = render :partial => @task.discussion.comments
 

@@ -59,6 +59,7 @@ EOffice::Application.routes.draw do
     get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
     get 'projects/:project_id/:user_id/kick_out_users' => 'projects#kick_out_users', :as => "kick_out_users"
     get 'projects/:project_id/:user_id/reinvite_user' => 'projects#reinvite_user', :as => "reinvite_user"
+    post "contacts/:user_id/add_new_comment" => "contacts#add_new_comment", :as => "add_new_comment_to_contact"
   end
 
 
