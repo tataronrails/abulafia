@@ -28,6 +28,7 @@ EOffice::Application.routes.draw do
 
   get 'contacts' => "contacts#index", :as => "contacts_list"
   get 'contacts/:id' => "contacts#show", :as => "contact_page"
+  post 'contacts/create_virtual_user' => "contacts#create_virtual_user", :as => "contact_create_virtual_user"
   delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
 
 

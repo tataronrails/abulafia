@@ -5,6 +5,26 @@ class ContactsController < ApplicationController
 
   def index
     @users = User.order(:login)
+    @user = User.new
+  end
+
+  def create_virtual_user
+
+    #unless params[:user][:login].present?
+    #  redirect_to :back, :notice => "Error" and return
+    #end
+
+    params[:user][:password] = Devise.friendly_token.first(8)
+    user = User.new(params[:user])
+
+    if user.save
+      flash[:notice] = "ok"
+    else
+      #raise user.errors.to_json
+      flash[:errors] =  user.errors
+    end
+
+    redirect_to :back
   end
 
   def show
@@ -26,7 +46,7 @@ class ContactsController < ApplicationController
 
   private
   def check_access
-    unless ["almazomru@gmail.com","e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include? current_user.email
+    unless ["almazomru@gmail.com", "e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include? current_user.email
 
       flash[:notice] = "You have no access to see contacts"
       redirect_to root_path
