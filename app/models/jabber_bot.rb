@@ -128,7 +128,7 @@ class JabberBot
   end
 
   def get_task_url(task)
-    "http://#{get_host}#{task_url(task, :only_path => true)}"
+    "http://#{get_host}#{project_task_url(task.project, task, :only_path => true)}"
   end
 
 

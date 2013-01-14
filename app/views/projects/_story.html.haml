@@ -110,13 +110,13 @@
                 -unless ["icebox","backlog","current_work"].include?(place)
                   .pull-right.span1
                     -if place == "draft"
-                      =link_to(edit_task_path(t)) do |l|
+                      =link_to(edit_project_task_path(t.project, t)) do |l|
                         %i.icon-edit
-                    =link_to(task_path(t), :method => "delete", :remote => true) do |l|
+                    =link_to(project_task_path(t.project, t), :method => "delete", :remote => true) do |l|
                       %i.icon-trash
                 .story_1{:id => t.id.to_s+"_around",  :class => "alone_story"}
                   -if t.finished_at.nil?
-                    =link_to t.title, task_path(t)
+                    =link_to t.title, project_task_path(t.project, t)
 
                     - if t.discussion && t.discussion.comments.present?
                       %i.icon-comment-alt.light-gray

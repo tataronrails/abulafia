@@ -1,5 +1,5 @@
 - list_of_task_types = list_of_task_types
-= form_for @task do |f|
+= form_for [@task.project, @task] do |f|
   - if @task.errors.any?
     #error_explanation
       %h2= "#{pluralize(@task.errors.count, "error")} prohibited this project from being saved:"

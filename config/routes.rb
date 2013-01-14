@@ -7,14 +7,14 @@ EOffice::Application.routes.draw do
   resources :comments
 
 
-  resources :tasks, :has_many => :comments do
-    post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
-    post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
-    post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
-    post "update_points" => "tasks#update_points", :as => "update_points"
-    post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
-    post "finish_work" => "tasks#finish_work", :as => "finish_work"
-  end
+  #resources :tasks, :has_many => :comments do
+  #  post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+  #  post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
+  #  post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
+  #  post "update_points" => "tasks#update_points", :as => "update_points"
+  #  post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
+  #  post "finish_work" => "tasks#finish_work", :as => "finish_work"
+  #end
 
   match "tasks/update_order" => "tasks#update_order"
   get "story/:id" => "tasks#show", :as => "story_to_show"
