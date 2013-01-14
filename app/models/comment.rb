@@ -54,6 +54,15 @@ class Comment < ActiveRecord::Base
       Rails.logger.debug jb.message_for_comment(self)
       #Rails.logger.debug jb.send_message
       Rails.logger.debug jb.send_message
+
+      #send note to project room
+      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      begin
+        client[self.commentable.discussable.project.name].send('bot', "New comment in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+      rescue
+        client['abulafia'].send('bot', "No room #{self.project.name}", color: 'red', notify: true)
+      end
+
     end
   end
   # handle_asynchronously :notify
