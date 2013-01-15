@@ -25,9 +25,8 @@
 //= require bootstrap-typeahead.js
 //= require bootstrap
 //= require jquery.autosize
-//= jquery-ui.triggeredAutocomplete.js
-//= require select2
-
+//= jquery-ui.triggeredAutocomplete
+//= jquery.ui.touch-punch.min
 
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").live("click", function () {

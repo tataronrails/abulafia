@@ -42,36 +42,37 @@
 
 
 
-  -@users.each do |u|
-    .alone_comment_cube
-      .row-fluid
-        .pull-right.span1
-          -unless u == current_user
-            =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
-              %i.icon.icon-remove
-        .span2
-          .avatar
-            =gravatar_image_tag(u.email)
-        .span9
-          =truncate u.fio
-          -#%h4= u.login
-          %br
-          as
-          =truncate u.role_in_project(@project)
-          -#first name:
-          -#=u.first_name
-          -#%br/
-          -#second_name:
-          -#=u.second_name
-          -#=u.login
-          -#%br
-          -#Phone:
-          %p
-          -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
-            %small
-              Not accepted invitation yet
-              =link_to :reinvite, reinvite_user_path(@project, u)
-          - else
-            %small
-              Last sign in:
-              =distance_of_time_in_words_to_now(u.last_sign_in_at)
+  .container.users_grid{:style=>"position: relative;"}
+    -@users.each do |u|
+      .alone_comment_cube
+        .row-fluid
+          .pull-right.span1
+            -unless u == current_user
+              =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
+                %i.icon.icon-remove
+          .span2
+            .avatar
+              =gravatar_image_tag(u.email)
+          .span9
+            =truncate u.fio
+            -#%h4= u.login
+            %br
+            as
+            =truncate u.role_in_project(@project)
+            -#first name:
+            -#=u.first_name
+            -#%br/
+            -#second_name:
+            -#=u.second_name
+            -#=u.login
+            -#%br
+            -#Phone:
+            %p
+            -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
+              %small
+                Not accepted invitation yet
+                =link_to :reinvite, reinvite_user_path(@project, u)
+            - else
+              %small
+                Last sign in:
+                =distance_of_time_in_words_to_now(u.last_sign_in_at)
