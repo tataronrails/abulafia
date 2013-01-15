@@ -60,7 +60,7 @@ class Comment < ActiveRecord::Base
       begin
         client[self.commentable.discussable.project.name].send('bot', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
       rescue
-        client['abulafia'].send('bot', "Can not find hipchat room for ptoject \"#{self.commentable.discussable.project.name}\"", color: 'red', notify: true)
+        client['abulafia'].send('bot', "Can not find hipchat room for project \"#{self.commentable.discussable.project.name}\"", color: 'red', notify: true)
       end
 
     end
