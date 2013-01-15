@@ -9,20 +9,21 @@
 
 =content_for :right_column do
   - if @user.discussion.comments
-    .lead
-      %i.icon-folder-open-alt
-      Notes
-      =link_to "#", :class=> "add_note_to_user_toggle" do
-        %i.icon-plus.green
+    .row-fluid.span3
+      .lead
+        %i.icon-folder-open-alt
+        Notes
+        =link_to "#", :class=> "add_note_to_user_toggle" do
+          %i.icon-plus.green
 
-    .form_to_add_note.h
-      =form_tag add_new_comment_to_contact_path(params[:id]), :id => "add_new_comment_to_contact" , :remote => true do |f|
-        =hidden_field_tag "user_id", current_user.id
-        =text_area_tag "user[comment]", "", :class => "span5"
-        .row-fluid
-          =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
-    #comments_line
-      = render :partial => @user.discussion.comments
+      .form_to_add_note.h
+        =form_tag add_new_comment_to_contact_path(params[:id]), :id => "add_new_comment_to_contact" , :remote => true do |f|
+          =hidden_field_tag "user_id", current_user.id
+          =text_area_tag "user[comment]", "", :class => "span10"
+          .row-fluid
+            =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
+      #comments_line
+        = render :partial => @user.discussion.comments
 
 
 .row

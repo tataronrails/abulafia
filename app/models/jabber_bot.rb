@@ -167,6 +167,7 @@ class JabberBot
 
   def message_for_comment(comment)
     self.message = " New comment \"#{comment.comment}\""+
+        " by: \"#{comment.user.login}\""+
         ", Discussion: \"#{comment.commentable.title}\""+
         ", Project: \"#{comment.commentable.discussable.project.name}\"" +
         ", Url: #{get_task_url(comment.commentable.discussable)}"

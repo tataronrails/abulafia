@@ -49,7 +49,7 @@ class ContactsController < ApplicationController
     @user = User.find(params[:id])
 
     unless @user.discussion
-      @user.create_discussion!(:title => @user.login)
+      @user.create_discussion!(:title => "Discussion by: #{@user.login}")
     end
     @invitation_accepted_list = User.invitation_accepted.map(&:email)
   end
