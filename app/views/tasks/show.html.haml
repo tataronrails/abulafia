@@ -113,14 +113,12 @@
   =form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|
     =hidden_field_tag "user_id", current_user.id
     =hidden_field_tag "id", @task.id
-
     =text_area_tag "task[comment]", "", :class => "span12"
     .row-fluid
       =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
       .info.pull-right
         %i.icon-external-link
         %small= link_to "Как пользоваться Markdown?", "http://rukeba.com/blog/2009/02/28/markdown-sintaksis-po-russki/", :target => "_blank"
-
     %p
     .row-fluid
       %small
@@ -131,10 +129,6 @@
             Users to notify
             -@task.discussion.notificable_users(current_user).each do |u|
               = gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
-
-
-
-
 
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 
