@@ -25,7 +25,7 @@ class Discussion < ActiveRecord::Base
       project = self.discussable
     end
 
-    if self.comments.count == 1
+    if self.comments.count <= 1
       if project.present?
         project.users.where("users.id <> ?", ignored_user)
       else

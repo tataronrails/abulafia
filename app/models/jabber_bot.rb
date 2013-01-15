@@ -1,6 +1,6 @@
 class JabberBot
   # To change this template use File | Settings | File Templates.
-  attr_accessor :user, :message, :bot
+  attr_accessor :user, :message, :bot, :room, :room_message
 
   include Rails.application.routes.url_helpers
 
@@ -8,6 +8,8 @@ class JabberBot
     @options = args.extract_options!
     self.user = @options.delete(:user).presence || nil
     self.message = @options.delete(:message).presence || nil
+    self.room = @options.delete(:room).presence || nil
+    self.room_message = @options.delete(:room_message).presence || nil
     self.bot = $hipchat_bot
     self
   end
@@ -51,14 +53,18 @@ class JabberBot
         end
 
         if u.hc_user_id.nil?
+          #send sms
+
+
           #email send
-          begin
-            client['abulafia'].send('bot', "send mail becouse no hipchat id", :color => 'yellow', :notify => true)
-            BotMailer.send_email(u, self.message).deliver
-          rescue
-            Rails.logger.error "ERROR send!"
-            client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
-          end
+
+          #begin
+          #  client['abulafia'].send('bot', "send mail becouse no hipchat id", :color => 'yellow', :notify => true)
+          #  BotMailer.send_email(u, self.message).deliver
+          #rescue
+          #  Rails.logger.error "ERROR send!"
+          #  client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
+          #end
         else
           address ="#{KEYS['bot']['hipchat']['company']}_#{u.hc_user_id}@#{KEYS['bot']['hipchat']['host']}"
           message = Jabber::Message::new(address, self.message)
@@ -83,18 +89,22 @@ class JabberBot
             break
           end
           if @mail_flag
-            # email send
-            begin
-              Rails.logger.error "bots is down!!!"
-              client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
-              client['abulafia'].send('bot', "send mail", :color => 'yellow', :notify => true)
-              BotMailer.send_email(u, self.message).deliver
-            rescue
-              Rails.logger.error "ERROR send!"
-              client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
-            end
+            # send sms
+
+
+            #begin
+            #  Rails.logger.error "bots is down!!!"
+            #  client['abulafia'].send('bot', "BOT is down! IOError", :color => 'red', :notify => true)
+            #  client['abulafia'].send('bot', "send mail", :color => 'yellow', :notify => true)
+            #  BotMailer.send_email(u, self.message).deliver
+            #rescue
+            #  Rails.logger.error "ERROR send!"
+            #  client['abulafia'].send('bot', "ERROR send mail", :color => 'red', :notify => true)
+            #end
           end
         end
+
+
         #begin
         #  sending_robot = robot.send(message)
         #
@@ -119,6 +129,13 @@ class JabberBot
         #end
 
       end
+
+      #send note to project room
+      begin
+        client[self.room].send('bot', self.room_message, :color => 'yellow', :notify => true)
+      rescue
+        client['abulafia'].send('bot', "No room #{self.room}", color: 'red', notify: true)
+      end
     end
   end
 
@@ -133,11 +150,19 @@ class JabberBot
 
 
   def message_for_task(task)
-
-    self.message = "Task assigned to you: \"#{task.title}\" in project " +
+    self.message = "Task assigned to you: \"#{task.title}\" in Project " +
         " \"#{task.project.name}\", "+
         "by #{task.owner.fio}, "+
-        "url: #{get_task_url(task)}"
+        "Url: #{get_task_url(task)}"
+  end
+
+  def room_message_for_task(task)
+    self.room_message = "Task \"#{task.title}\" assigned to user #{self.user.first.fio}" +
+        ", Url: #{get_task_url(task)}"
+  end
+
+  def room_for_task(task)
+    self.room = task.project.name
   end
 
   def message_for_comment(comment)
@@ -145,6 +170,15 @@ class JabberBot
         ", Discussion: \"#{comment.commentable.title}\""+
         ", Project: \"#{comment.commentable.discussable.project.name}\"" +
         ", Url: #{get_task_url(comment.commentable.discussable)}"
+  end
+
+  def room_message_for_comment(comment)
+    self.room_message = "New comment \"#{comment.comment}\" in Discussion: \"#{comment.commentable.title}\"" +
+        "by user #{comment.user.fio}, Url: #{get_task_url(comment.commentable.discussable)}"
+  end
+
+  def room_for_comment(comment)
+    self.room = comment.commentable.discussable.project.name
   end
 
 end

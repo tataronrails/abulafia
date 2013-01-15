@@ -46,14 +46,7 @@ class Comment < ActiveRecord::Base
       #end
 
 
-      #Rails.logger.info "--- users to notify---"
-      #Rails.logger.info users_to_notify.to_json
-      #
-      #Rails.logger.info "--- jabber bot init ---"
-      #Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
-      #Rails.logger.debug jb.message_for_comment(self)
-      #Rails.logger.debug jb.send_message
-      #Rails.logger.debug jb.send_message
+ 
     end
   end
   # handle_asynchronously :notify

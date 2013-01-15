@@ -133,10 +133,14 @@ class Task < ActiveRecord::Base
     Rails.logger.debug "*** notify_assigned_user -> Task.rb ***"
     unless self.assigned_to_was == self.assigned_to
       assigned_user = []
-      assigned_user.push User.find(self.assigned_to)
+      ass_user = User.find(self.assigned_to)
+      assigned_user.push ass_user
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
-      Rails.logger.info jb.send_message
+      jb.room_message_for_task(self)
+      jb.room_for_task(self)
+      Rails.logger.info  jb.send_message
+
       #begin
       #Rails.logger.info jb.send_message
       #rescue Exception
