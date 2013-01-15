@@ -179,6 +179,7 @@ class JabberBot
   end
 
   def room_for_comment(comment)
+    raise "room_for_comment"
     self.room = comment.commentable.discussable.project.name
   end
 
