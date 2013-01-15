@@ -53,7 +53,7 @@ class JabberBot
         end
 
         if u.hc_user_id.nil?
-          #send sms
+          #TODO: send sms
 
 
           #email send
