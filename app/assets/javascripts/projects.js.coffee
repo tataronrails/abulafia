@@ -34,7 +34,7 @@ window.accept_task = (task_id) ->
     project_id = $('body').data('project_id')
 
     $.ajax(
-      url: "/tasks/" + task_id + "/update_points"
+      url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
       type: "post",
       data:
         {'status': 6, 'project_id': project_id}
@@ -123,7 +123,7 @@ labels_click_bind = () ->
 
     if status == "to_backlog"
       $.ajax(
-        url: "/tasks/" + task_id + "/to_backlog"
+        url:  "/projects/"+project_id+"/tasks/" + task_id + "/to_backlog"
         type: "post",
         data:
           { 'project_id': project_id}
@@ -145,7 +145,7 @@ labels_click_bind = () ->
       next_status =  parseInt(status, 10) + 1
 
       $.ajax(
-        url: "/tasks/" + task_id + "/update_points"
+        url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
         type: "post",
         data:
           {'status': next_status, 'project_id': project_id}
@@ -162,7 +162,7 @@ labels_click_bind = () ->
       next_status =  parseInt(status, 10) + 1
 
       $.ajax(
-        url: "/tasks/" + task_id + "/update_points"
+        url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
         type: "post",
         data:
           {'status': next_status, 'project_id': project_id}
@@ -180,7 +180,7 @@ labels_click_bind = () ->
       next_status =  parseInt(status, 10) + 1
 
       $.ajax(
-        url: "/tasks/" + task_id + "/update_points"
+        url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
         type: "post",
         data:
           {'status': next_status, 'project_id': project_id}
@@ -263,7 +263,7 @@ $ ->
 
 
     $.ajax(
-      url: "/tasks/" + task_id + "/update_points"
+      url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
       type: "post",
       data:
         {'points': points}

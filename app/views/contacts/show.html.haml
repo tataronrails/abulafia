@@ -7,12 +7,24 @@
     =link_to "Contacts", contacts_list_path
 
 
+=content_for :right_column do
+  - if @user.discussion.comments
+    .row-fluid.span3
+      .lead
+        %i.icon-folder-open-alt
+        Notes
+        =link_to "#", :class=> "add_note_to_user_toggle" do
+          %i.icon-plus.green
 
--#%i.icon-bell-alt.red
--#-@user.strikes.each do |s|
--#  =s.desc
--#  ,
--#  =distance_of_time_in_words_to_now s.created_at
+      .form_to_add_note.h
+        =form_tag add_new_comment_to_contact_path(params[:id]), :id => "add_new_comment_to_contact" , :remote => true do |f|
+          =hidden_field_tag "user_id", current_user.id
+          =text_area_tag "user[comment]", "", :class => "span10"
+          .row-fluid
+            =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
+      #comments_line
+        = render :partial => @user.discussion.comments
+
 
 .row
   .span2
@@ -24,27 +36,27 @@
 %table.table.table-striped
   %tr
     %td
-      name:
+      Name:
     %td
       =@user.fio
   %tr
     %td
-      e-mail:
+      E-mail:
     %td
       =@user.email
   %tr
     %td
-      login:
+      Login:
     %td
       =@user.login
   %tr
     %td
-      initials:
+      Initials:
     %td
       =@user.initials
   %tr
     %td
-      cell:
+      Cell:
     %td
       =@user.cell
   %tr
@@ -54,7 +66,7 @@
       =@user.im
   %tr
     %td
-      hip chat user_id:
+      Hip chat user_id:
     %td
       =@user.hc_user_id
 
@@ -77,6 +89,12 @@
         %i.icon-bell-alt.orange
       =link_to "#" do
         %i.icon-plus.green.toggle_create_strike
+
+  %tr
+    %td
+      Description:
+    %td
+      =@user.desc
 
 
 .new_strike

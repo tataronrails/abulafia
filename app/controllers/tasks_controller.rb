@@ -2,7 +2,6 @@ class TasksController < ApplicationController
   load_and_authorize_resource :task
 
   def accept_to_start
-
     task = Task.find(params[:task_id])
 
     if task.update_attribute(:accepted_to_start, Time.now)
@@ -19,10 +18,6 @@ class TasksController < ApplicationController
     else
       flash[:notice] = "Error"
     end
-
-
-
-
   end
 
   def finish_work
@@ -62,7 +57,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to project_task_path(@task.project, @task), notice: 'Task was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

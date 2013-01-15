@@ -1,5 +1,3 @@
-
-
 - if @task.task_type == "0" &&  @task.behavior.present?
   =content_for :right_column do |c|
     .lead
@@ -49,7 +47,6 @@
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
 
-  -#if not done and not user story
   -unless [0,1,2].include?(@task.task_type.to_i)
     - unless @task.finished_at.present?
       .accept_task{:class => classes_to_add}
@@ -57,7 +54,7 @@
           -#если в задаче есть поле начал
           - if @task.accepted_to_start.present?
             - if current_user.eql? @task.assigned_to_user
-              =link_to task_finish_work_path(@task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
+              =link_to project_task_finish_work_path(@task.project, @task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
                 %i.icon-question-sign
                 &nbsp;
                 Is work the complete?
@@ -69,7 +66,7 @@
           -else
             #accept_me
               - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
-                =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+                =link_to project_task_accept_to_start_path(@task.project, @task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
                   %i.icon-thumbs-up
                   &nbsp;
                   Accept to start
@@ -85,7 +82,7 @@
     #{@task.title}
 
 
-    =link_to edit_task_path(@task) do |l|
+    =link_to edit_project_task_path(@task.project, @task) do |l|
       %i.icon-edit
     - if @task.tag_list.present?
       .row-fluid
@@ -113,26 +110,28 @@
             =distance_of_time_in_words_to_now @task.finished_at
 .row-fluid
   .lead Discussion:
-  =form_tag task_add_new_comment_path(params[:id]), :remote => true do |f|
+  =form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|
     =hidden_field_tag "user_id", current_user.id
     =hidden_field_tag "id", @task.id
-
     =text_area_tag "task[comment]", "", :class => "span12"
     .row-fluid
       =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
       .info.pull-right
         %i.icon-external-link
         %small= link_to "Как пользоваться Markdown?", "http://rukeba.com/blog/2009/02/28/markdown-sintaksis-po-russki/", :target => "_blank"
-
     %p
     .row-fluid
       %small
         %i.icon-paper-clip
         =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
+        - if @task.discussion.notificable_users(current_user).count > 0
+          .info.pull-right
+            Users to notify
+            -@task.discussion.notificable_users(current_user).each do |u|
+              = gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
+
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 
-
 #comments_line
-  -#= render :partial => "comments", :locals => {:comments => @task.discussion.comments, :list_of_mentions => @list_of_mentions}
   = render :partial => @task.discussion.comments
 

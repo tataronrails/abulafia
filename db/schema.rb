@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105062513) do
+ActiveRecord::Schema.define(:version => 20130114145427) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20130105062513) do
     t.integer  "user_id"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
@@ -162,8 +163,8 @@ ActiveRecord::Schema.define(:version => 20130105062513) do
     t.integer  "status",               :default => 0
     t.integer  "owner_id"
     t.integer  "assigned_to"
-    t.date     "start"
-    t.date     "end"
+    t.datetime "start"
+    t.datetime "end"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "project_id"

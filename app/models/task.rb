@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked owner: Proc.new { |controller, model| controller.current_user }
+  tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   scope :not_finished, where("end > Time.now")
 
@@ -133,10 +133,24 @@ class Task < ActiveRecord::Base
     Rails.logger.debug "*** notify_assigned_user -> Task.rb ***"
     unless self.assigned_to_was == self.assigned_to
       assigned_user = []
-      assigned_user.push User.find(self.assigned_to)
+      ass_user = User.find(self.assigned_to)
+      assigned_user.push ass_user
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
-      Rails.logger.info  jb.send_message
+      jb.room_message_for_task(self)
+      jb.room_for_task(self)
+      Rails.logger.info jb.send_message
+
+
+      #send note to project room
+      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      begin
+        client[self.project.name].send('bot', "Task \"#{self.title}\" assigned to user <b>#{ass_user.login}</b> #{gravatar_image_tag(ass_user.login)}", :color => 'yellow', :notify => true)
+      rescue
+        client['abulafia'].send('bot', "No room #{self.project.name}", color: 'red', notify: true)
+      end
+
+
       #begin
       #Rails.logger.info jb.send_message
       #rescue Exception

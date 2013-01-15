@@ -39,7 +39,7 @@ class StrikesController < ApplicationController
 
     respond_to do |format|
       if @strike.update_attributes(params[:strike])
-        format.html { redirect_to strikes_path, notice: 'Strike was successfully updated.' }
+        format.html { redirect_to strikes_path, notice: 'Strike was successfully updated.'}
         format.json { head :no_content }
       else
         format.html { redirect_to strikes_path, notice: 'Strike was not updated.' }

@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-
+  acts_as_paranoid
   include ActsAsCommentable::Comment
 
 
@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
   validates_length_of :comment, :minimum => 2
 
   include PublicActivity::Model
-  tracked owner: Proc.new { |controller, model| controller.current_user }
+  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model|  if model.kind_of?(Task); model.commentable.discussable.project; end; })
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -54,8 +54,16 @@ class Comment < ActiveRecord::Base
       Rails.logger.debug jb.message_for_comment(self)
       #Rails.logger.debug jb.send_message
       Rails.logger.debug jb.send_message
+
+      #send note to project room
+      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      begin
+        client[self.commentable.discussable.project.name].send('bot', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+      rescue
+        client['abulafia'].send('bot', "Can not find hipchat room for ptoject \"#{self.commentable.discussable.project.name}\"", color: 'red', notify: true)
+      end
+
     end
   end
-  # handle_asynchronously :notify
 
 end

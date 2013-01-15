@@ -6,6 +6,74 @@
   %li.active
     Contacts
 
+
+%h4
+  =link_to "#", :class => "green create_user_link"  do
+    %i.icon-plus.green
+    %i.icon-user.green
+
+.well.well-large.h
+  %h3 New user
+  -if flash[:errors]
+    %ul
+      -flash[:errors].full_messages.each do |m|
+        .alert-error
+          %li= m
+
+
+  =form_for @user, url: contact_create_virtual_user_path do |f|
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-user
+      =f.text_field :first_name, :placeholder => "First name", :class => "span3"
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-user-md
+      =f.text_field :second_name, :placeholder => "Second Name", :class => "span3"
+      %p/
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-envelope
+      =f.text_field :email, :placeholder => "Email", :class => "span3"
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-group
+      =f.text_field :login, :placeholder => "Login", :class => "span3"
+
+    .input-prepend
+      %span.add-on
+        I
+      =f.text_field :initials, :placeholder => "Initials", :class => "span3"
+
+    %p/
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-phone
+      =f.text_field :cell, :placeholder => "Phone number", :class => "span3"
+
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-comment-alt
+      =f.text_field :im, :placeholder => "Skype or GTalk", :class => "span3"
+
+    .input-prepend
+      %span.add-on
+        %icon.icon-comments
+      =f.text_field :hc_user_id, :placeholder => "Hipchat user id", :class => "span3"
+    .desc
+      =f.text_area :desc, :placeholder => "Description"
+
+    .form-actions
+      =f.button :class => "btn btn-success"
+
+
+
 -@users.each do |u|
   %table.table.table-striped
     %tr.span12

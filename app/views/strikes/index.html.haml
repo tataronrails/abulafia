@@ -35,7 +35,7 @@
       %td.span3
         -if Task.exists?(s.task_id)
           -@task = Task.find(s.task_id)
-          =link_to task_path(s.task_id)  do
+          =link_to project_task_path(@task.project, @task)  do
             =@task.title
       %td.span1
         =link_to strike_path(s.id), :method => "delete", :confirm => "Sure?" do
