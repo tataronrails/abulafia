@@ -54,7 +54,7 @@
           -#если в задаче есть поле начал
           - if @task.accepted_to_start.present?
             - if current_user.eql? @task.assigned_to_user
-              =link_to task_finish_work_path(@task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
+              =link_to project_task_finish_work_path(@task.project, @task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
                 %i.icon-question-sign
                 &nbsp;
                 Is work the complete?
@@ -66,7 +66,7 @@
           -else
             #accept_me
               - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
-                =link_to task_accept_to_start_path(@task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+                =link_to project_task_accept_to_start_path(@task.project, @task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
                   %i.icon-thumbs-up
                   &nbsp;
                   Accept to start

@@ -103,7 +103,7 @@
                         =image_tag "select_"+a+"pt_fibonacci.gif", :rel => a
 
                     %div.hours.h{:class =>"span3 pull-right hours_"+t.id.to_s, :style =>"border:0px solid red"}
-                      =form_tag task_update_hours_spend_on_task_path(t), :remote => true do |f|
+                      =form_tag project_task_update_hours_spend_on_task_path(t.project, t), :remote => true do |f|
                         =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
 
 
