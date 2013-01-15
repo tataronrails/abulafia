@@ -135,5 +135,5 @@
                             ,
                             %i.icon-envelope{:title => "remind via hipchat"}
                   -else
-                    .done_title= link_to t.title, task_path(t)
+                    .done_title= link_to t.title, project_task_path(t.project, t)
 

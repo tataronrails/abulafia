@@ -64,7 +64,7 @@
           = distance_of_time_in_words_to_now comm.created_at
       -task = comm.commentable.discussable
       %i.icon-comment-alt
-      =link_to project_tasks_path(task.project, task) do
+      =link_to project_task_path(task.project, task) do
         =truncate(comm.comment, :length => 50)
         .title.pull-right
           %small
