@@ -126,10 +126,11 @@
       %small
         %i.icon-paper-clip
         =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
-        .info.pull-right
-          Users to notify
-          -@task.discussion.notificable_users(current_user).each do |u|
-            = gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
+        - if @task.discussion.notificable_users(current_user).count > 0
+          .info.pull-right
+            Users to notify
+            -@task.discussion.notificable_users(current_user).each do |u|
+              = gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
 
 
 
