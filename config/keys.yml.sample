@@ -1,5 +1,6 @@
 bot:
   hipchat:
+    token:
     host:
     company:
     password:
