@@ -66,7 +66,7 @@ class Comment < ActiveRecord::Base
       begin
         if self.commentable.discussable.kind_of? User
           user = self.commentable.discussable
-          client["Human Resources dept."].send('abulafia', "+ Note <b>\"#{self.comment}\"</b> to user <a href ='http://abulafia.ru/contacts/#{user.id.to_s}'>#{user.fio ? user.fio : user.email}</a> by user #{self.user.login}", :color => 'yellow', :notify => true)
+          client["Human Resources dept."].send('abulafia', "+ Note <b>\"#{self.comment}\"</b> to user <a href ='http://abulafia.ru/contacts/#{user.id.to_s}'>#{user.fio ? user.fio : user.email}</a>", :color => 'yellow', :notify => true)
         else
           client[self.commentable.discussable.project.name].send('abulafia', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
         end
