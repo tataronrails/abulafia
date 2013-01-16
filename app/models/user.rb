@@ -5,9 +5,17 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
-  validates_uniqueness_of :login
-  validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
 
+  with_options :if => :is_virtual_user? do |user|
+    user.validates_uniqueness_of :login
+    user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
+  end
+
+  #invitation_accepted_at
+
+  #validates_uniqueness_of :login
+
+  #validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
 
   after_create :assign_discussion_to_user
 
@@ -23,7 +31,7 @@ class User < ActiveRecord::Base
   has_one :discussion, :as => :discussable
 
 
-  ACTIVITY_INTERVAL=0.minutes
+  ACTIVITY_INTERVAL=10.minutes
 
 
   def role_in_project project_id
@@ -41,7 +49,7 @@ class User < ActiveRecord::Base
 
   def is_online?
     last_activity = PublicActivity::Activity.where(owner_id: self).order('created_at desc').first
-    last_activity.present? && (Time.now - last_activity.created_at) <  ACTIVITY_INTERVAL
+    last_activity.present? && (Time.now - last_activity.created_at) < ACTIVITY_INTERVAL
   end
 
 
@@ -51,9 +59,11 @@ class User < ActiveRecord::Base
   end
 
 
-
   def assign_discussion_to_user
     self.create_discussion!(:title => self.login)
   end
 
+  def is_virtual_user?
+    self.invitation_sent_at.nil?
+  end
 end

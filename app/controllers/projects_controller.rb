@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
 
   def update_icebox
     project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.icebox, :place => "icebox" , :updated_task => nil}
+    render :partial => "projects/story", :locals => {:tasks => project.icebox, :place => "icebox", :updated_task => nil}
   end
 
   def update_backlog
@@ -70,33 +70,31 @@ class ProjectsController < ApplicationController
 
       if pm.save
         flash[:notice] = "User now can see current project"
+      else
+        raise pm.erors.to_json
+      end
+    else
+      #User not exist, we must create ProjectMembership link and send invitation
+
+      begin
+        u = User.invite!(:email => email)
+      rescue
+        raise u.to_json
       end
 
-    else
-      User.invite!(:email => email)
+      #Rails.logger.info "*** ***"
+      #Rails.logger.info u.to_json
+      #Rails.logger.info "*** ***"
+      #
+      pm = ProjectMembership.new(:user => u, :project => project, :role => role)
 
-      pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)
       if pm.save
         flash[:notice] = "User was invited to project"
+      else
+        raise pm.errors.to_json
       end
     end
-
-    #raise params.to_json
-
-    #user.update_attributes(:first_name => "222")
-    #
-    #begin
-    #  user.first_name = first_name
-    #  user.second_name = second_name
-    #  user.save
-    #rescue
-    #end
-
-    #user.update_attributes(:first_name => first_name, :second_name => second_name)
-
-
     redirect_to :back
-
   end
 
   def reinvite_user
@@ -130,8 +128,6 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-
-
 
 
     @project = Project.find(params[:id])
