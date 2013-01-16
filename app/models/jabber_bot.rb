@@ -1,6 +1,6 @@
 class JabberBot
   # To change this template use File | Settings | File Templates.
-  attr_accessor :user, :message, :bot, :room, :room_message
+  attr_accessor :user, :message, :bot, :room, :room_message, :sms_text
 
   include Rails.application.routes.url_helpers
 
@@ -10,6 +10,7 @@ class JabberBot
     self.message = @options.delete(:message).presence || nil
     self.room = @options.delete(:room).presence || nil
     self.room_message = @options.delete(:room_message).presence || nil
+    self.sms_text = @options.delete(:sms_text).presence || nil
     self.bot = $hipchat_bot
     self
   end
@@ -20,7 +21,7 @@ class JabberBot
   end
 
   def change
-    client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+    client = HipChat::Client.new(KEYS['bot']['hipchat']['token'])
     Rails.logger.debug "*** Change bot ***"
     KEYS['bot']['hipchat']['jid'].each do |jid|
       unless self.bot.jid.to_s == "#{jid}/none"
@@ -43,7 +44,7 @@ class JabberBot
   def send_message
     Rails.logger.debug "**** Send message ****"
     if self.user.present?
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      client = HipChat::Client.new(KEYS['bot']['hipchat']['token'])
 
       self.user.each do |u|
         begin
@@ -54,6 +55,13 @@ class JabberBot
 
         if u.hc_user_id.nil?
           #TODO: send sms
+          begin
+            client['abulafia'].send('bot', "No hipchat id, send sms", :color => 'yellow', :notify => true)
+            sms = SMS.new(number: u.cell, message: self.text_for_sms)
+            sms.send!
+          rescue
+            client['abulafia'].send('bot', "Error send sms!", :color => 'yellow')
+          end
 
 
           #email send
@@ -91,6 +99,13 @@ class JabberBot
           if @mail_flag
             # send sms
 
+            begin
+              client['abulafia'].send('bot', "bot is down!, send sms", :color => 'yellow', :notify => true)
+              sms = SMS.new(number: u.cell, message: self.text_for_sms)
+              sms.send!
+            rescue
+              client['abulafia'].send('bot', "Error send sms!", :color => 'yellow')
+            end
 
             #begin
             #  Rails.logger.error "bots is down!!!"
@@ -134,7 +149,7 @@ class JabberBot
       begin
         client[self.room].send('bot', self.room_message, :color => 'yellow', :notify => true)
       rescue
-        client['abulafia'].send('bot', "No room #{self.room}", color: 'red', notify: true)
+        client['abulafia'].send('bot',  "Can not find hipchat room for project \"#{self.room}\"", color: 'red', notify: true)
       end
     end
   end
@@ -150,15 +165,22 @@ class JabberBot
 
 
   def message_for_task(task)
-    self.message = "Task assigned to you: \"#{task.title}\" in Project " +
+    self.message = "Task assigned to you: \"#{task.title}\" in Project" +
         " \"#{task.project.name}\", "+
         "by #{task.owner.fio}, "+
         "Url: #{get_task_url(task)}"
   end
 
+  def sms_for_task(task)
+    self.sms_text = "Task assigned to you Url:  #{get_task_url(task)}"
+  end
+
   def room_message_for_task(task)
-    self.room_message = "Task \"#{task.title}\" assigned to user #{self.user.first.fio}" +
-        ", Url: #{get_task_url(task)}"
+    self.room_message = "Task <b>\"#{task.title}\"</b> assigned to user <b>#{self.user.first.login}</b>"
+        #" #{gravatar_image_tag(self.user.first.login)}"
+
+    #self.room_message = "Task \"#{task.title}\" assigned to user #{self.user.first.fio}" +
+    #    ", Url: #{get_task_url(task)}"
   end
 
   def room_for_task(task)
@@ -173,13 +195,17 @@ class JabberBot
         ", Url: #{get_task_url(comment.commentable.discussable)}"
   end
 
+  def sms_for_comment(comment)
+    self.sms_text = "New comment in discussion Url: #{get_task_url(comment.commentable.discussable)}"
+  end
+
   def room_message_for_comment(comment)
-    self.room_message = "New comment \"#{comment.comment}\" in Discussion: \"#{comment.commentable.title}\"" +
-        "by user #{comment.user.fio}, Url: #{get_task_url(comment.commentable.discussable)}"
+    self.room_message = "+ comment: \"#{comment.comment}\" in discussion #{get_task_url(comment.commentable.discussable)} by user <b>#{comment.user.login}</b>"
+    #self.room_message = "New comment \"#{comment.comment}\" in Discussion: \"#{comment.commentable.title}\"" +
+    #    "by user #{comment.user.fio}, Url: #{get_task_url(comment.commentable.discussable)}"
   end
 
   def room_for_comment(comment)
-    raise "room_for_comment"
     self.room = comment.commentable.discussable.project.name
   end
 
