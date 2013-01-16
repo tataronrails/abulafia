@@ -35,7 +35,15 @@ class ProjectsController < ApplicationController
 
 
   def kick_out_users
+    user = User.find(params[:user_id])
+    project = Project.find(params[:project_id])
+
+    client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+    message = "Kicked out user <b>#{user.fio}</b> from project"
+    client[project.name].send('abulafia', message, :color => 'red', :notify => false)
+
     ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
+
     redirect_to :back, :notice => "User was kicked out from project!"
   end
 
@@ -61,7 +69,7 @@ class ProjectsController < ApplicationController
     #first_name = params[:invitation][:first_name]
     #second_name = params[:invitation][:second_name]
     role = params[:role]
-    user =User.where(:email => email).first
+    user = User.where(:email => email).first
 
     project = Project.find(params[:project_id])
 
@@ -70,6 +78,12 @@ class ProjectsController < ApplicationController
 
       if pm.save
         flash[:notice] = "User now can see current project"
+
+        client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+        message = "Invited existed user <b>#{user.fio}</b> to project as #{role}"
+        client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
+
+
       else
         raise pm.erors.to_json
       end
@@ -90,6 +104,10 @@ class ProjectsController < ApplicationController
 
       if pm.save
         flash[:notice] = "User was invited to project"
+
+        client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+        message = "Invited <b>new</b> user with email <b>#{u.email}</b> as #{role}, invitation email was sent!"
+        client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
       else
         raise pm.errors.to_json
       end
