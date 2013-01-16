@@ -47,8 +47,7 @@
       %blockquote
 
         -pm.projects.each do |project|
-          - if project.project_manager && project.is_department == false && project.project_manager == pm
-            = project.users.include? current_user
+          - if project.project_manager && project.is_department == false && project.project_manager == pm &&  project.users.include?(current_user)
             .project_alone
               %i.icon-leaf
               = link_to project.name, project
@@ -59,8 +58,7 @@
 
 
   - @projects.without_departments.each do |project|
-    - if project.project_manager.nil?
-      = project.users.include? current_user
+    - if project.project_manager.nil? && project.users.include?(current_user)
       .project_alone
         %i.icon-leaf
         = link_to project.name, project
