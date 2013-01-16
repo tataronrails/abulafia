@@ -43,7 +43,6 @@ class ProjectsController < ApplicationController
     client[project.name].send('abulafia', message, :color => 'red', :notify => false)
 
     ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
-
     redirect_to :back, :notice => "User was kicked out from project!"
   end
 
