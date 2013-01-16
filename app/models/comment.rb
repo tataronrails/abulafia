@@ -61,10 +61,23 @@ class Comment < ActiveRecord::Base
       #send note to project room
       client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
 
+      #raise self.commentable.discussable.email.to_json
+
       begin
-        client[self.commentable.discussable.project.name].send('bot', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+        if self.commentable.discussable.kind_of? User
+          user = self.commentable.discussable
+          client["Human Resources dept."].send('abulafia', "+ Note <b>\"#{self.comment}\"</b> to user <a href ='http://abulafia.ru/contacts/#{user.id.to_s}'>#{user.fio ? user.fio : user.email}</a> by user #{self.user.login}", :color => 'yellow', :notify => true)
+        else
+          client[self.commentable.discussable.project.name].send('abulafia', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+        end
+
       rescue HipChat::UnknownRoom
-        client['abulafia'].send('bot', "Error sending notification to room <b>#{self.commentable.discussable.project.name}</b>", color: 'red', notify: true)
+        if self.commentable.discussable.kind_of? User
+          obj = ""
+        else
+          obj = self.commentable.discussable.project.name
+        end
+        client['abulafia'].send('bot', "Error sending notification to room <b>#{obj}</b>", color: 'red', notify: true)
       end
 
     end
