@@ -3,9 +3,7 @@ class ProjectsController < ApplicationController
 
   def progress
     @activities = PublicActivity::Activity.where(:recipient_id => [current_user.projects.map(&:id)]).order("created_at DESC")
-
   end
-
 
   def update_icebox
     project = Project.find(params[:project_id])
@@ -148,13 +146,11 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
 
-
     @project = Project.find(params[:id])
     @discussion = @project.discussions.new
     @task = @project.tasks.new
     @project_users = @project.users
     #.delete_if{|u| u==current_user}
-
 
     begin
       @task.discussion
