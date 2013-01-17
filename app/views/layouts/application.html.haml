@@ -46,12 +46,13 @@
               -#- else
               -#  %li
               -#    = link_to t( :projects), projects_path, :class =>"capitalize"
-              %li
-                = link_to my_tasks_path, :class =>"capitalize" do
-                  %i.icon-check
-                  My tasks
-                  .label.label-inverse
-                    =current_user.my_tasks.count
+              - if current_user
+                %li
+                  = link_to my_tasks_path, :class =>"capitalize" do
+                    %i.icon-check
+                    My tasks
+                    .label.label-inverse
+                      =current_user.my_tasks.count
               %li
                 = link_to progress_path, :class =>"capitalize" do
                   %i.icon-dashboard
