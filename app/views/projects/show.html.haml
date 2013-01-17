@@ -33,17 +33,17 @@
   .row-fluid
     .control-group
       .controls
-        .input-prepend
-          %span.add-on
-            %i.icon-tasks.green
-          = f.text_field :title, :placeholder => "Enter draft task", :class => "span11", :autocomplete =>  "off"
-          = f.hidden_field :project_id, :value => @project.id
-%p
-  По умолчанию все задачи создаются в состоянии "Черновик". Во время редактирования можно добавить и исполнителя и один из 7 типов задачи.
-
-%strong #feature, #bug, #chore -
-эти ключи в начале делают задачу с типом Фича, Баг, Работенка.
-Пример: #bug Сделать пример использования бага или #bug, Это также работает
+        -#.input-prepend
+          -#%span.add-on
+            -#%i.icon-tasks.green
+        = f.text_area :title, :placeholder => "Enter draft task", :class => "span11", :autocomplete =>  "off"
+        = f.hidden_field :project_id, :value => @project.id
+-#%p
+-#  По умолчанию все задачи создаются в состоянии "Черновик". Во время редактирования можно добавить и исполнителя и один из 7 типов задачи.
+-#
+-#%strong #feature, #bug, #chore -
+-#эти ключи в начале делают задачу с типом Фича, Баг, Работенка.
+-#Пример: #bug Сделать пример использования бага или #bug, Это также работает
 
 
 %hr/
@@ -54,9 +54,11 @@
   -begin
     - if c.commentable.discussable.project == @project
       - comments_array << c
-  -rescue
+  -rescue NoMethodError
 
--comments_array.each do |comm|
+
+#TODO: pagination
+-comments_array.first(10).each do |comm|
   .row-fluid.list_of_discussion_history
     .pull-right
       .row-fluid
