@@ -138,17 +138,20 @@ class Task < ActiveRecord::Base
       jb = JabberBot.new(:user => assigned_user)
       jb.message_for_task(self)
       jb.room_message_for_task(self)
+      #jb.room_message.concat " #{gravatar_image_tag(ass_user.email).html_safe? }"
       jb.room_for_task(self)
+      jb.sms_for_task(self)
       Rails.logger.info jb.send_message
 
+      #gravatar_image_tag
 
       #send note to project room
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-      begin
-        client[self.project.name].send('bot', "Task \"#{self.title}\" assigned to user <b>#{ass_user.login}</b> #{gravatar_image_tag(ass_user.login)}", :color => 'yellow', :notify => true)
-      rescue
-        client['abulafia'].send('bot', "No room #{self.project.name}", color: 'red', notify: true)
-      end
+      #client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      #begin
+      #  client[self.project.name].send('bot', "Task \"#{self.title}\" assigned to user <b>#{ass_user.login}</b> #{gravatar_image_tag(ass_user.login)}", :color => 'yellow', :notify => true)
+      #rescue
+      #  client['abulafia'].send('bot', "No room #{self.project.name}", color: 'red', notify: true)
+      #end
 
 
       #begin

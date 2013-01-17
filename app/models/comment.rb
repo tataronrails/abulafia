@@ -46,23 +46,26 @@ class Comment < ActiveRecord::Base
       #end
 
 
-      #Rails.logger.info "--- users to notify---"
-      #Rails.logger.info users_to_notify.to_json
+      Rails.logger.info "--- users to notify---"
+      Rails.logger.info users_to_notify.to_json
 
-      #Rails.logger.info "--- jabber bot init ---"
-      #Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
-      #Rails.logger.debug jb.message_for_comment(self)
+      Rails.logger.info "--- jabber bot init ---"
+      Rails.logger.debug jb = JabberBot.new(:user => users_to_notify)
+      Rails.logger.debug jb.message_for_comment(self)
+
+      jb.room_for_comment(self)
+      jb.room_message_for_comment(self)
+      jb.sms_for_comment(self)
       #Rails.logger.debug jb.send_message
-      #Rails.logger.debug jb.send_message
+      Rails.logger.debug jb.send_message
 
       #send note to project room
-      client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-      begin
-        client[self.commentable.discussable.project.name].send('bot', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
-      rescue
-        client['abulafia'].send('bot', "Error sending notification to room", color: 'red', notify: true)
-        #client['abulafia'].send('bot', "Can not find hipchat room for project \"#{self.commentable.discussable.project.name}\"", color: 'red', notify: true)
-      end
+      #client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
+      #begin
+      #  client[self.commentable.discussable.project.name].send('bot', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+      #rescue
+      #  client['abulafia'].send('bot', "Can not find hipchat room for ptoject \"#{self.commentable.discussable.project.name}\"", color: 'red', notify: true)
+      #end
 
     end
   end
