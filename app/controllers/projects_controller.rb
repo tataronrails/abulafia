@@ -113,19 +113,7 @@ class ProjectsController < ApplicationController
   end
 
   def reinvite_user
-    email = User.where(:id => params[:user_id]).first.email
-    role = ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).first.role
-    project = Project.find(params[:project_id])
-
-    ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
-    User.where(:id => params[:user_id]).delete_all
-
-    User.invite!(:email => email)
-    pm = ProjectMembership.new(:user => User.where(:email => email).first, :project => project, :role => role)
-    if pm.save
-      flash[:notice] = "User was reinvited to project"
-    end
-
+    User.find(params[:user_id]).invite!
     redirect_to :back
   end
 
