@@ -17,7 +17,7 @@
             %i.icon-edit
           %span.divider /
       %li
-        =link_to project_user_stories_path(@project), :class => "btn btn-success" do
+        =link_to project_user_stories_path(@project), :class => "btn" do
           %i.icon-inbox
           Task boards
   .pull-right
@@ -27,8 +27,7 @@
           .badge
             %i.icon-wrench
             = @project.users.count
-.lead
-  Tasks
+
 = form_for [@project, @task] , :remote => true do |f|
   .row-fluid
     .control-group
@@ -36,8 +35,10 @@
         -#.input-prepend
           -#%span.add-on
             -#%i.icon-tasks.green
-        = f.text_area :title, :placeholder => "Enter draft task", :class => "span11", :autocomplete =>  "off"
+        = f.text_area :title, :placeholder => "Enter draft task", :class => "span12", :autocomplete =>  "off"
         = f.hidden_field :project_id, :value => @project.id
+        .pull-right
+          =f.button :class => "btn btn-success"
 -#%p
 -#  По умолчанию все задачи создаются в состоянии "Черновик". Во время редактирования можно добавить и исполнителя и один из 7 типов задачи.
 -#
