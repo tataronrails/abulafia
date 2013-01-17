@@ -11,11 +11,6 @@ class User < ActiveRecord::Base
     user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
   end
 
-  #invitation_accepted_at
-
-  #validates_uniqueness_of :login
-
-  #validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
 
   after_create :assign_discussion_to_user
 
@@ -31,7 +26,7 @@ class User < ActiveRecord::Base
   has_one :discussion, :as => :discussable
 
 
-  ACTIVITY_INTERVAL=10.minutes
+  ACTIVITY_INTERVAL = 10.minutes
 
 
   def role_in_project project_id
@@ -50,6 +45,10 @@ class User < ActiveRecord::Base
   def is_online?
     last_activity = PublicActivity::Activity.where(owner_id: self).order('created_at desc').first
     last_activity.present? && (Time.now - last_activity.created_at) < ACTIVITY_INTERVAL
+  end
+
+  def my_tasks
+    Task.where(:assigned_to => self.id)
   end
 
 

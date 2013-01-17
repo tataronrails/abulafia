@@ -1,0 +1,17 @@
+-@projects.each do |p|
+  %p
+    .lead
+      %i.icon-leaf
+      =link_to(p.name, project_path(p))
+    %blockquote
+      %table.table.span12
+        -p.tasks.order(:created_at).each do |t|
+          %tr
+            %td.span1
+              =type_icon(t.task_type) if t.task_type
+            %td.span10
+              = link_to  project_task_path(t.project, t) do
+                =t.title
+            %td.span1
+              %i.icon-comment-alt
+              =t.discussion.comments.count
