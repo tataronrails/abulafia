@@ -52,7 +52,7 @@ EOffice::Application.routes.draw do
     get 'update_icebox'
     get 'update_backlog'
     get 'update_current_work'
-    get "user_stories", "user_stories"
+    get "user_stories"
   end
 
 

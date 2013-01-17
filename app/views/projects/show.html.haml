@@ -15,6 +15,11 @@
             =@project.name
           =link_to edit_project_path(@project) do |l|
             %i.icon-edit
+          %span.divider /
+      %li
+        =link_to project_user_stories_path(@project), :class => "btn btn-success" do
+          %i.icon-inbox
+          Task boards
   .pull-right
     .span7
       =link_to users_list_path(@project) do |u|

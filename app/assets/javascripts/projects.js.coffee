@@ -276,7 +276,7 @@ $ ->
     )
 
   update_some_test_smth = (data, column_and_place, url_location) ->
-    if url_location.indexOf("/user_stories")
+    if url_location.indexOf("/task_boards")
       project_id = $("body").data("project_id")
 
       switch column_and_place

@@ -3,9 +3,6 @@
 
 
 %ul.breadcrumb
-  %li.active
-    %i.icon-inbox
-    =link_to "User stories", project_user_stories_path(project)
   .pull-right
     -if @project.project_manager
       %span{:title => "project manager of project"}

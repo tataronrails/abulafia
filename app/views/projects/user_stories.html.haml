@@ -7,7 +7,8 @@
 .row-fluid
   .span4.us_column{:data => {:column =>"current_work"}}
     .lead
-      =link_to project_path(@project) do |l|
+      =link_to project_path(@project), :class => "btn" do |l|
+
         %i.icon-arrow-left
       Current
 
