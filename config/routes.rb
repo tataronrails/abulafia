@@ -26,6 +26,7 @@ EOffice::Application.routes.draw do
   get 'progress' => "projects#progress", :as => "progress"
 
 
+  get 'my' => "tasks#my", :as => "my_tasks"
   get 'contacts' => "contacts#index", :as => "contacts_list"
   get 'contacts/:id' => "contacts#show", :as => "contact_page"
   post 'contacts/create_virtual_user' => "contacts#create_virtual_user", :as => "contact_create_virtual_user"

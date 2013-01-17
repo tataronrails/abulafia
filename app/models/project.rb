@@ -1,9 +1,9 @@
 class Project < ActiveRecord::Base
   include PublicActivity::Model
   attr_accessible :desc, :name, :is_department
-  has_many :discussions
-  has_many :tasks
-  has_many :project_memberships
+  has_many :discussions, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
+  has_many :project_memberships, :dependent => :destroy
   has_many :users, :through => :project_memberships
 
   validates :name, :presence => true, :length => {:minimum => 3}

@@ -1,6 +1,13 @@
 class TasksController < ApplicationController
   load_and_authorize_resource :task
 
+
+  def my
+    tasks = current_user.my_tasks
+    @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).order("name DESC")
+  end
+
+
   def accept_to_start
     task = Task.find(params[:task_id])
 
@@ -10,7 +17,7 @@ class TasksController < ApplicationController
       message = "Accepted by : \"#{User.find(task.assigned_to).fio}\", Task: \"#{task.title}\""
       client[task.project.name].send('bot', message, :color => 'green', :notify => false)
 
-      task.create_activity key: 'Task.accept_to_start', owner: User.find(task.assigned_to) , params: {message: message}
+      task.create_activity key: 'Task.accept_to_start', owner: User.find(task.assigned_to), params: {message: message}
 
       flash[:notice] = "Started"
       respond_to do |format|

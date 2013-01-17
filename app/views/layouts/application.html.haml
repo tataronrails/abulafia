@@ -46,11 +46,18 @@
               -#- else
               -#  %li
               -#    = link_to t( :projects), projects_path, :class =>"capitalize"
+              - if current_user
+                %li
+                  = link_to my_tasks_path, :class =>"capitalize" do
+                    %i.icon-check
+                    My tasks
+                    .label.label-inverse
+                      =current_user.my_tasks.count
               %li
-
                 = link_to progress_path, :class =>"capitalize" do
                   %i.icon-dashboard
                   Progress
+
 
               -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
                 %li
