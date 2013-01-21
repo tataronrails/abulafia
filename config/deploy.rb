@@ -87,3 +87,6 @@ before 'deploy:migrate', 'deploy:db:create'
 after  "deploy:finalize_update", "deploy:update_shared_symlinks"
 after  "deploy", "deploy:cleanup"
 
+
+        require './config/boot'
+        require 'airbrake/capistrano'
