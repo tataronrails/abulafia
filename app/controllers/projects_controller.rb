@@ -38,7 +38,14 @@ class ProjectsController < ApplicationController
 
     client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
     message = "Kicked out user <b>#{user.fio}</b> from project"
-    client[project.name].send('abulafia', message, :color => 'red', :notify => false)
+
+
+    begin
+      client[project.name].send('abulafia', message, :color => 'red', :notify => false)
+    rescue HipChat::UnknownRoom
+      client["abulafia"].send('abulafia', "Unknown room#{project.name}", :color => 'red', :notify => true)
+    end
+
 
     ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
     redirect_to :back, :notice => "User was kicked out from project!"
