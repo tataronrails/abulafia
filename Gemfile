@@ -24,6 +24,7 @@ gem "capistrano", :group => :development
 
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"
+gem 'phony'
 
 gem "rails_autolink"
 gem "best_in_place"
