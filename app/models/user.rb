@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
     user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
   end
 
-
   after_create :assign_discussion_to_user
 
   #before_create :create_login
@@ -59,7 +58,7 @@ class User < ActiveRecord::Base
 
 
   def assign_discussion_to_user
-    self.create_discussion!(:title => self.login)
+    self.create_discussion!(:title => "self.login")
   end
 
   def is_virtual_user?

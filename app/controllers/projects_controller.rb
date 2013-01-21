@@ -63,8 +63,6 @@ class ProjectsController < ApplicationController
     end
 
     email = params[:invitation][:email]
-    #first_name = params[:invitation][:first_name]
-    #second_name = params[:invitation][:second_name]
     role = params[:role]
     user = User.where(:email => email).first
 
@@ -87,10 +85,12 @@ class ProjectsController < ApplicationController
     else
       #User not exist, we must create ProjectMembership link and send invitation
 
+
+
       begin
         u = User.invite!(:email => email)
       rescue
-        raise u.to_json
+        raise u.errors.to_json
       end
 
       #Rails.logger.info "*** ***"
