@@ -86,7 +86,6 @@ class ProjectsController < ApplicationController
       #User not exist, we must create ProjectMembership link and send invitation
 
 
-
       begin
         u = User.invite!(:email => email)
       rescue
@@ -104,7 +103,13 @@ class ProjectsController < ApplicationController
 
         client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
         message = "Invited <b>new</b> user with email <b>#{u.email}</b> as #{role}, invitation email was sent!"
-        client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
+
+        begin
+          client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
+        rescue HipChat::UnknownRoom
+          client["abulafia"].send('abulafia', "Unknown room#{project.name}", :color => 'red', :notify => true)
+        end
+
       else
         raise pm.errors.to_json
       end
