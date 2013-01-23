@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
     self.project_memberships.where(:project_id => project_id).first.role
   end
 
+
+
   def fio
     if self.first_name.present? && self.second_name.present?
       [self.first_name, self.second_name].join(" ")
@@ -52,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def my_tasks
-    Task.where(:assigned_to => self.id)
+    Task.where(:assigned_to => self.id).order(:created_at).delete_if{|t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)}
   end
 
 
