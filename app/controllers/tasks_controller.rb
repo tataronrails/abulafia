@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     cell = assigned_user.cell
 
 
-    sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
+    sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}\"?,  #{current_user.fio}")
 
     if sms.send!
       flash[:notice] = "OK"
