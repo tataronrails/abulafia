@@ -81,8 +81,7 @@ class Task < ActiveRecord::Base
   end
 
   def assigned_to_user
-    User.find(self.assigned_to) rescue nil
-
+    User.find(self.assigned_to)
   end
 
   private

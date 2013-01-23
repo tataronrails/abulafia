@@ -45,6 +45,7 @@ EOffice::Application.routes.draw do
       post "update_points" => "tasks#update_points", :as => "update_points"
       post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
       post "finish_work" => "tasks#finish_work", :as => "finish_work"
+      get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
     end
 
     resources :discussions, :has_many => :comments

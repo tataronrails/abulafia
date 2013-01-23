@@ -16,6 +16,11 @@
     =link_to "User stories", project_user_stories_path(@task.project)
 %small
   Assigned by #{@task.owner.fio}
+  - if current_user == @task.owner && @task.assigned_to.present?
+    %h5
+      =link_to project_task_sms_ping_path(@task.project, @task), :remote => true, :class => "btn" do
+        %i.icon-eye-open
+        SMS ping
   -if @task.estimate
     .estimate
       Estimate: #{@task.estimate} points

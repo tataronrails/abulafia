@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class TasksController < ApplicationController
   load_and_authorize_resource :task
 
@@ -5,6 +7,18 @@ class TasksController < ApplicationController
   def my
     tasks = current_user.my_tasks
     @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).order("name DESC")
+  end
+
+  def sms_ping
+    task = Task.find(params[:task_id])
+    assigned_user = task.assigned_to_user
+    cell =  assigned_user.cell
+
+
+    sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
+    sms.send!
+
+    render :text => "OK"
   end
 
 

@@ -146,12 +146,6 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    number = "+79033196728"
-    text_for_sms = "bla bla bla"
-
-    Rails.logger.info sms = SMS.new(number: number, message: text_for_sms)
-    Rails.logger.info  sms.send!
-
     @projects = current_user.projects
 
     respond_to do |format|
