@@ -23,7 +23,11 @@ class TasksController < ApplicationController
       flash[:notice] = "Error sending SMS!"
     end
 
-    render :js => "alert('#{flash[:notice]})'"
+    respond_to do |format|
+      format.js {
+        render :js => "alert('#{flash[:notice]})'"
+      }
+    end
   end
 
 
