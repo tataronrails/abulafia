@@ -12,13 +12,18 @@ class TasksController < ApplicationController
   def sms_ping
     task = Task.find(params[:task_id])
     assigned_user = task.assigned_to_user
-    cell =  assigned_user.cell
+    cell = assigned_user.cell
 
 
-    Rails.logger.info sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
-    Rails.logger.info sms.send!
+    sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
 
-    render :text => "OK"
+    if sms.send!
+      flash[:notice] = "OK"
+    else
+      flash[:notice] = "Error sending SMS!"
+    end
+
+    render :js => "alert('#{flash[:notice]})'"
   end
 
 
