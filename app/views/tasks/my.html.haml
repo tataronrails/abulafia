@@ -6,11 +6,22 @@
     %blockquote
       %table.table.span12
 
-        -p.tasks.where(:assigned_to => current_user).order(:created_at).each do |t|
+        -p.tasks.where(:assigned_to => current_user).order(:created_at).delete_if{|t| t.status == 2}.each do |t|
           %tr
             %td.span1
               = gravatar_image_tag t.owner.email, :class => 'img-rounded', :gravatar => { :size => 25 }
             %td.span1
+              %h2
+                -#      a = []
+                -#      a[0] = "estimate"
+                -#      a[1] = "start"
+                -#      a[2] = "finish"
+                -#      a[3] = "pushed"
+                -#      a[4] = "testing"
+                -#      a[5] = "accept/reject"
+                -#      #a[5] = "accept"
+                -#=t.status
+                -#=t.status_via_words
               =type_icon(t.task_type) if t.task_type
             %td.span10
               = link_to  project_task_path(t.project, t) do
