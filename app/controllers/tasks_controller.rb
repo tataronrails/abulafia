@@ -25,7 +25,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.js {
-        render :js => "alert('#{flash[:notice]})'"
+        render :js => "alert('#{flash[:notice]}')"
       }
     end
   end

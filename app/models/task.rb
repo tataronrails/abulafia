@@ -81,7 +81,12 @@ class Task < ActiveRecord::Base
   end
 
   def assigned_to_user
-    User.find(self.assigned_to)
+    begin
+      User.find(self.assigned_to)
+    rescue ActiveRecord::RecordNotFound
+      Rails.logger.error "Error assigned user!"
+    end
+
   end
 
   private
