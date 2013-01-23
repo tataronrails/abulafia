@@ -15,8 +15,8 @@ class TasksController < ApplicationController
     cell =  assigned_user.cell
 
 
-    sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
-    sms.send!
+    Rails.logger.info sms = SMS.new(number: cell, message: "Как дела в задаче: \"#{task.title}?\"")
+    Rails.logger.info sms.send!
 
     render :text => "OK"
   end
