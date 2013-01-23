@@ -28,8 +28,13 @@ class User < ActiveRecord::Base
   ACTIVITY_INTERVAL = 10.minutes
 
 
+  #TODO: refactor
   def role_in_project project_id
     self.project_memberships.where(:project_id => project_id).first.role.text
+  end
+
+  def role project_id
+    self.project_memberships.where(:project_id => project_id).first.role
   end
 
   def fio
