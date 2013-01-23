@@ -83,7 +83,13 @@ class ProjectsController < ApplicationController
 
         client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
         message = "Invited existed user <b>#{user.fio}</b> to project as #{role}"
-        client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
+
+        begin
+          client[project.name].send('abulafia', message, :color => 'yellow', :notify => false)
+        rescue HipChat::UnknownRoom
+          client['abulafia'].send('abulafia', "No room #{project.name}", :color => 'red', :notify => true)
+
+        end
 
 
       else
