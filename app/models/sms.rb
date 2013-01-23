@@ -9,7 +9,7 @@ class SMS
   FAILURE_RESPONSE = %Q{<title>Unhandled Exception</title>}
   COUNTRY_CODE = '7'
 
-  TRANSLITERATE = true
+  TRANSLITERATE = false
 
   ONE_MESSAGE_MAX_SIZE = 100
   MESSAGE_FOOTER_SIZE = 32
