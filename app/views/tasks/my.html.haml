@@ -6,7 +6,7 @@
     %blockquote
       %table.table.span12
 
-        -p.tasks.where(:assigned_to => current_user).order(:created_at).delete_if{|t| t.status == 2}.each do |t|
+        -p.tasks.where(:assigned_to => current_user).order(:created_at).delete_if{|t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)}.each do |t|
           %tr
             %td.span1
               = gravatar_image_tag t.owner.email, :class => 'img-rounded', :gravatar => { :size => 25 }
