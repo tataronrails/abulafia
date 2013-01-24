@@ -70,6 +70,8 @@ class ProjectsController < ApplicationController
     end
 
     email = params[:invitation][:email]
+    #first_name = params[:invitation][:first_name]
+    #second_name = params[:invitation][:second_name]
     role = params[:role]
     user = User.where(:email => email).first
 

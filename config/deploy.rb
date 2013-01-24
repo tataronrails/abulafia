@@ -66,7 +66,7 @@ end
 
 namespace :logs do
   task :watch do
-    stream("tail -f #{shared_path}/log/#{rails_env}.log")
+    stream("tail -f www/apps/#{application}_#{branch}/current/log/#{rails_env}.log")
   end
 end
 
