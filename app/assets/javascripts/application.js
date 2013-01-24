@@ -27,6 +27,7 @@
 //= require jquery.autosize
 //= jquery-ui.triggeredAutocomplete
 //= jquery.ui.touch-punch.min
+//= require bootstrap-datepicker
 
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").live("click", function () {
@@ -35,11 +36,16 @@ function hide_removed_task() {
 }
 
 
+$(document).on("focus", "[data-behaviour~='datepicker']", function (e) {
+    $(this).datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
+});
+
+
 function in_duscussion_too_small_length() {
 
-    $("#task_comment").parents("form:first").on("submit", function(e){
+    $("#task_comment").parents("form:first").on("submit", function (e) {
         text = $(this).find("textarea:first").val();
-        if(text.length < 2){
+        if (text.length < 2) {
             alert("That's all?");
             return false;
         }

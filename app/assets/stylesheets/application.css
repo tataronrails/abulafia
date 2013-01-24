@@ -10,10 +10,7 @@
  *
  *= require_self
  * require twitter/bootstrap/static/bootstrap
- * require gritter
  *= require bootstrap-datepicker
- *= require select2
-
  *= require_tree
 
  .

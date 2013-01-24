@@ -133,6 +133,10 @@ class ProjectsController < ApplicationController
   def reinvite_user
     #TODO: recreate another way
 
+
+    User.find(params[:user_id]).invite!
+    redirect_to :back
+
     #email = User.where(:id => params[:user_id]).first.email
     #role = ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).first.role
     #project = Project.find(params[:project_id])
