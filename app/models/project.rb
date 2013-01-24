@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   has_many :discussions, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   has_many :project_memberships, :dependent => :destroy
+  has_many :sprints, :dependent => :destroy
   has_many :users, :through => :project_memberships
 
   validates :name, :presence => true, :length => {:minimum => 3}
