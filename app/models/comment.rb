@@ -72,7 +72,7 @@ class Comment < ActiveRecord::Base
           user = self.commentable.discussable
           client["Human Resources dept."].send('abulafia', "+ Note <b>\"#{self.comment}\"</b> to user <a href ='http://abulafia.ru/contacts/#{user.id.to_s}'>#{user.fio ? user.fio : user.email}</a>", :color => 'yellow', :notify => true)
         else
-          client[self.commentable.discussable.project.name].send('abulafia notify: comment.rb', "+ comment: \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
+          client[self.commentable.discussable.project.name].send('abulafia', "+ comment (notify: comment.rb): \"#{self.comment}\" in discussion #{self.title} by user #{self.user.login}", :color => 'yellow', :notify => true)
         end
 
       rescue HipChat::UnknownRoom
