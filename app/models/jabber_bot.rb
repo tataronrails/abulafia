@@ -202,7 +202,7 @@ class JabberBot
   end
 
   def room_message_for_comment(comment)
-    self.room_message = "+ comment: \"#{comment.comment}\" in discussion #{get_task_url(comment.commentable.discussable)} by user <b>#{comment.user.login}</b>"
+    self.room_message = "+ comment (room_message_for_comment): \"#{comment.comment}\" in discussion #{get_task_url(comment.commentable.discussable)} by user <b>#{comment.user.login}</b>"
     #self.room_message = "New comment \"#{comment.comment}\" in Discussion: \"#{comment.commentable.title}\"" +
     #    "by user #{comment.user.fio}, Url: #{get_task_url(comment.commentable.discussable)}"
   end
