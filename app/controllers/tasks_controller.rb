@@ -42,7 +42,7 @@ class TasksController < ApplicationController
       #TODO: hc notofication here
       client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
       message = "Accepted by : \"#{User.find(task.assigned_to).fio}\", Task: \"#{task.title}\""
-      client[task.project.name].send('bot', message, :color => 'green', :notify => false)
+      client[task.project.name].send('task bot', message, :color => 'green', :notify => false)
 
       task.create_activity key: 'Task.accept_to_start', owner: User.find(task.assigned_to), params: {message: message}
 

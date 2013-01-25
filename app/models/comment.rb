@@ -81,7 +81,7 @@ class Comment < ActiveRecord::Base
         else
           obj = self.commentable.discussable.project.name
         end
-        client['abulafia'].send('bot', "Error sending notification to room <b>#{obj}</b>", color: 'red', notify: true)
+        client['abulafia'].send('comment bot', "Error sending notification to room <b>#{obj}</b>", color: 'red', notify: true)
       end
 
     end
