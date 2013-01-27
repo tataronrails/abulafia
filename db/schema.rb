@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124075423) do
+ActiveRecord::Schema.define(:version => 20130127165939) do
+
+  create_table "active_admin_comments", :force => true do |t|
+    t.string   "resource_id",   :null => false
+    t.string   "resource_type", :null => false
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.text     "body"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "namespace"
+  end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
+  add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
+  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -94,18 +109,6 @@ ActiveRecord::Schema.define(:version => 20130124075423) do
     t.time     "deleted_at"
     t.boolean  "is_department"
   end
-
-  create_table "sprints", :force => true do |t|
-    t.date     "start_at"
-    t.date     "end_at"
-    t.text     "desc"
-    t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.text     "title"
-  end
-
-  add_index "sprints", ["project_id"], :name => "index_sprints_on_project_id"
 
   create_table "strikes", :force => true do |t|
     t.text     "desc"
