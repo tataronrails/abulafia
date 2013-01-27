@@ -4,15 +4,17 @@ class ApplicationController < ActionController::Base
   #, :set_locale
   include PublicActivity::StoreController
 
-  check_authorization :unless => :devise_controller?
+  check_authorization :unless => :skip_authorization?
 
   #rescue_from CanCan::AccessDenied do |exception|
   #  redirect_to root_path, :alert => exception.message
   #end
 
-
-
   private
+
+  def skip_authorization?
+    self.kind_of?(ActiveAdmin::BaseController) || devise_controller?
+  end
 
   #def set_locale
   #  I18n.locale = params[:locale] || :ru #|| I18n.default_locale
