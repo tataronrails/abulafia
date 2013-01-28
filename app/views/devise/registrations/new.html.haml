@@ -1,0 +1,37 @@
+%h2{:style => "padding-left: 180px "} Sign up
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-horizontal registration-form'}) do |f|
+  = devise_error_messages!
+
+  = bootstrap_input(f, :email) do
+    = f.email_field :email, :placeholder => "email"
+
+  = bootstrap_input(f, :first_name) do
+    = f.text_field :first_name, :placeholder => "First Name"
+
+  = bootstrap_input(f, :second_name) do
+    = f.text_field :second_name, :placeholder => "Second Name"
+
+  = bootstrap_input(f, :login) do
+    = f.text_field :login, :placeholder => "Login"
+
+  = bootstrap_input(f, :initials) do
+    = f.text_field :initials, :placeholder => "Initials", :size => 4
+
+  -#= bootstrap_input(f, :phone) do
+  -#  = f.text_field :phone, :placeholder => "Cell"
+
+  = bootstrap_input(f, :im, "Skype") do
+    = f.text_field :im, :placeholder => "Skype"
+
+  = bootstrap_input(f, :password) do
+    = f.password_field :password, :autocomplete => "off"
+
+  = bootstrap_input(f, :password_confirmation) do
+    = f.password_field :password_confirmation, :autocomplete => "off"
+
+  .control-group
+    .controls
+      = f.submit "Sign up", :class => "btn"
+      %div{:style => "height: 1.5em"}
+      = render "devise/shared/links"
