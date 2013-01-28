@@ -97,7 +97,7 @@
           .span4.pull-right
             - if controller_name == "projects" && action_name == "show"
               .users_stories
-                = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
+                -#= render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
             -else
               .span4
                 =yield :right_column

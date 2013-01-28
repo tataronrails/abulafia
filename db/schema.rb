@@ -171,7 +171,6 @@ ActiveRecord::Schema.define(:version => 20130124070048) do
 
   create_table "tasks", :force => true do |t|
     t.string   "title"
-    t.integer  "status",               :default => 0
     t.integer  "owner_id"
     t.integer  "assigned_to"
     t.datetime "start"
@@ -182,12 +181,13 @@ ActiveRecord::Schema.define(:version => 20130124070048) do
     t.integer  "estimate"
     t.text     "desc"
     t.integer  "place",                :default => 0
-    t.string   "task_type"
     t.text     "behavior"
     t.time     "deleted_at"
     t.datetime "accepted_to_start"
     t.integer  "hours_worked_on_task"
     t.datetime "finished_at"
+    t.string   "type"
+    t.string   "status"
   end
 
   create_table "users", :force => true do |t|

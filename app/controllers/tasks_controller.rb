@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class TasksController < ApplicationController
-  load_and_authorize_resource :task
+  authorize_resource :task
 
 
   def my
@@ -268,30 +268,32 @@ class TasksController < ApplicationController
   end
 
   def create
-    @project = Project.find(params[:task][:project_id])
-    @task = @project.tasks.new
-    @task.title = params[:task][:title]
-    @task.assigned_to = params[:task][:assigned_to] if params[:task][:assigned_to].present?
+    @project = Project.find(params[:project_id])
+    @task = @project.tasks.factory_new(params[:task])
     @task.owner_id = current_user.id
-    #@task = @project.tasks.new(:title => params[:task][:title], :assigned_to => User.where(:email => params[:assigned_to]).first.id, :owner_id => current_user.id)
-
-    if @task.save
-
-
-      respond_to do |format|
-        format.js {
-          #if params[:assigned_to].present?
-          #gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
-          #else
-          #gflash :success => "Alone task successfully created"
-          #end
-          render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
-        }
-
-      end
+    if @task.save!
+      redirect_to project_task_path(@project, @task)
     else
-      flash[:notice] = "Error task creating"
+      raise @task.to_yaml
+      redirect_to :back, :alert => "ERROR!!!!!!!!"
     end
+    #if @task.save
+    #
+    #
+    #  respond_to do |format|
+    #    format.js {
+    #      #if params[:assigned_to].present?
+    #      #gflash :success => "Task successfully assigned to #{User.where(:email => params[:assigned_to]).first.login}"
+    #      #else
+    #      #gflash :success => "Alone task successfully created"
+    #      #end
+    #      render :partial => "projects/stories_all", :locals => {:project => @project, :user => current_user, :task => @task}
+    #    }
+    #
+    #  end
+    #else
+    #  flash[:notice] = "Error task creating"
+    #end
 
   end
 end
