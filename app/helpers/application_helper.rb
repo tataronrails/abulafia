@@ -25,6 +25,15 @@ module ApplicationHelper
     content_tag(:i, "", :class => "icon-#{a[number.to_i]}")
   end
 
-
-
+  def bootstrap_input(f, label_field, title = nil)
+    capture_haml do
+      haml_tag :div, :class => "control-group" do
+        label_args = [label_field, title, :class => 'control-label'].compact
+        haml_concat(f.label(*label_args))
+        haml_tag :div, :class => "controls" do
+          yield
+        end
+      end
+    end
+  end
 end
