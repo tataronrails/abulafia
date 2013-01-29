@@ -11,12 +11,11 @@ gem 'devise'
 gem 'devise_invitable'
 gem 'acts_as_commentable', '3.0.1'
 gem "select2-rails"
-gem "bootstrapped"
+#gem "bootstrapped"
 gem "gritter", "1.0.2"
 gem "select2-rails"
 gem 'public_activity'
 gem 'acts-as-taggable-on', '~> 2.3.1'
-gem 'bootstrap-datepicker-rails'
 gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
@@ -27,6 +26,8 @@ gem "airbrake"
 gem 'phony'
 gem 'bootstrap-datepicker-rails'
 
+gem "less-rails"
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem "rails_autolink"
 gem "best_in_place"
 gem 'better_logging'

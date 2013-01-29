@@ -19,7 +19,7 @@ filter_task_types = () ->
 
 
 hide_done_stories = () ->
-  $(".toggle_done_tasks").live "click", () ->
+  $(".toggle_done_tasks").on "click", () ->
     console.log $(".done_story:hidden").length
 
     if $(".done_story:hidden").length > 0
@@ -92,7 +92,7 @@ window.update_estimates = (id_of_task, data) ->
   labels_click_bind()
 
 delete_story = () ->
-  $('.accordion-group i.icon-trash').live "click", () ->
+  $('.accordion-group i.icon-trash').on "click", () ->
     c = confirm("Sure?")
     if c
       $(this).parents(".accordion-group").slideUp("slow")
@@ -102,7 +102,7 @@ window.open_task_modal = (title_of_task) ->
   $('#task_modal .modal-header h3').html(title_of_task)
 
 send_form_on_select_assigned_to = () ->
-  $("#task_assigned_to").live 'change', ()->
+  $("#task_assigned_to").on 'change', ()->
     if $("#task_title").val().length > 0
       $(this).parents(".accordion-inner").find("form").submit().end().find("input[type='text']").focus().select()
 
@@ -111,7 +111,7 @@ send_form_on_select_assigned_to = () ->
 #  alert(id_of_task)
 
 labels_click_bind = () ->
-  $('.estimates_label').live 'click', ()->
+  $('.estimates_label').on 'click', ()->
     #    story_id = $(this).attr("id").replace("estimates_label_","")
     status = $(this).data('status')
     status_text = $(this).text()
@@ -210,7 +210,14 @@ labels_click_bind = () ->
 $(document).ajaxComplete (xhr, data, status) ->
   unless status.type == "DELETE"
 
-    $(".users_stories").effect("fade", "fast")
+
+    if status.url.indexOf("sprint") > 0
+      alert "update sprints"
+    else
+      $(".users_stories").effect("fade", "fast")
+
+
+
     if status.url.indexOf("tasks") > 0 && status.url.indexOf("add_new_comment") < 0
       $(".users_stories").fadeTo("fast", ".8", -> $(".users_stories").html(data.responseText).fadeTo("fast", "1"))
       $("#task_title, #task_assigned_to").val("")
@@ -254,7 +261,7 @@ $ ->
   labels_click_bind()
   #  send_form_on_select_assigned_to()
 
-  $('span.estimates img').live 'click', (e) ->
+  $('span.estimates img').on 'click', (e) ->
     column_and_place = $(this).parents(".us_column").data("column")
     points = $(this).attr("rel")
     task_id = $(this).parents(".accordion-group").data("taskid")

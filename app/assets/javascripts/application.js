@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+
 //= require bootstrap-transition.js
 //= require bootstrap-alert.js
 //= require bootstrap-modal.js
@@ -24,13 +25,14 @@
 //= require bootstrap-collapse.js
 //= require bootstrap-typeahead.js
 //= require bootstrap
+
 //= require jquery.autosize
 //= jquery-ui.triggeredAutocomplete
 //= jquery.ui.touch-punch.min
 //= require bootstrap-datepicker
 
 function hide_removed_task() {
-    $(".alone_comment i.icon-trash").live("click", function () {
+    $(".alone_comment i.icon-trash").on("click", function () {
         $(this).parents(".alone_comment").slideUp("slow")
     })
 }
