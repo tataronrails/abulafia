@@ -68,7 +68,7 @@ class ContactsController < ApplicationController
 
   private
   def check_access
-    unless ["almazomru@gmail.com", "e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include? current_user.email
+    unless ["almazomru@gmail.com", "e.acoolova@gmail.com", "hama.deev@gmail.com"].include? current_user.email
 
       flash[:notice] = "You have no access to see contacts"
       redirect_to root_path

@@ -52,7 +52,7 @@
                   %i.icon-dashboard
                   Progress
 
-              -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "mirzayanovti@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
+              -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
                 %li
                   = link_to contacts_list_path, :class =>"capitalize" do
                     %i.icon-group
