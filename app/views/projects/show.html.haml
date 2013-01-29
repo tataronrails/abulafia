@@ -47,11 +47,14 @@
 
 
 -#%hr/
+
+
+
 .lead.h
   %i.icon-plus
   Create sprint
 
-  =form_for :new_spring, :url => project_sprint_path(@project) do |f|
+  -form_for :new_spring, :remote => :true, :url => project_sprints_path(@project)  do |f|
     =f.label :title
     =f.text_field :title
     =f.label :start

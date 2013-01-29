@@ -22,6 +22,7 @@ class Ability
     can :create, Comment
 
     can :manage, Strike
+    can :manage, Sprint
     can :manage, Task
     can :manage, User
 
