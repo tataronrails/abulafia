@@ -20,7 +20,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
-#gem 'activeadmin'
+gem 'activeadmin'
 
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"
@@ -51,7 +51,7 @@ gem 'russian'
 gem 'xmpp4r'
 gem 'delayed_job_active_record'
 gem 'daemons'
- 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
