@@ -46,22 +46,22 @@
 -#Пример: #bug Сделать пример использования бага или #bug, Это также работает
 
 
-%hr/
-.lead
+-#%hr/
+.lead.h
   %i.icon-plus
   Create sprint
-
-  =form_for :new_spring, :url => project_sprint_path(@project) do |f|
-    =f.label :title
-    =f.text_field :title
-    =f.label :start
-    =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
-    =f.label :end
-    =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
-    =f.label :description
-    =f.text_area :desc
-    %p
-    =f.button :Create,  :class => "btn"
+-#
+-#  =form_for :new_spring, :url => project_sprint_path(@project, Sprint.new) do |f|
+-#    =f.label :title
+-#    =f.text_field :title
+-#    =f.label :start
+-#    =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
+-#    =f.label :end
+-#    =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
+-#    =f.label :description
+-#    =f.text_area :desc
+-#    %p
+-#    =f.button :Create,  :class => "btn"
 
 %hr/
 .lead
@@ -74,7 +74,7 @@
   -rescue NoMethodError
 
 
--#TODO: pagination
+-#TODO: pagination here
 -comments_array.first(10).each do |comm|
   .row-fluid.list_of_discussion_history
     .pull-right

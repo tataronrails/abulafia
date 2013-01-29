@@ -149,7 +149,7 @@ class JabberBot
       begin
         client[self.room].send('bot', self.room_message, :color => 'yellow', :notify => true)
       rescue
-        client['abulafia'].send('bot',  "Can not find hipchat room for project \"#{self.room}\"", color: 'red', notify: true)
+        client['abulafia'].send('bot', "Can not find hipchat room for project \"#{self.room}\"", color: 'red', notify: true)
       end
     end
   end
@@ -160,15 +160,15 @@ class JabberBot
   end
 
   def get_task_url(task)
-    "http://#{get_host}#{project_task_url(task.project, task, :only_path => true)}"
+    "http://#{get_host}#{project_task_url(task.project, task, :only_path => true)}" rescue nil
   end
 
 
   def message_for_task(task)
     self.message = "Task assigned to you: \"#{task.title}\" in Project" +
         " \"#{task.project.name}\", "+
-        "by #{task.owner.fio}, "+
-        "Url: #{get_task_url(task)}"
+        "by #{task.owner.fio}, "
+    #"Url: #{get_task_url(task)}"
   end
 
   def sms_for_task(task)
@@ -177,7 +177,7 @@ class JabberBot
 
   def room_message_for_task(task)
     self.room_message = "Task <b>\"#{task.title}\"</b> assigned to user <b>#{self.user.first.login}</b>"
-        #" #{gravatar_image_tag(self.user.first.login)}"
+    #" #{gravatar_image_tag(self.user.first.login)}"
 
     #self.room_message = "Task \"#{task.title}\" assigned to user #{self.user.first.fio}" +
     #    ", Url: #{get_task_url(task)}"
@@ -188,13 +188,13 @@ class JabberBot
   end
 
   def message_for_comment(comment)
-
-
-    self.message = " New comment \"#{comment.comment}\""+
-        " by: \"#{comment.user.login}\""+
-        ", Discussion: \"#{comment.commentable.title}\""+
-        ", Project: \"#{comment.commentable.discussable.project.name}\"" +
-        ", Url: #{get_task_url(comment.commentable.discussable)}"
+    unless comment.commentable.discussable.kind_of?(User)
+      self.message = " New comment \"#{comment.comment}\""+
+          " by: \"#{comment.user.login}\""+
+          ", Discussion: \"#{comment.commentable.title}\""+
+          ", Project: \"#{comment.commentable.discussable.project.name}\"" +
+          ", Url: #{get_task_url(comment.commentable.discussable)}"
+    end
   end
 
   def sms_for_comment(comment)
@@ -202,13 +202,15 @@ class JabberBot
   end
 
   def room_message_for_comment(comment)
-    self.room_message = "+ comment: \"#{comment.comment}\" in discussion #{get_task_url(comment.commentable.discussable)} by user <b>#{comment.user.login}</b>"
+    self.room_message = "+ comment (room_message_for_comment): \"#{comment.comment}\" in discussion #{get_task_url(comment.commentable.discussable)} by user <b>#{comment.user.login}</b>"
     #self.room_message = "New comment \"#{comment.comment}\" in Discussion: \"#{comment.commentable.title}\"" +
     #    "by user #{comment.user.fio}, Url: #{get_task_url(comment.commentable.discussable)}"
   end
 
   def room_for_comment(comment)
-    self.room = comment.commentable.discussable.project.name
+    unless comment.commentable.discussable.kind_of?(User)
+      self.room = comment.commentable.discussable.project.name
+    end
   end
 
 end
