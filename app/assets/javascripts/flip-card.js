@@ -1,6 +1,6 @@
 var init = function() {
   var card = document.getElementById('card');
-  
+
   document.getElementById('flip').addEventListener( 'click', function(){
     card.toggleClassName('flipped');
   }, false);

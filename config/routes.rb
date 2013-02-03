@@ -8,6 +8,12 @@ EOffice::Application.routes.draw do
   resources :column_orders
   resources :comments
 
+  resources :tasks do
+    member do
+      put :estimate
+      put :change_status
+    end
+  end
 
   #resources :tasks, :has_many => :comments do
   #  post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"

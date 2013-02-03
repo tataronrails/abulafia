@@ -1,7 +1,7 @@
 %ul.breadcrumb
   %li
     %i.icon-home
-    =link_to "Home", root_path
+    = link_to "Home", root_path
     %span.divider /
   %li
     = link_to @task.project.name, project_path(@task.project)
@@ -16,7 +16,3 @@
       %i.icon-trash
 
 = render 'form'
-
--#= link_to 'Show', @project
--#\|
--#= link_to 'Back', projects_path

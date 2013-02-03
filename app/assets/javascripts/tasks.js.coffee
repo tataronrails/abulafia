@@ -44,7 +44,57 @@ task_type_detection = () ->
 
 
 
-$ ->
+jQuery ->
+  $("#btn-types button.active").addClass($("#btn-types button.active").data("class"))
+
+  # (tasks/_form) Выбор типа задачи
+  $buttons = $("#btn-types button")
+  $buttons.click (e) ->
+    $this = $(this)
+
+    # Изменение цвета кнопок при залипании.
+    $buttons.removeAttr("class").addClass("btn btn-small")
+    $this.addClass($this.data("class"))
+
+    # Показать поле Behavior, если выбран тип feature
+    if $this.attr("id") == "feature"
+      $(".behavior_block").show('500')
+    else
+      $(".behavior_block").hide('500')
+
+    # Задаем поле type
+    $('#task_type').val(jQuery.camelCase("-"+$this.attr('id')+"Task"))
+
+    e.preventDefault()
+
+  # (tasks/_form) - Поле end_at
+  $dropdown_items = $('#other-toolbox ul li a')
+  $dropdown_items.click (e) ->
+    $this = $(this)
+
+    # Изменение текста в зависимости от элемента
+    $str = "<i class='icon-calendar'></i> "
+    $str+= $this.text()
+    $str+= " <span class='caret'></span>"
+    $('#other-toolbox #date-dropdown').html($str)
+
+    # Если выбран custom, то показываем поле end_at
+    $temp = $('#other-toolbox').children('div')
+    if $this.attr("id") == "custom-date"
+      $temp.addClass('input-prepend').removeClass('btn-group')
+      $("#prependedDropdownButton").show 'hidelight'
+    else
+      $("#prependedDropdownButton").hide 'hidelight', ->
+        $temp.addClass('btn-group').removeClass('input-prepend')
+
+    # Задаем поле end_at
+    $('#other-toolbox .date-field#prependedDropdownButton').val($this.data('finish'))
+
+    e.preventDefault()
+
+
+
+
 
   $(document).ajaxComplete (xhr, data, status) ->
     if status.url.indexOf("accept_to_start") > 0
@@ -70,24 +120,6 @@ $ ->
   task_type_detection() if $("#task_end").length > 0
   intruction_select_ends_at()
 #  $('#task_start').datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": true})
-
-  $(".well.well-small button").click (e)->
-
-    $(".well.well-small button").removeAttr("class").addClass("btn btn-small")
-
-    $(this).addClass("active").addClass($(this).data("class"))
-
-    if $(this).attr("id") == "0"
-      $(".behavior_block").removeClass("h")
-    else
-      $(".behavior_block").addClass("h")
-
-
-    val = $(this).attr("id")
-    $("#task_task_type").val(val)
-
-    e.preventDefault()
-
 
   $("#mention_logins").autocomplete source: availableTags
 

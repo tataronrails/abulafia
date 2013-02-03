@@ -1,5 +1,4 @@
 class BugTask < Task
-  enumerize :type, :in => [self.to_s] #HOOK for enumerize
   enumerize :status, in: [:new, :in_work, :finished, :accepted, :rejected], predicates: true, default: :new
 
   state_machine :status, :initial => :new do

@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20130124070048) do
     t.integer  "owner_id"
     t.integer  "assigned_to"
     t.datetime "start"
-    t.datetime "end"
+    t.datetime "end_at"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "project_id"

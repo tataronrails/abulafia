@@ -1,5 +1,4 @@
-class FeatureTask < Task
-  enumerize :type, :in => [self.to_s] #HOOK for enumerize
+class ChoreTask < Task
   enumerize :status, in: [:new, :in_work, :accepted], predicates: true, default: :new
 
   state_machine :status, :initial => :new do

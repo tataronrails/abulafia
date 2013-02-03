@@ -3,6 +3,15 @@
 class TasksController < ApplicationController
   authorize_resource :task
 
+  def estimate
+    @task = Task.find(params[:id])
+    @task.update_attributes(:estimate => params[:task][:estimate])
+  end
+
+  def change_status
+    @task = Task.find(params[:id])
+    @task.fire_status_event(params[:event].to_sym)
+  end
 
   def my
     tasks = current_user.my_tasks
@@ -88,7 +97,6 @@ class TasksController < ApplicationController
       }
     end
   end
-
 
   def update
     @task = Task.find(params[:id])
@@ -258,24 +266,23 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    @project_users = @task.project.users.map(&:login)
-
-    if @task.assigned_to
-      assigned_to_user = User.find(@task.assigned_to)
-      @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
-      @strikes = Strike.where(:user_id => assigned_to_user.id, :task_id => @task.id).order("date_of_assignment DESC")
-    end
+    #@project_users = @task.project.users.map(&:login)
+    #
+    #if @task.assigned_to
+    #  assigned_to_user = User.find(@task.assigned_to)
+    #  @assigned_to = User.find(assigned_to_user).email if @task.assigned_to
+    #  @strikes = Strike.where(:user_id => assigned_to_user.id, :task_id => @task.id).order("date_of_assignment DESC")
+    #end
   end
 
   def create
     @project = Project.find(params[:project_id])
     @task = @project.tasks.factory_new(params[:task])
     @task.owner_id = current_user.id
-    if @task.save!
+    if @task.save
       redirect_to project_task_path(@project, @task)
     else
       raise @task.to_yaml
-      redirect_to :back, :alert => "ERROR!!!!!!!!"
     end
     #if @task.save
     #

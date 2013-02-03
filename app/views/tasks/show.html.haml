@@ -1,9 +1,9 @@
--#- if @task.task_type == "0" &&  @task.behavior.present?
--#  =content_for :right_column do |c|
--#    .lead
--#      Behavior
--#    :markdown
--#      #{@task.behavior}
+- if @task.type == 'StoryTask' &&  @task.behavior.present?
+  =content_for :right_column do |c|
+    .lead
+      Behavior
+    :markdown
+      #{@task.behavior}
 %ul.breadcrumb
   %li
     %i.icon-home
@@ -21,9 +21,14 @@
       =link_to project_task_sms_ping_path(@task.project, @task), :remote => true, :class => "btn" do
         %i.icon-eye-open
         SMS ping
-  -if @task.estimate
-    .estimate
+
+  .estimate
+    - if @task.estimate.present?
       Estimate: #{@task.estimate} points
+  - Task.estimate.values.each do |number|
+    = link_to estimate_task_path(@task, :task => {estimate: number}), :method => :put, :remote => true do
+      = image_tag "select_#{number.to_s}pt_fibonacci.gif"
+
   .worked
     -if @task.hours_worked_on_task
       Hours work on: #{@task.hours_worked_on_task} h
@@ -51,34 +56,33 @@
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
 
+  -unless ['CommonTask'].include?(@task.type)
+    - unless @task.finished_at.present?
+      .accept_task{:class => classes_to_add}
+        #accepted_time
+          -#если в задаче есть поле начал
+          - if @task.accepted_to_start.present?
+            - if current_user.eql? @task.assigned_to_user
+              =link_to project_task_finish_work_path(@task.project, @task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
+                %i.icon-question-sign
+                &nbsp;
+                Is the work complete?
+            - else
+              %i.icon-ok
+              Accepted:
+              =distance_of_time_in_words_to_now(@task.accepted_to_start)
 
-  -#-unless [0,1,2].include?(@task.task_type.to_i)
-  -#  - unless @task.finished_at.present?
-  -#    .accept_task{:class => classes_to_add}
-  -#      #accepted_time
-  -#        -#если в задаче есть поле начал
-  -#        - if @task.accepted_to_start.present?
-  -#          - if current_user.eql? @task.assigned_to_user
-  -#            =link_to project_task_finish_work_path(@task.project, @task), :class =>"blue", :remote => true, :method => "post", :confirm => "Sure?" do
-  -#              %i.icon-question-sign
-  -#              &nbsp;
-  -#              Is the work complete?
-  -#          - else
-  -#            %i.icon-ok
-  -#            Accepted:
-  -#            =distance_of_time_in_words_to_now(@task.accepted_to_start)
-  -#
-  -#        -else
-  -#          #accept_me
-  -#            - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
-  -#              =link_to project_task_accept_to_start_path(@task.project, @task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
-  -#                %i.icon-thumbs-up
-  -#                &nbsp;
-  -#                Accept to start
-  -#            - else
-  -#              %span
-  -#                %i.icon-warning-sign.red
-  -#                Not accepted yet
+          -else
+            #accept_me
+              - if @task.assigned_to_user.present? && @task.assigned_to_user.eql?(current_user)
+                =link_to project_task_accept_to_start_path(@task.project, @task), :class =>"green", :remote => true, :method => "post", :confirm => "Sure?" do
+                  %i.icon-thumbs-up
+                  &nbsp;
+                  Accept to start
+              - else
+                %span
+                  %i.icon-warning-sign.red
+                  Not accepted yet
 
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
@@ -113,6 +117,9 @@
             %i.icon-thumbs-up
             Done at:
             =distance_of_time_in_words_to_now @task.finished_at
+    .row-fluid#actions
+      = render 'actions'
+
 .row-fluid
   .lead Discussion:
   =form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|

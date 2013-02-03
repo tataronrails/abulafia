@@ -1,0 +1,2 @@
+- @task.status_events.each do |event|
+  = link_to event.to_s.capitalize, change_status_task_path(@task, :event => event), :method => :put, :remote => true, :class => 'btn'

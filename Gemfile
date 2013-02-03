@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'mysql2'
 gem "acts_as_paranoid", "~>0.4.0"
 gem 'devise'
@@ -13,26 +10,22 @@ gem 'acts_as_commentable', '3.0.1'
 gem "select2-rails"
 #gem "bootstrapped"
 gem "gritter", "1.0.2"
-gem "select2-rails"
 gem 'public_activity'
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
-gem 'activeadmin'
-
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"
 gem 'phony'
-gem 'bootstrap-datepicker-rails'
 
 gem "less-rails"
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'bootstrap-datepicker-rails'
 gem "rails_autolink"
 gem "best_in_place"
 gem 'better_logging'
 gem 'hipchat'
-#gem 'hipchat-api'
 gem 'yaml_db'
 
 gem 'haml'
@@ -64,3 +57,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+gem "less"
+
+gem "less-rails"

@@ -70,7 +70,7 @@ class Project < ActiveRecord::Base
   end
 
   def current_work
-    self.tasks.where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
+    self.tasks.with_place(:current)
   end
   #
   #def my_work user
@@ -78,12 +78,11 @@ class Project < ActiveRecord::Base
   #end
 
   def icebox
-    self.tasks.where(:place => 0).where("task_type IN (0,1,2,6)")
-    #.where("task_type != 5").where("task_type != 3")
+    self.tasks.with_place(:icebox)
   end
 
   def backlog
-    self.tasks.where("task_type NOT IN (5,3,4,6)").where(:place => 1)
+    self.tasks.with_place(:backlog)
   end
 
 end

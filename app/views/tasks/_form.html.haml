@@ -1,102 +1,95 @@
-- list_of_task_types = list_of_task_types
-= form_for [@task.project, @task] do |f|
+= form_for @task, :as => :task, :url => project_task_path(@task.project, @task) do |f|
   - if @task.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@task.errors.count, "error")} prohibited this project from being saved:"
+      %h2
+        = "#{pluralize(@task.errors.count, "error")} prohibited this project from being saved:"
       %ul
         - @task.errors.full_messages.each do |msg|
-          %li= msg
-
+          %li
+            = msg
   .field
     .tabbable
       %ul.nav.nav-tabs
         %li.active
-          =link_to "Task","#"
+          = link_to "Task","#"
         %li
-          =link_to "Templates","#"
+          = link_to "Templates","#"
 
-      -#= f.label :Task
-    = f.text_area :title, :class => "span8"
-
+    = f.text_area :title, :class => "span8",:placeholder => 'Title'
   .well.well-small
-    .row-fluid
-      .span6
-        .btn-group.user_story_types
-          %button.btn.btn-small{:id => 0, :data=>{:class => "btn-primary"}}
-            %l.icon-star-empty
-            Feature
-          %button.btn.btn-small{:id => 6, :data=>{:class => ""}}
-            %l.icon-star-half
-            Story
-          %button.btn.btn-small{:id => 2, :data=>{:class => "btn-inverse"}}
-            %l.icon-cogs
-            Chore
-          %button.btn.btn-small{:id => 1, :data=>{:class => "btn-danger"}}
-            %l.icon-bolt
-            Bug
-
-      .span6
-        .btn-group.other_toolbox
-          %button.btn.btn-small.dropdown-toggle{:id => 3, :data => {:toggle => "dropdown", :class => "btn-warning"}}
-            %l.icon-calendar
-            %span{:id => "instruction_text",:data => {:default_text => "Until:"}}
-              Urgent
+    .row-fluid#btn-types
+      .btn-group{:data => {toggle: 'buttons-radio'}}
+        %button.btn.btn-small{:type => 'button', :data => {class: "btn-primary"}, :id => 'feature', :class => @task.feature? ? 'active' : ''}
+          %i.icon-star-empty
+          Feature
+        %button.btn.btn-small{:type => 'button', :data => {class: ""}, :id => 'story', :class => @task.story? ? 'active' : ''}
+          %i.icon-star-half
+          Story
+        %button.btn.btn-small{:type => 'button', :data => {class: "btn-inverse"}, :id => 'chore', :class => @task.chore? ? 'active' : ''}
+          %i.icon-cogs
+          Chore
+        %button.btn.btn-small{:type => 'button', :data => {class: "btn-danger"}, :id => 'bug', :class => @task.bug? ? 'active' : ''}
+          %i.icon-wrench
+          Bug
+      .btn-group.pull-right{:data => {toggle: 'buttons-radio'}}
+        %button.btn.btn-small{:type => 'button', :data=>{:class => "btn-info"}, :id => 'self', :class => @task.self? ? 'active' : ''}
+          %i.icon-briefcase
+          Self task
+        %button.btn.btn-small{:type => 'button', :data=>{:class => "btn-success"}, :id => 'manager', :class => @task.manager? ? 'active' : ''}
+          %i.icon-ok
+          Draft
+      = f.hidden_field :type, :id => 'task_type'
+    .row-fluid#other-toolbox
+      %div{:class => @task.end_at.present? ? 'input-prepend' : 'btn-group'}
+        .btn-group
+          %button.btn.dropdown-toggle#date-dropdown{:data => {:toggle => "dropdown"}}
+            %i.icon-calendar
+            = @task.end_at.present? ? 'Custom' : 'Anytime'
             %span.caret
           %ul.dropdown-menu
             %li
-              =link_to "1 day", "#", :data=>{:finish => (Time.now+1.day).to_s(:db).to_date}
+              = link_to "1 day", "#", :data => {:finish => (Time.now+1.day).strftime("%d-%m-%Y")}
             %li
-              =link_to "3 days", "#", :data=>{:finish => (Time.now+3.day).to_s(:db).to_date}
+              = link_to "3 days", "#", :data => {:finish => (Time.now+3.day).strftime("%d-%m-%Y")}
             %li
-              =link_to "week", "#", :data=>{:finish => (Time.now+7.day).to_s(:db).to_date}
+              = link_to "Week", "#", :data => {:finish => (Time.now+7.day).strftime("%d-%m-%Y")}
             %li
-              =link_to "2 weeks", "#", :data=>{:finish => (Time.now+14.day).to_s(:db).to_date}
+              = link_to "2 weeks", "#", :data => {:finish => (Time.now+14.day).strftime("%d-%m-%Y")}
             %li.divider
             %li
-              =link_to "Anytime", "#", :data=>{:finish => "", :anytime => "true"}
+              = link_to "Anytime", "#", :data => {:finish => ''}
             %li
-              =link_to "Custom", "#", :data=>{:finish => (Time.now+1.month).to_s(:db).to_date, :default_text => "Custom"}
-          %button.btn.btn-small{:id => 4, :data=>{:class => "btn-info"}}
-            %l.icon-briefcase
-            Self task
-          %button.btn.btn-small{:id => 5, :data=>{:class => "btn-success"}}
-            %l.icon-ok
-            Draft
-        =f.text_field :end, :placeholder => "Finish until...", :class => "h"
-
-
-      =f.hidden_field :task_type
+              = link_to "Custom", "#", :data => {:finish => @task.end_at.present? ? @task.end_at.strftime("%d-%m-%Y") : ''}, :id => 'custom-date'
+        = f.text_field :end_at, :class => 'date-field span2',
+                                :id => "prependedDropdownButton",
+                                :style => @task.end_at.present? ? '' : 'display:none',
+                                :value => @task.end_at.present? ? @task.end_at.strftime("%d-%m-%Y") : ''
   .field
     %i.icon-edit
     Description
-    =f.text_area :desc, :class => "span8"
-  .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
+    = f.text_area :desc, :class => "span8"
+  .field.behavior_block{:style => @task.feature? ? "" : "display:none" }
     %i.icon-sitemap
     Behavior
-    =f.text_area :behavior, :class => "span8"
+    = f.text_area :behavior, :class => "span8"
 
   .field
-    =f.label :tags
+    = f.label :tags
     .input-prepend
       %span.add-on
         %i.icon-tags
       = f.text_field :tagging_list, :class => "span4"
   .field
-    =f.label "Assigned_to"
+    = f.label "Assigned_to"
     .input-prepend
       %span.add-on
         %i.icon-user
       = collection_select(:task, :assigned_to, @task.project.users, :id, :login, :prompt => true)
   .field
-    =f.label "Change project"
+    = f.label "Change project"
     .input-prepend
       %span.add-on
         %i.icon-leaf
       = collection_select(:task, :project_id, current_user.projects, :id, :name, :prompt => true)
-
-
-  -#.field
-  -#  = f.label :desc
-  -#  = f.text_area :desc
   .actions
     = f.submit 'Save', {:class => "btn"}

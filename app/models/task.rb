@@ -2,8 +2,10 @@ class Task < ActiveRecord::Base
   include PublicActivity::Model
   extend Enumerize
 
-  attr_accessible :assigned_to, :end, :owner_id, :status, :title, :estimate, :owner_id, :place, :tagging_list
+  attr_accessible :assigned_to, :end_at, :owner_id, :status, :title, :estimate, :owner_id, :place, :tagging_list
   attr_accessible :task_type, :behavior, :project_id, :desc, :type
+
+  TYPES = %w'CommonTask FeatureTask BugTask ChoreTask ManagerTask StoryTask SelfTask'
 
   belongs_to :project
 
@@ -13,7 +15,8 @@ class Task < ActiveRecord::Base
   after_create :assign_discussion
   #after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
 
-  validates :title,  :presence => true
+  validates :title, :presence => true
+  validates :type,  :presence => true, :inclusion => TYPES
 
   acts_as_taggable
   acts_as_paranoid
@@ -21,76 +24,61 @@ class Task < ActiveRecord::Base
   tracked(:owner     => Proc.new { |controller, model| controller.current_user },
           :recipient => Proc.new { |controller, model| model.project }
   )
+  enumerize :estimate, :in => [0, 1, 2, 3, 5, 8]
+  enumerize :place, :in => { :icebox => 0, :backlog => 1, :current => 2 },
+                    :predicates => true,
+                    :default => :icebox
 
-  enumerize :type, in: {
-      :common   => 'CommonTask',
-      :feature  => 'FeatureTask',
-      :bug      => 'BugTask',
-      :chore    => 'ChoreTask',
-      :manager  => 'ManagerTask',
-      :story    => 'StoryTask',
-      :self     => 'SelfTask'
-  }, predicates: true, default: :common
+  scope :with_place, lambda { |*places|
+    where(:place => places.map { |place| Task.place.find_value(place).try(:value) })
+  }
+
+  def self.type_as_sym(type)
+    if (type = type.gsub(/Task\z/, ""))
+      type.underscore.to_sym
+    end
+  end
+
+  def self.type_as_text(type)
+    type.match(/.+Task\z/) ? type : "#{type.to_s.camelize}Task" if type.present?
+  end
+
+  TYPES.each do |type|
+    define_method("#{type_as_sym(type).to_s}?") do
+      type?(type)
+    end
+  end
+
+  def type?(type)
+    self.type == Task.type_as_text(type)
+  end
+
+  def type_as_sym
+    Task.type_as_sym(self.type)
+  end
 
   def self.factory_new(tparams = {})
-    type = tparams.delete(:type)
+    class_name = tparams.delete(:type)
+    class_name = Task.type_as_text(class_name)
+    klass = class_name.constantize
+    klass.new(tparams)
+  rescue NameError
+    CommonTask.new(tparams)
+  rescue NoMethodError
+    CommonTask.new(tparams)
+  end
 
-    task_types = Task.type.values
-    if (index = task_types.index(type))
-      class_name = task_types[index].value
-      class_name = class_name.camelize
-      klass = class_name.constantize
-      klass.new(tparams)
-    else
-      CommonTask.new(tparams)
-    end
+  def tagging_list=(tags_list)
+    self.tag_list = tags_list
+  end
+
+  def tagging_list
+    tag_list
   end
 
   #scope :not_finished, where("end > Time.now")
 
-  #state_machine :status, :initial => :new do
-  #
-  #  event :start do
-  #    transition :new => :in_work, :if => lambda { |task| task.estimate.present? }
-  #  end
-  #
-  #  event :finish do
-  #    transition :in_work => :accepted, :if => lambda { |task| task.task_type.self_task? }
-  #    transition :in_work => :done,     :if => lambda { |task| task.task_type.manager? }
-  #    transition :in_work => :finished
-  #  end
-  #
-  #  event :push do
-  #    transition :finished => :pushed
-  #  end
-  #
-  #  event :test do
-  #    transition :pushed => :done
-  #  end
-  #
-  #  event :accept do
-  #    transition :done => :accepted
-  #  end
-  #
-  #  event :reject do
-  #    transition :done => :rejected
-  #  end
-  #
-  #  event :restart do
-  #    transition [:accepted, :rejected] => :in_work
-  #  end
-  #
-  #end
-
   #acts_as_taggable_on :skills
-
-  #def tagging_list=(tags_list)
-  #  self.tag_list = tags_list
-  #end
-  #
-  #def tagging_list
-  #  tag_list
-  #end
 
   #def not_finished
   #

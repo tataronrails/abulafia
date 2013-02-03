@@ -9,11 +9,9 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-
 //= require bootstrap-transition.js
 //= require bootstrap-alert.js
 //= require bootstrap-modal.js
@@ -24,12 +22,12 @@
 //= require bootstrap-button.js
 //= require bootstrap-collapse.js
 //= require bootstrap-typeahead.js
+//= require bootstrap-datepicker/core
 //= require bootstrap
-
 //= require jquery.autosize
 //= jquery-ui.triggeredAutocomplete
 //= jquery.ui.touch-punch.min
-//= require bootstrap-datepicker
+
 
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").on("click", function () {
@@ -38,9 +36,9 @@ function hide_removed_task() {
 }
 
 
-$(document).on("focus", "[data-behaviour~='datepicker']", function (e) {
-    $(this).datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
-});
+//$(document).on("focus", "[data-behaviour~='datepicker']", function (e) {
+//    $(this).datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
+//});
 
 
 function in_duscussion_too_small_length() {
@@ -58,6 +56,7 @@ function in_duscussion_too_small_length() {
 
 $(document).ready(function () {
     $('textarea').autosize({append:"\n"});
+    $('.date-field').datepicker({"format": "dd-mm-yyyy", "autoclose": true});
 
     if ($("#task_comment").length > 0) {
         in_duscussion_too_small_length();
