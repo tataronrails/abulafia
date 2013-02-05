@@ -21,9 +21,19 @@ class Ability
     can :create, Project
     can :create, Comment
 
+    # better use heimdallr if we'll have many field based restrictions
+    # https://github.com/roundlake/heimdallr
+    # habrahabr: http://habrahabr.ru/company/roundlake/blog/141282/
+    can :manage_sprints, Task do |task|
+      task.project.admins.include?( user ) ||
+        task.project.project_managers.include?( user )
+      false
+    end
+
+
     can :manage, Strike
     can :manage, Sprint
-    can :manage, Task
+    can [:create, :update, :read], Task
     can :manage, User
 
 
@@ -34,7 +44,6 @@ class Ability
     can :manage, Project do |project|
       project.admins.include?( user )
     end
-
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
