@@ -92,7 +92,12 @@
     .input-prepend
       %span.add-on
         %i.icon-forward
-      = collection_select(:task, :sprint_id, @task.project.sprints.alive, :id, :short_desc, :prompt => true)
+      - if can? :manage_sprints, @task
+        = collection_select(:task, :sprint_id, @task.project.sprints.alive, :id, :short_desc, include_blank: true)
+      - else
+        %span.uneditable-input.input-xlarge
+          - if @task.sprint
+            = @task.sprint.short_desc
   .field
     =f.label "Change project"
     .input-prepend
