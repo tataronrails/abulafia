@@ -55,6 +55,16 @@ gem 'daemons'
 
 gem 'activeadmin'
 
+# more pretty AR query methods in additional to standart
+# https://github.com/ernie/squeel
+gem 'squeel'
+
+# useful development tools
+group :development do
+  gem 'sextant' # /rails/routes - view routes fast and in browser
+  gem 'awesome_print'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
