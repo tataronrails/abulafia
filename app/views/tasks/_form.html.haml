@@ -88,6 +88,12 @@
         %i.icon-user
       = collection_select(:task, :assigned_to, @task.project.users, :id, :login, :prompt => true)
   .field
+    =f.label "Sprint"
+    .input-prepend
+      %span.add-on
+        %i.icon-forward
+      = collection_select(:task, :sprint_id, @task.project.sprints.alive, :id, :short_desc, :prompt => true)
+  .field
     =f.label "Change project"
     .input-prepend
       %span.add-on
