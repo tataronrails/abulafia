@@ -19,7 +19,7 @@ class Task < ActiveRecord::Base
   include PublicActivity::Model
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
-  scope :not_finished, where("end > Time.now")
+  scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
 
 
   #acts_as_taggable_on :skills
