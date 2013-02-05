@@ -27,7 +27,6 @@ class Ability
     can :manage_sprints, Task do |task|
       task.project.admins.include?( user ) ||
         task.project.project_managers.include?( user )
-      false
     end
 
 
