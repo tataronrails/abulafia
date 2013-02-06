@@ -12,7 +12,7 @@ class Sprint < ActiveRecord::Base
 
   # use in [rake task :check_dead_sprints + cron] or some bg queue with shelduer like DJ or sidekiq.
   def self.check_dead_sprints
-    dead_sprints = Task.joins(:sprint).where{sprints.end_at < Time.now}.where{finished_at == nil}.includes(:sprint).all.group_by(&:sprint)
+    dead_sprints = Task.joins(:sprint).where{sprints.end_at < Time.now}.where{hours_worked_on_task == nil}.includes(:sprint).all.group_by(&:sprint)
 
     Task.public_activity_off
     
