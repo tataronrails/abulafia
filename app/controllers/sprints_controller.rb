@@ -15,9 +15,11 @@ class SprintsController < ApplicationController
     project = Project.find(params[:project_id])
     sprint = project.sprints.new(params[:new_spring])
 
+    sprints_list = project.sprints.order("created_at DESC")
+
     respond_to do |format|
       if sprint.save!
-        format.js { head :ok }
+        format.js { render sprints_list }
       else
         format.js { render :js => "error" }
       end

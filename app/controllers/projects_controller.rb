@@ -171,6 +171,7 @@ class ProjectsController < ApplicationController
   def show
 
     @project = Project.find(params[:id])
+    @sprints = @project.sprints.order("created_at DESC")
     @discussion = @project.discussions.new
     @task = @project.tasks.new
     @project_users = @project.users
