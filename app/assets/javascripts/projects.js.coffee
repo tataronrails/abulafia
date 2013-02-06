@@ -3,6 +3,13 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+create_sprint_toggle = () ->
+
+  $(".create_sprint_button").on "click", (event) ->
+    event.preventDefault()
+    $(".add_sprint_form").toggleClass("h")
+
+
 filter_task_types = () ->
   $(".list_of_vis_links .btn-group a").click ->
     $(this).toggleClass("active")
@@ -212,7 +219,7 @@ $(document).ajaxComplete (xhr, data, status) ->
 
 
     if status.url.indexOf("sprint") > 0
-      alert "update sprints"
+      $(".sprints_show").html(data.responseText)
     else
       $(".users_stories").effect("fade", "fast")
 
@@ -227,6 +234,7 @@ focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
 
 $ ->
+  create_sprint_toggle()
   filter_task_types()
 #  hide_done_stories()
   delete_story()
