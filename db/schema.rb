@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124070048) do
+ActiveRecord::Schema.define(:version => 20130205173527) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -129,12 +129,13 @@ ActiveRecord::Schema.define(:version => 20130124070048) do
   end
 
   create_table "sprints", :force => true do |t|
-    t.datetime "start_at"
-    t.datetime "end_at"
+    t.date     "start_at"
+    t.date     "end_at"
     t.text     "desc"
     t.integer  "project_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "title"
   end
 
   add_index "sprints", ["project_id"], :name => "index_sprints_on_project_id"
@@ -188,7 +189,10 @@ ActiveRecord::Schema.define(:version => 20130124070048) do
     t.datetime "accepted_to_start"
     t.integer  "hours_worked_on_task"
     t.datetime "finished_at"
+    t.integer  "sprint_id"
   end
+
+  add_index "tasks", ["sprint_id"], :name => "index_tasks_on_sprint_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false

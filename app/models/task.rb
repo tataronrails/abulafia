@@ -1,9 +1,12 @@
 class Task < ActiveRecord::Base
   acts_as_taggable
   acts_as_paranoid
-  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :owner_id, :place, :tagging_list, :task_type, :behavior, :project_id, :desc
+  attr_accessible :assigned_to, :end, :owner_id, :start, :status,
+                  :title, :estimate, :owner_id, :place, :tagging_list,
+                  :task_type, :behavior, :project_id, :desc, :sprint_id
 
   belongs_to :project
+  belongs_to :sprint
 
   after_create :assign_discussion
   before_create :parse_text_to_add_tags_and_type
@@ -16,7 +19,7 @@ class Task < ActiveRecord::Base
   include PublicActivity::Model
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
-  scope :not_finished, where("end > Time.now")
+  scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
 
 
   #acts_as_taggable_on :skills

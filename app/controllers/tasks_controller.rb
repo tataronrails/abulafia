@@ -93,6 +93,9 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
+    # This check contain too many logic for controller. Look at comment around role definition in ability.rb.
+    params[:task].delete(:sprint_id) unless (can? :manage_sprints, @task)
+
     respond_to do |format|
       if @task.update_attributes(params[:task])
         format.html { redirect_to project_task_path(@task.project, @task), notice: 'Task was successfully updated.' }
