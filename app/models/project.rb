@@ -7,6 +7,8 @@ class Project < ActiveRecord::Base
   has_many :sprints, :dependent => :destroy
   has_many :users, :through => :project_memberships
 
+  has_one :column_order, :dependent => :destroy
+
   validates :name, :presence => true, :length => {:minimum => 3}
 
   default_scope order(" created_at DESC")
@@ -20,7 +22,11 @@ class Project < ActiveRecord::Base
   #tracked owner: Proc.new{ |controller, model| controller.current_user }
   tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model| model })
 
+  after_create :create_column_order
 
+  def create_column_order
+    self.column_order.create_column_order!
+  end
 
   # define project.admins, project.members ... methods
   ProjectMembership.role.values.each do |r|
@@ -42,25 +48,6 @@ class Project < ActiveRecord::Base
     pm
   end
 
-  # status_via_words
-  #a[0] = "estimate"
-  #a[1] = "start"
-  #a[2] = "finish"
-  #a[3] = "pushed"
-  #a[4] = "testing"
-  #a[5] = "accept/reject"
-
-  #type_via_words
-  #a = []
-  #a[0] = "feature"
-  #a[1] = "bug"
-  #a[2] = "chore"
-  #a[3] = "instruction"
-  #a[4] = "self_task"
-  #a[5] = "easy_task"
-  #a[6] = "story"
-
-
   def urgent
     self.tasks.where(:task_type => "3").order("end")
   end
@@ -69,7 +56,7 @@ class Project < ActiveRecord::Base
     self.tasks.where(:task_type => "5").order("finished_at").order("created_at DESC")
   end
 
-  def current_work
+  def current_tasks
     self.tasks.with_place(:current)
   end
   #
@@ -77,12 +64,20 @@ class Project < ActiveRecord::Base
   #  self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
   #end
 
-  def icebox
+  def icebox_tasks
     self.tasks.with_place(:icebox)
   end
 
-  def backlog
-    self.tasks.with_place(:backlog)
+  def backlog_tasks(reorder = false)
+    tasks = self.tasks.with_place(:backlog)
+    if reorder
+      temp = []
+      self.column_order.positions.each do |position|
+        temp << tasks.select { |task| task.id == position.to_i }
+      end
+      tasks = temp
+    end
+    tasks.flatten
   end
 
 end

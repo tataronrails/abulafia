@@ -278,6 +278,7 @@ DEPENDENCIES
   haml-rails
   hipchat
   hipchat-api
+  inherited_resources
   jquery-rails
   less
   less-rails

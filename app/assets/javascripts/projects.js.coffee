@@ -227,93 +227,111 @@ focus_on_ready_on_create_task = () ->
   $("#task_title").focus().select()
 
 $ ->
-  filter_task_types()
-#  hide_done_stories()
-  delete_story()
-  focus_on_ready_on_create_task()
-  #  task_create_advanced_settings()
-  project_id = $('body').data('project_id')
-
-  $('.backlog_column').sortable(
-    update: (event, ui) ->
-      backlogOrder = $(this).sortable('toArray').toString()
-
+  $('#backlog_column').sortable(
+    forcePlaceholderSize: true
+    axis: 'y'
+    opacity: 0.75
+    distance: 50
+    cursor: 'move'
+    scroll: false
+    update: (event, ui)->
+      $this = $(this)
+      $data = $this.sortable('serialize', {key: 'positions[]'})
+      $data+= "&_method=put"
       $.ajax(
-        url: "/tasks/update_order"
-        type: "post",
-        data:
-          {'project_id': project_id, 'position_array': backlogOrder}
-        headers:
-          {
-          'X-Transaction': 'POST Example',
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-          }
+        url: $this.data('update-url')
+        type: 'post'
+        data: $data
       )
-
-
-    #      $.get('update-sort.cfm', {fruitOrder:fruitOrder});
   )
 
-  $.ajaxSetup beforeSend: (xhr) ->
-    xhr.setRequestHeader "Accept", "text/javascript"
-
-  #  make_visible_2_backlog_button()
-  labels_click_bind()
-  #  send_form_on_select_assigned_to()
-
-  $('span.estimates img').on 'click', (e) ->
-    column_and_place = $(this).parents(".us_column").data("column")
-    points = $(this).attr("rel")
-    task_id = $(this).parents(".accordion-group").data("taskid")
-
-    url_location = window.location.pathname
-
-
-    $.ajax(
-      url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
-      type: "post",
-      data:
-        {'points': points}
-      complete: (data) -> update_some_test_smth(data, column_and_place, url_location),
-      headers:
-        {
-        'X-Transaction': 'POST Example',
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-        }
-    )
-
-  update_some_test_smth = (data, column_and_place, url_location) ->
-    if url_location.indexOf("/task_boards")
-      project_id = $("body").data("project_id")
-
-      switch column_and_place
-        when 'icebox' then update_icebox_in_us_page(project_id)
-        when 'backlog' then update_backlog_in_us_page(project_id)
-#        when 'my_work' then update_my_work_in_us_page(project_id)
-        when 'current_work' then update_current_work_in_us_page(project_id)
-
-
-  $(".estimate_me_class select").change ->
-    estimate_of_task = $(this).val()
-    $(this).attr("data-id")
-    id_of_task = $(this).attr("data-id")
-
-    form_of_estimation = $("form#edit_task_" + String(id_of_task))
-
-    form_of_estimation.find("input[type='text']").val(estimate_of_task)
-
-    #    console.log(form_of_estimation.find("input[type='text']").val())
-
-    form_of_estimation.submit()
-
-
-  $(".add_project_block a").click (e) ->
-    $(".add_new_project_field").toggleClass("h")
-    $("#project_name").focus().select()
-    e.preventDefault()
-
-  $(".accordion-body").on "shown", ->
-    $(this).parents(".accordion").find("input[type=text]").focus().select()
-
-  if location.hash == "#comments"
-    $(".accordion-group.existed_discussions #collapseTwo").collapse('show')
+#  filter_task_types()
+##  hide_done_stories()
+#  delete_story()
+#  focus_on_ready_on_create_task()
+#  #  task_create_advanced_settings()
+#  project_id = $('body').data('project_id')
+#
+#  $('.backlog_column').sortable(
+#    update: (event, ui) ->
+#      backlogOrder = $(this).sortable('toArray').toString()
+#
+#      $.ajax(
+#        url: "/tasks/update_order"
+#        type: "post",
+#        data:
+#          {'project_id': project_id, 'position_array': backlogOrder}
+#        headers:
+#          {
+#          'X-Transaction': 'POST Example',
+#          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+#          }
+#      )
+#
+#
+#    #      $.get('update-sort.cfm', {fruitOrder:fruitOrder});
+#  )
+#
+#  $.ajaxSetup beforeSend: (xhr) ->
+#    xhr.setRequestHeader "Accept", "text/javascript"
+#
+#  #  make_visible_2_backlog_button()
+#  labels_click_bind()
+#  #  send_form_on_select_assigned_to()
+#
+#  $('span.estimates img').on 'click', (e) ->
+#    column_and_place = $(this).parents(".us_column").data("column")
+#    points = $(this).attr("rel")
+#    task_id = $(this).parents(".accordion-group").data("taskid")
+#
+#    url_location = window.location.pathname
+#
+#
+#    $.ajax(
+#      url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
+#      type: "post",
+#      data:
+#        {'points': points}
+#      complete: (data) -> update_some_test_smth(data, column_and_place, url_location),
+#      headers:
+#        {
+#        'X-Transaction': 'POST Example',
+#        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+#        }
+#    )
+#
+#  update_some_test_smth = (data, column_and_place, url_location) ->
+#    if url_location.indexOf("/task_boards")
+#      project_id = $("body").data("project_id")
+#
+#      switch column_and_place
+#        when 'icebox' then update_icebox_in_us_page(project_id)
+#        when 'backlog' then update_backlog_in_us_page(project_id)
+##        when 'my_work' then update_my_work_in_us_page(project_id)
+#        when 'current_work' then update_current_work_in_us_page(project_id)
+#
+#
+#  $(".estimate_me_class select").change ->
+#    estimate_of_task = $(this).val()
+#    $(this).attr("data-id")
+#    id_of_task = $(this).attr("data-id")
+#
+#    form_of_estimation = $("form#edit_task_" + String(id_of_task))
+#
+#    form_of_estimation.find("input[type='text']").val(estimate_of_task)
+#
+#    #    console.log(form_of_estimation.find("input[type='text']").val())
+#
+#    form_of_estimation.submit()
+#
+#
+#  $(".add_project_block a").click (e) ->
+#    $(".add_new_project_field").toggleClass("h")
+#    $("#project_name").focus().select()
+#    e.preventDefault()
+#
+#  $(".accordion-body").on "shown", ->
+#    $(this).parents(".accordion").find("input[type=text]").focus().select()
+#
+#  if location.hash == "#comments"
+#    $(".accordion-group.existed_discussions #collapseTwo").collapse('show')

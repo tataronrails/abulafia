@@ -51,7 +51,7 @@
                 %i.icon-eye-open.red
               -else
                 %i.icon-eye-close
-.bs-docs-example.shadow
+.bs-docs-example.shadow{:id => "task-#{@task.id}"}
   - classes_to_add = ""
   - @task.accepted_to_start.present? ? classes_to_add << "white_back" : ""
   - @task.assigned_to.present? ? "" : classes_to_add << " h"
@@ -117,8 +117,8 @@
             %i.icon-thumbs-up
             Done at:
             =distance_of_time_in_words_to_now @task.finished_at
-    .row-fluid#actions
-      = render 'actions'
+    .row-fluid
+      = render :partial => 'shared/events', :locals => { :task => @task, :anchor_class => 'btn' }
 
 .row-fluid
   .lead Discussion:

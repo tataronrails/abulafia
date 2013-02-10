@@ -18,7 +18,7 @@ gem "capistrano", :group => :development
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"
 gem 'phony'
-
+gem 'inherited_resources'
 gem "less-rails"
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'bootstrap-datepicker-rails'

@@ -1,0 +1,6 @@
+- anchor_class ||= nil
+.events
+  - task.status_events.each do |event|
+    = link_to event.to_s.capitalize, change_status_project_task_path(@project, task, :event => event), :method => :put,
+                                                                                         :remote => true,
+                                                                                         :class => anchor_class || nil

@@ -2,6 +2,8 @@ class FeatureTask < Task
   enumerize :status, in: [:new, :in_work, :finished, :accepted, :rejected], predicates: true, default: :new
 
   state_machine :status, :initial => :new do
+    after_transition :new => :in_work, :do => :to_current
+
     event :start do
       transition :new => :in_work, :if => lambda { |task| task.estimate.present? }
     end
@@ -23,4 +25,9 @@ class FeatureTask < Task
     end
   end
 
+  private
+
+  def to_current
+    self.update_attributes!(:place => :current)
+  end
 end

@@ -11,8 +11,7 @@
     = stylesheet_link_tag "application", :media => "all"
     :css
       body {
-        padding-top: 30px;
-        padding-bottom: 40px;
+        padding-top: 50px;
       }
       .sidebar-nav {
         padding: 9px 0;
@@ -32,10 +31,11 @@
   - papers << "white_wall.png"
   - papers << "creampaper.png"
   - papers << "debut_light.png"
-  -#%body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/#{papers.sample})"}
   %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/012-subtle-light-patterns.jpg)"}
     .navbar-fixed-top{:style => "padding: 10px;"}
       .row-fluid
+        = link_to project_path(@project), :class => "btn" do
+          %i.icon-arrow-left
         .span3.pull-right
           .list_of_vis_links{:style => "text-align:right"}
             Filter:

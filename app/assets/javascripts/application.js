@@ -25,8 +25,8 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap
 //= require jquery.autosize
-//= jquery-ui.triggeredAutocomplete
-//= jquery.ui.touch-punch.min
+//= require jquery-ui.triggeredAutocomplete
+//= require jquery.ui.touch-punch.min
 
 
 function hide_removed_task() {

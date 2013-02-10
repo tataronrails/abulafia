@@ -1,3 +1,5 @@
 class ColumnOrder < ActiveRecord::Base
-  attr_accessible :place, :position_id, :project_id
+  attr_accessible :positions, :project
+
+  serialize :positions, Array
 end

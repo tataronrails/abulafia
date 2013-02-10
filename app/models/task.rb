@@ -8,12 +8,16 @@ class Task < ActiveRecord::Base
   TYPES = %w'CommonTask FeatureTask BugTask ChoreTask ManagerTask StoryTask SelfTask'
 
   belongs_to :project
+  belongs_to :assigned_user, :class_name => User, :foreign_key => :assigned_to
+  belongs_to :owner, :class_name => User
 
   has_one :discussion, :as => :discussable
 
   #before_create :parse_text_to_add_tags_and_type
   after_create :assign_discussion
   #after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
+
+  before_update :refresh_status, :if => :new_type?
 
   validates :title, :presence => true
   validates :type,  :presence => true, :inclusion => TYPES
@@ -84,32 +88,6 @@ class Task < ActiveRecord::Base
   #
   #end
 
-  #def status_via_words
-  #  a = []
-  #  a[0] = "estimate"
-  #  a[1] = "start"
-  #  a[2] = "finish"
-  #  a[3] = "pushed"
-  #  a[4] = "testing"
-  #  a[5] = "accept/reject"
-  #  #a[5] = "accept"
-  #
-  #  a[self.status]
-  #end
-  #
-  #def type_via_words
-  #  a = []
-  #  a[0] = "feature"
-  #  a[1] = "bug"
-  #  a[2] = "chore"
-  #  a[3] = "manager"
-  #  a[4] = "self_task"
-  #  a[5] = "easy_task"
-  #  a[6] = "story"
-  #
-  #  a[self.status]
-  #end
-
 
   #def assigned_to_initials
   #  begin
@@ -140,8 +118,15 @@ class Task < ActiveRecord::Base
 
   end
 
-  private
+  protected
 
+  def refresh_status
+    self.status = self.type.constantize.status.default_value
+  end
+
+  def new_type?
+    self.type != self.class.to_s
+  end
   #def set_type_to_task object, source_text, string_to_find, type_to_set
   #  if source_text.include? string_to_find
   #    object.title = source_text.gsub(/^#{string_to_find}/, "").gsub(/^, /, "").gsub(/^ /, "")

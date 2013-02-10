@@ -1,0 +1,16 @@
+.row-fluid.task{:id => "task_#{task.id}"}
+  .span1
+    %i.icon-star-empty.orange
+  .span10
+    = link_to task.title, project_task_path(@project, task)
+    %br
+    - if task.end_at.present?
+      %small
+        |
+        = distance_of_time_in_words_to_now(task.end_at)
+    %br
+    .events
+      = render :partial => 'shared/events', :locals => { :task => task, :anchor_class => 'btn btn-mini' }
+  .span1
+    %small
+      = task.owner.initials
