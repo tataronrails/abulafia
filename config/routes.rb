@@ -40,7 +40,11 @@ EOffice::Application.routes.draw do
   resources :discussions, :has_many => :comments
 
   resources :projects, :has_many => :comments do
-    resources :sprints
+    resources :sprints do
+      member do
+        get 'user_stories'
+      end
+    end
 
     resources :tasks, :has_many => :comments do
       post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
