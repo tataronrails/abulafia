@@ -31,7 +31,6 @@ class ProjectsController < ApplicationController
     render :layout => "user_stories"
   end
 
-
   def kick_out_users
     user = User.find(params[:user_id])
     project = Project.find(params[:project_id])
