@@ -5,6 +5,9 @@ class Sprint < ActiveRecord::Base
 
   scope :alive, where{end_at > Time.now}
   scope :dead,  where{end_at < Time.now}
+  scope :currents, lambda{ where( 'start_at <= :c_date AND end_at >= :c_date', c_date: Time.now.to_date) }
+
+  before_create :assign_iteration_number
 
   def short_desc
     "#{title} (#{I18n.l start_at, format: :short} - #{I18n.l end_at, format: :short})"
@@ -45,4 +48,15 @@ class Sprint < ActiveRecord::Base
 
     self
   end
+
+  private
+
+  def next_iteration_number
+    self.project.sprints.count + 1
+  end
+
+  def assign_iteration_number
+    self.iteration_number = next_iteration_number
+  end
+
 end

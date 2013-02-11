@@ -45,15 +45,19 @@
 -#эти ключи в начале делают задачу с типом Фича, Баг, Работенка.
 -#Пример: #bug Сделать пример использования бага или #bug, Это также работает
 
-.sprints_show= render @sprints
-
+.sprints_show
+  - if @project.current_sprint.present?
+    %em
+      Current sprint:
+    = render @project.current_sprint
+  = link_to 'All sprints', project_sprints_path(@project)
 .lead
   =link_to "#", :class => "create_sprint_button" do
     %i.icon-plus
     Create sprint
 
   .add_sprint_form.h
-    =form_for :new_spring, :remote => :true, :url => project_sprints_path(@project)  do |f|
+    =form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
       =f.label :title
       =f.text_field :title
       =f.label :start

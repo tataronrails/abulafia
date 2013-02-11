@@ -1,0 +1,13 @@
+%ul.unstyled
+  %li
+    = link_to user_stories_project_sprint_path( parent, @sprint.iteration_number) do
+      %i.icon-inbox
+      User stories
+  %li
+    = link_to '#' do
+      %i.icon-star
+      Reports
+  %li
+    = link_to '#' do
+      %i.icon-paper-clip
+      Files

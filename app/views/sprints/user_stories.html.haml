@@ -1,0 +1,6 @@
+.page-header
+  %h4
+    %em
+      Sprint:
+    = link_to @sprint.title, project_sprint_path( parent, @sprint.iteration_number)
+=render partial: 'projects/user_stories', locals: { project: parent, tasks: @sprint.tasks}

@@ -42,6 +42,10 @@ class Project < ActiveRecord::Base
     pm
   end
 
+  def current_sprint
+    sprints.currents.first
+  end
+
   # status_via_words
   #a[0] = "estimate"
   #a[1] = "start"
@@ -60,30 +64,31 @@ class Project < ActiveRecord::Base
   #a[5] = "easy_task"
   #a[6] = "story"
 
-
-  def urgent
-    self.tasks.where(:task_type => "3").order("end")
-  end
-
-  def draft
-    self.tasks.where(:task_type => "5").order("finished_at").order("created_at DESC")
-  end
-
-  def current_work
-    self.tasks.where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
-  end
+  # moved to Task scope
   #
-  #def my_work user
-  #  self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
-  #end
+  # def urgent
+  #   self.tasks.where(:task_type => "3").order("end")
+  # end
+  #
+  # def draft
+  #   self.tasks.where(:task_type => "5").order("finished_at").order("created_at DESC")
+  # end
+  #
+  # def current_work
+  #  self.tasks.where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
+  # end
+  #
+  # def my_work user
+  #   self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
+  # end
 
-  def icebox
-    self.tasks.where(:place => 0).where("task_type IN (0,1,2,6)")
-    #.where("task_type != 5").where("task_type != 3")
-  end
-
-  def backlog
-    self.tasks.where("task_type NOT IN (5,3,4,6)").where(:place => 1)
-  end
+  # def icebox
+  #   self.tasks.where(:place => 0).where("task_type IN (0,1,2,6)")
+  #   #.where("task_type != 5").where("task_type != 3")
+  # end
+  #
+  # def backlog
+  #   self.tasks.where("task_type NOT IN (5,3,4,6)").where(:place => 1)
+  # end
 
 end

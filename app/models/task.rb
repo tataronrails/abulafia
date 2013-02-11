@@ -20,7 +20,13 @@ class Task < ActiveRecord::Base
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
-
+  scope :urgent, where(:task_type => "3").order("end")
+  scope :draft, where(:task_type => "5").order("finished_at").order("created_at DESC")
+  scope :current_work, where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
+  scope :icebox, where(:place => 0).where("task_type IN (0,1,2,6)")
+  scope :backlog, where("task_type NOT IN (5,3,4,6)").where(:place => 1)
+  scope :my_work, lambda { |user| where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")}
+  scope :without_sprint, where( sprint_id: nil)
 
   #acts_as_taggable_on :skills
 
