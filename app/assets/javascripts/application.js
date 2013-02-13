@@ -25,6 +25,9 @@
 //= require bootstrap-collapse.js
 //= require bootstrap-typeahead.js
 //= require bootstrap
+//= require best_in_place.js
+//= require best_in_place.purr.js
+//= require jquery-migrate.js
 
 //= require jquery.autosize
 //= jquery-ui.triggeredAutocomplete
@@ -57,6 +60,8 @@ function in_duscussion_too_small_length() {
 }
 
 $(document).ready(function () {
+    $('.best_in_place').best_in_place();
+
     $('textarea').autosize({append:"\n"});
 
     if ($("#task_comment").length > 0) {

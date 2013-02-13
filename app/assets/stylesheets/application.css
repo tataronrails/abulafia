@@ -16,6 +16,16 @@
  .
  */
 
+.purr {
+  positio:n fixed;
+  top: 30px;
+  right: 100px;
+  width: 250px;
+  padding: 20px;
+  background-color: #FCC;
+  border: solid 2px #C66;
+}
+
 body {
     background: url(/assets/012-subtle-light-patterns.jpg) !important;
 }

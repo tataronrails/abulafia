@@ -66,29 +66,28 @@ class Project < ActiveRecord::Base
 
   # moved to Task scope
   #
-  # def urgent
-  #   self.tasks.where(:task_type => "3").order("end")
-  # end
-  #
-  # def draft
-  #   self.tasks.where(:task_type => "5").order("finished_at").order("created_at DESC")
-  # end
-  #
-  # def current_work
-  #  self.tasks.where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
-  # end
-  #
-  # def my_work user
-  #   self.tasks.where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")
-  # end
+  def urgent
+     tasks.without_sprint.urgent
+  end
 
-  # def icebox
-  #   self.tasks.where(:place => 0).where("task_type IN (0,1,2,6)")
-  #   #.where("task_type != 5").where("task_type != 3")
-  # end
-  #
-  # def backlog
-  #   self.tasks.where("task_type NOT IN (5,3,4,6)").where(:place => 1)
-  # end
+  def draft
+     tasks.without_sprint.draft
+  end
+
+  def current_work
+    tasks.without_sprint.current_work
+  end
+
+  def my_work user
+     tasks.without_sprint.my_work user
+  end
+
+  def icebox
+     tasks.without_sprint.icebox
+  end
+
+  def backlog
+     tasks.without_sprint.backlog
+  end
 
 end

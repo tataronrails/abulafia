@@ -32,7 +32,7 @@ class Ability
 
     can :manage, Strike
     can :manage, Sprint
-    can [:create, :update, :read], Task
+    can [:create, :update, :read, :to_backlog], Task
     can :manage, User
 
 

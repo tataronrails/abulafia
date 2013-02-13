@@ -7,6 +7,8 @@ class Sprint < ActiveRecord::Base
   scope :dead,  where{end_at < Time.now}
   scope :currents, lambda{ where( 'start_at <= :c_date AND end_at >= :c_date', c_date: Time.now.to_date) }
 
+  validates_presence_of :title, :end_at, :start_at
+
   before_create :assign_iteration_number
 
   def short_desc

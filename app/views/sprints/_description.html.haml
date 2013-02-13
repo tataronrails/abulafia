@@ -1,13 +1,31 @@
 .row
   %strong
     Start at
-  = @sprint.start_at
+  - if can?(:manage, @sprint)
+    = best_in_place @sprint, :start_at, :type => :input, path: project_sprint_path(parent, @sprint.iteration_number),
+                              activator: '#edit_start_at'
+    %button.btn
+      %i.icon-edit{ id: 'edit_start_at'}
+    - else
+    = @sprint.start_at
 .row
   %strong
     End at
-  = @sprint.end_at
+  - if can?(:manage, @sprint)
+    = best_in_place @sprint, :end_at, :type => :input, path: project_sprint_path(parent, @sprint.iteration_number),
+                              activator: '#edit_end_at', classes:  'datepicker'
+    %button.btn
+      %i.icon-edit{ id: 'edit_end_at'}
+    - else
+    = @sprint.end_at
 .row
   %strong
     Description
   %p
-    = @sprint.desc
+    - if can?(:manage, @sprint)
+      = best_in_place @sprint, :desc, :type => :textarea, path: project_sprint_path(parent, @sprint.iteration_number),
+                                activator: '#edit_desc'
+      %button.btn
+        %i.icon-edit{ id: 'edit_desc'}
+    - else
+      = @sprint.desc
