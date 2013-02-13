@@ -1,0 +1,26 @@
+%h1 Listing plus_transactions
+
+%table.table
+  %tr
+    %th Source user
+    %th Value
+    %th Desc
+    %th
+    %th
+    %th
+
+  - @plus_transactions.each do |plus_transaction|
+    %tr
+      %td
+        = gravatar_image_tag(User.find(plus_transaction.source_user).email)
+      %td
+        %strong
+          = plus_transaction.value
+      %td= plus_transaction.desc
+      %td= link_to 'Show', plus_transaction
+      %td= link_to 'Edit', edit_plus_transaction_path(plus_transaction)
+      %td= link_to 'Destroy', plus_transaction, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Plus transaction', new_plus_transaction_path

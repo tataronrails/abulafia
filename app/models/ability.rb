@@ -21,6 +21,9 @@ class Ability
     can :create, Project
     can :create, Comment
 
+    can :manage, MinusTransaction
+    can :manage, PlusTransaction
+
     # better use heimdallr if we'll have many field based restrictions
     # https://github.com/roundlake/heimdallr
     # habrahabr: http://habrahabr.ru/company/roundlake/blog/141282/
