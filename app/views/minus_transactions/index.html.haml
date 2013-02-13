@@ -1,0 +1,21 @@
+%h1 Listing minus_transactions
+
+%table
+  %tr
+    %th Target user
+    %th Project
+    %th
+    %th
+    %th
+
+  - @minus_transactions.each do |minus_transaction|
+    %tr
+      %td= minus_transaction.target_user
+      %td= minus_transaction.project
+      %td= link_to 'Show', minus_transaction
+      %td= link_to 'Edit', edit_minus_transaction_path(minus_transaction)
+      %td= link_to 'Destroy', minus_transaction, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Minus transaction', new_minus_transaction_path

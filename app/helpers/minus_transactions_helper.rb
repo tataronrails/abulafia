@@ -1,0 +1,2 @@
+module MinusTransactionsHelper
+end

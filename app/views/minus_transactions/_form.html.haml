@@ -1,0 +1,31 @@
+= form_for @minus_transaction do |f|
+  - if @minus_transaction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@minus_transaction.errors.count, "error")} prohibited this minus_transaction from being saved:"
+      %ul
+        - @minus_transaction.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :value
+    = f.number_field :value
+
+  .field
+    .input-prepend
+      %span.add-on
+        %i.icon-money
+      = f.collection_select(:plus_transaction_id, PlusTransaction.all, :id, :value, :selected => params[:plus_transaction])
+
+  .field
+    .input-prepend
+      %span.add-on
+        %i.icon-user
+      = f.collection_select(:target_user, User.all.delete_if{|u| u.fio.nil?}, :id, :fio, :prompt => true)
+
+  .field
+    .input-prepend
+      %span.add-on
+        %i.icon-leaf
+      = f.collection_select(:project_id, Project.all, :id, :name, :prompt => true)
+  .actions
+    = f.submit 'Save'

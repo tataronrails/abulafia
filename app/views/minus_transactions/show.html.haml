@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Target user:
+  = @minus_transaction.target_user
+%p
+  %b Project:
+  = @minus_transaction.project
+
+= link_to 'Edit', edit_minus_transaction_path(@minus_transaction)
+\|
+= link_to 'Back', minus_transactions_path

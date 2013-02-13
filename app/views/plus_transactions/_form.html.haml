@@ -1,0 +1,24 @@
+= form_for @plus_transaction do |f|
+  - if @plus_transaction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@plus_transaction.errors.count, "error")} prohibited this plus_transaction from being saved:"
+      %ul
+        - @plus_transaction.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :value
+    = f.number_field :value
+  .field
+    .input-prepend
+      %span.add-on
+        %i.icon-user
+      = f.collection_select(:source_user, User.joins(:project_memberships).where(project_memberships: {role: 'customer'}).uniq!, :id, :fio, :prompt => true)
+
+
+    -#= f.label :source_user
+    -#= f.number_field :source_user
+  .field
+    = f.label :desc
+    = f.text_area :desc
+  .actions
+    = f.submit 'Save'
