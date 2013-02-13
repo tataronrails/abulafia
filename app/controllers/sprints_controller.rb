@@ -24,6 +24,11 @@ class SprintsController < InheritedResources::Base
     end
   end
 
+  def update
+    @sprint.update_attributes(params[:sprint])
+    respond_with_bip( @sprint )
+  end
+
   private
 
   def resource

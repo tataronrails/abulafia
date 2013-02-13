@@ -22,6 +22,11 @@
 //= require_tree ./widgets
 //= require angular
 
+//= require best_in_place.js
+//= require best_in_place.purr.js
+//= require jquery-migrate.js
+
+
 function hide_removed_task() {
   $(".alone_comment i.icon-trash").on("click", function () {
     $(this).parents(".alone_comment").slideUp("slow");
@@ -59,6 +64,9 @@ function show_error_message(){
 }
 
 $(document).ready(function () {
+
+  $('.best_in_place').best_in_place();
+
   $(".select2_to_mark").select2();
   $('textarea').autosize({append:"\n"});
 
