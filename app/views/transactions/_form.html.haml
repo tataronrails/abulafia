@@ -1,0 +1,30 @@
+= form_for @transaction do |f|
+  - if @transaction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@transaction.errors.count, "error")} prohibited this transaction from being saved:"
+      %ul
+        - @transaction.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :value
+    = f.number_field :value
+  .field
+    .row-fluid
+      .span10
+        .span5
+          = f.label :from_account
+          =f.select(:from_account_id, Account.all.collect {|p| [ p.owner_name, p.id ] },{},  {:class => "select2_to_mark"} )
+          %span{:style => "font-size:22px; padding-right: 5px "}
+            %i.icon-arrow-right
+        .span5
+          = f.label :to_account
+          =f.select(:to_account_id, Account.all.collect {|p| [ p.owner_name, p.id ] },{},  {:class => "select2_to_mark"} )
+  .field
+    = f.label :desc
+    = f.text_area :desc
+  -#.field
+  -#  = f.label :author
+  -#  = f.text_field :author
+  .actions
+    = f.submit 'Save'
