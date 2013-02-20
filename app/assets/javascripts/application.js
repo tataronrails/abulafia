@@ -31,6 +31,8 @@
 //= jquery.ui.touch-punch.min
 //= require bootstrap-datepicker
 
+//= require select2
+
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").on("click", function () {
         $(this).parents(".alone_comment").slideUp("slow")
@@ -57,6 +59,9 @@ function in_duscussion_too_small_length() {
 }
 
 $(document).ready(function () {
+
+    $(".select2_to_mark").select2();
+
     $('textarea').autosize({append:"\n"});
 
     if ($("#task_comment").length > 0) {

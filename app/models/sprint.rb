@@ -1,6 +1,7 @@
 class Sprint < ActiveRecord::Base
   belongs_to :project
   has_many :tasks
+  has_one :account, :as => :owner, :dependent => :destroy
   attr_accessible :desc, :end_at, :start_at, :title
 
   scope :alive, where{end_at > Time.now}
@@ -8,6 +9,9 @@ class Sprint < ActiveRecord::Base
   scope :currents, lambda{ where( 'start_at <= :c_date AND end_at >= :c_date', c_date: Time.now.to_date) }
 
   before_create :assign_iteration_number
+
+
+
 
   def short_desc
     "#{title} (#{I18n.l start_at, format: :short} - #{I18n.l end_at, format: :short})"

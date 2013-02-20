@@ -6,6 +6,7 @@ gem 'rails', '3.2.12'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem "ancestry"
 gem "acts_as_paranoid", "~>0.4.0"
 gem 'devise'
 gem 'devise_invitable'
@@ -20,6 +21,8 @@ gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
 gem 'activeadmin'
+
+gem "select2-rails"
 
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"

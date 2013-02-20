@@ -64,6 +64,15 @@ class ProjectsController < ApplicationController
   end
 
   def invite_user
+    rate = params[:project_user][:rate]
+    type_of_work = params[:project_user][:type_of_hours_calculation].to_i
+
+    a = %W(Hourly Fixed Percentage)
+    type_of_work_name = a[type_of_work]
+
+
+
+
     if params[:invitation][:email].blank?
       redirect_to :back, :notice => "Email field can not be blank!" and return
     end
@@ -77,7 +86,8 @@ class ProjectsController < ApplicationController
     project = Project.find(params[:project_id])
 
     if User.where(:email => email).exists?
-      pm = ProjectMembership.new(:user => user, :project => project, :role => role)
+      pm = ProjectMembership.new(:user => user, :project => project, :role => role, :rate => rate, :type_to_calculate => type_of_work_name)
+
 
       if pm.save
         flash[:notice] = "User now can see current project"

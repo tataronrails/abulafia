@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+
+
+  has_one :account, :as => :owner, :dependent => :destroy
+
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
@@ -10,6 +14,12 @@ class User < ActiveRecord::Base
     user.validates_uniqueness_of :login
     user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
   end
+
+
+  def to_s
+    fio
+  end
+
 
   after_create :assign_discussion_to_user
 
@@ -30,13 +40,17 @@ class User < ActiveRecord::Base
 
   #TODO: refactor
   def role_in_project project_id
-    self.project_memberships.where(:project_id => project_id).first.role.text
+    begin
+      self.project_memberships.where(:project_id => project_id).first.role.text
+    rescue NoMethodError
+      'error'
+    end
+
   end
 
   def role project_id
     self.project_memberships.where(:project_id => project_id).first.role
   end
-
 
 
   def fio
@@ -54,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def my_tasks
-    Task.where(:assigned_to => self.id).order(:created_at).delete_if{|t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)}
+    Task.where(:assigned_to => self.id).order(:created_at).delete_if { |t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?) }
   end
 
 
