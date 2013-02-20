@@ -1,4 +1,10 @@
 EOffice::Application.routes.draw do
+  resources :accounts
+
+
+  resources :transactions
+
+
   resources :minus_transactions
 
 

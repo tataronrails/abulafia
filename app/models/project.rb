@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :destroy
   has_many :sprints, :dependent => :destroy
   has_many :users, :through => :project_memberships
+  has_one :account, :as => :owner, :dependent => :destroy
 
   validates :name, :presence => true, :length => {:minimum => 3}
 
@@ -18,8 +19,7 @@ class Project < ActiveRecord::Base
   acts_as_commentable
 
   #tracked owner: Proc.new{ |controller, model| controller.current_user }
-  tracked(owner: Proc.new {|controller, model| controller.current_user }, recipient: Proc.new {|controller, model| model })
-
+  tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model })
 
 
   # define project.admins, project.members ... methods
@@ -27,6 +27,11 @@ class Project < ActiveRecord::Base
     send(:define_method, r.underscore.pluralize) do
       self.project_memberships.where(:role => r.underscore).map(&:user)
     end
+  end
+
+
+  def to_s
+    name
   end
 
 
