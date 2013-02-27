@@ -12,25 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require jquery-ui
+//= require jquery.autosize.js
+//= require jquery.shapeshift.min
+//= require jquery-ui.triggeredAutocomplete
+//= require jquery.ui.touch-punch.min
+//= require twitter/bootstrap
+//= require bootstrap-datepicker/core
 
-//= require bootstrap-transition.js
-//= require bootstrap-alert.js
-//= require bootstrap-modal.js
-//= require bootstrap-dropdown.js
-//= require bootstrap-tab.js
-//= require bootstrap-tooltip.js
-//= require bootstrap-popover.js
-//= require bootstrap-button.js
-//= require bootstrap-collapse.js
-//= require bootstrap-typeahead.js
-//= require bootstrap
-
-//= require jquery.autosize
-//= jquery-ui.triggeredAutocomplete
-//= jquery.ui.touch-punch.min
-//= require bootstrap-datepicker
 
 //= require select2
 
