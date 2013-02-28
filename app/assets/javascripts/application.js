@@ -13,10 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= bootstrap-datepicker/core
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts
-
+//= require bootstrap-datepicker/core
+//= require select2
 
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").on("click", function () {
@@ -44,6 +44,9 @@ function in_duscussion_too_small_length() {
 }
 
 $(document).ready(function () {
+
+    $(".select2_to_mark").select2();
+
     $('textarea').autosize({append:"\n"});
 
     if ($("#task_comment").length > 0) {

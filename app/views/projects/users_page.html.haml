@@ -26,6 +26,21 @@
           %span.add-on
             %i.icon-eye-open
           =select_tag(:role,  options_for_select(@list_of_roles))
+    %hr/
+    .control-group
+      Rate
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-money
+          =number_field :project_user, :rate, :class => "span2"
+    .control-group
+      Type of hours calculation
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-money
+          =select(:project_user, :type_of_hours_calculation, [['Hourly', 0], ['Fixed', 1], ['Percentage', 2]])
     -#.control-group
     -#  .controls
     -#    .input-prepend
@@ -39,8 +54,6 @@
     -#        %i.icon-user
     -#      =text_field(:invitation,:second_name, :placeholder => "Second name")
     =submit_tag(:submit, :value => "Invite", :class => "btn .pull-right")
-
-
 
   .container.users_grid{:style=>"position: relative;"}
     -@users.each do |u|
@@ -59,14 +72,15 @@
             %br
             as
             =truncate u.role_in_project(@project)
-            -#first name:
-            -#=u.first_name
-            -#%br/
-            -#second_name:
-            -#=u.second_name
-            -#=u.login
-            -#%br
-            -#Phone:
+            -#=ProjectMembership.where(:user_id => u.id, :project_id => @project_id).count
+            -fin = ProjectMembership.where(:project_id => @project.id, :user_id => u.id).first
+            - unless fin.rate.nil?
+              .fin
+                Rate:
+                %strong
+                  #{fin.rate}$
+                ,
+                =fin.type_to_calculate
             %p
             -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
               %small

@@ -1,0 +1,19 @@
+.row-fluid
+  .span10
+    %ul.breadcrumb
+      %li
+        =link_to "Abulafia", root_path
+        %span.divider /
+      %li
+        =link_to "Projects", projects_path
+        %span.divider /
+      %li
+        =link_to parent.name, parent
+        %span.divider /
+      %li
+        .active
+          %i.icon-leaf
+          %strong
+            Sprints
+          %span.divider /
+=render partial: 'list', locals: { sprints: @sprints}

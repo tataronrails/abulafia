@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem "ancestry"
 gem "acts_as_paranoid", "~>0.4.0"
 gem 'devise'
 gem 'devise_invitable'
@@ -20,6 +21,8 @@ gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
 gem 'activeadmin'
+
+gem "select2-rails"
 
 gem "meta_search",    '>= 1.1.0.pre'
 gem "airbrake"
@@ -54,6 +57,16 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 
 gem 'activeadmin'
+
+# more pretty AR query methods in additional to standart
+# https://github.com/ernie/squeel
+gem 'squeel'
+
+# useful development tools
+group :development do
+  gem 'sextant' # /rails/routes - view routes fast and in browser
+  gem 'awesome_print'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

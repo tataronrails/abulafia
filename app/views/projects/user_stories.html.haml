@@ -1,26 +1,8 @@
-.row-fluid.h
-  .span12
-    =link_to_function "icebox", "window.update_icebox_in_us_page(#{@project.id})"
-    =link_to_function "backlog", "window.update_backlog_in_us_page(#{@project.id})"
-    -#=link_to_function "my work", "window.update_my_work_in_us_page(#{@project.id})"
-    =link_to_function "current work", "window.update_current_work_in_us_page(#{@project.id})"
-.row-fluid
-  .span4.us_column{:data => {:column =>"current_work"}}
-    .lead
-      =link_to project_path(@project), :class => "btn" do |l|
-
-        %i.icon-arrow-left
-      Current
-
-    .current_work_column= render :partial => "story", :locals => {:tasks => @project.current_work, :place => "current_work", :updated_task => nil}
-  .span4.us_column{:data => {:column =>"backlog"}}
-    .lead
-      Backlog
-    .backlog_column= render :partial => "story", :locals => {:tasks => @project.backlog, :place => "backlog", :updated_task => nil}
-  .span4.us_column{:data => {:column =>"icebox"}}
-    .lead
-      Icebox
-    .icebox_column= render :partial => "story", :locals => {:tasks => @project.icebox, :place => "icebox", :updated_task => nil}
-  -#.span3.us_column
-  -#  .us_header
-  -#    History
+- project = project ? project : @project
+- if @tasks.present?
+  - tasks = @tasks
+- elsif tasks.present?
+  - tasks = tasks
+- else
+  - tasks = project.tasks.without_sprint
+=render partial: 'user_stories', locals: { project: project, tasks: tasks}

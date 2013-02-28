@@ -45,28 +45,36 @@
 -#эти ключи в начале делают задачу с типом Фича, Баг, Работенка.
 -#Пример: #bug Сделать пример использования бага или #bug, Это также работает
 
-
--#%hr/
-
--@project.sprints.order("created_at DESC").first(3).each do |s|
-  %h5= s.title
-
+.sprints_show
+  - if @project.current_sprint.present?
+    %em
+      Current sprint:
+    = render @project.current_sprint
+  = link_to 'All sprints', project_sprints_path(@project)
 .lead
-  %i.icon-plus
-  Create sprint
+  =link_to "#", :class => "create_sprint_button" do
+    %i.icon-plus
+    Create sprint
 
-  =form_for :new_spring, :remote => :true, :url => project_sprints_path(@project)  do |f|
-    =f.label :title
-    =f.text_field :title
-    =f.label :start
-    =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
-    =f.label :end
-    =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
-    =f.label :description
-    =f.text_area :desc
-    %p
-    =f.button :Create,  :class => "btn"
+  .add_sprint_form.h
+    =form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
+      =f.label :title
+      =f.text_field :title
+      =f.label :start
+      =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
+      =f.label :end
+      =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
+      =f.label :description
+      =f.text_area :desc
+      %p
+      =f.button :Create,  :class => "btn"
 
+%hr/
+%ul.nav.nav-pills
+  %li.active
+    =link_to "Discussions", "#"
+  %li
+    =link_to "Transaction", "#"
 %hr/
 .lead
   Discussions

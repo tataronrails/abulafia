@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127165939) do
+ActiveRecord::Schema.define(:version => 20130220102914) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "title"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -108,12 +118,33 @@ ActiveRecord::Schema.define(:version => 20130127165939) do
 
   add_index "discussions", ["project_id"], :name => "index_discussions_on_project_id"
 
+  create_table "minus_transactions", :force => true do |t|
+    t.integer  "target_user"
+    t.integer  "project_id"
+    t.integer  "plus_transaction_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "value"
+  end
+
+  add_index "minus_transactions", ["project_id"], :name => "index_minus_transactions_on_project_id"
+
+  create_table "plus_transactions", :force => true do |t|
+    t.integer  "source_user"
+    t.text     "desc"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "value"
+  end
+
   create_table "project_memberships", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
     t.string   "role"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "rate"
+    t.string   "type_to_calculate"
   end
 
   add_index "project_memberships", ["project_id"], :name => "index_project_memberships_on_project_id"
@@ -133,9 +164,10 @@ ActiveRecord::Schema.define(:version => 20130127165939) do
     t.date     "end_at"
     t.text     "desc"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.text     "title"
+    t.integer  "iteration_number"
   end
 
   add_index "sprints", ["project_id"], :name => "index_sprints_on_project_id"
@@ -189,7 +221,26 @@ ActiveRecord::Schema.define(:version => 20130127165939) do
     t.datetime "accepted_to_start"
     t.integer  "hours_worked_on_task"
     t.datetime "finished_at"
+    t.integer  "sprint_id"
   end
+
+  add_index "tasks", ["sprint_id"], :name => "index_tasks_on_sprint_id"
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "value"
+    t.integer  "from_account_id"
+    t.integer  "to_account_id"
+    t.text     "desc"
+    t.integer  "author_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "status"
+    t.string   "ancestry"
+  end
+
+  add_index "transactions", ["author_id"], :name => "index_transactions_on_author_id"
+  add_index "transactions", ["from_account_id"], :name => "index_transactions_on_from_account_id"
+  add_index "transactions", ["to_account_id"], :name => "index_transactions_on_to_account_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false

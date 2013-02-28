@@ -2,13 +2,11 @@ class Comment < ActiveRecord::Base
   acts_as_paranoid
   include ActsAsCommentable::Comment
 
-
   attr_accessible :comment, :user_id
 
   belongs_to :commentable, :polymorphic => true
 
   after_create :notify
-
 
   default_scope :order => 'created_at DESC'
 
