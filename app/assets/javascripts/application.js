@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= bootstrap-datepicker/core
+//= require_tree .
 //= require_tree ../../../vendor/assets/javascripts
 
 
