@@ -11,7 +11,7 @@
  *= require_self
  *= require bootstrap_and_overrides
  *= require bootstrap-datepicker
- *= require_tree
+ *= require_tree .
  */
 
 body {
