@@ -13,12 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require jquery.autosize.js
-//= require jquery.shapeshift.min
-//= require jquery-ui.triggeredAutocomplete
-//= require jquery.ui.touch-punch.min
-//= require twitter/bootstrap
-//= require bootstrap-datepicker/core
+//= bootstrap-datepicker/core
+//= require_tree ../../../vendor/assets/javascripts
 
 
 function hide_removed_task() {
