@@ -13,24 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-
-//= require bootstrap-transition.js
-//= require bootstrap-alert.js
-//= require bootstrap-modal.js
-//= require bootstrap-dropdown.js
-//= require bootstrap-tab.js
-//= require bootstrap-tooltip.js
-//= require bootstrap-popover.js
-//= require bootstrap-button.js
-//= require bootstrap-collapse.js
-//= require bootstrap-typeahead.js
-//= require bootstrap
-
-//= require jquery.autosize
-//= jquery-ui.triggeredAutocomplete
-//= jquery.ui.touch-punch.min
-//= require bootstrap-datepicker
-
+//= require_tree .
+//= require_tree ../../../vendor/assets/javascripts
+//= require bootstrap-datepicker/core
 //= require select2
 
 function hide_removed_task() {
