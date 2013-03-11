@@ -9,6 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+<<<<<<< HEAD
+ *= require bootstrap_and_overrides
+ * require twitter/bootstrap/static/bootstrap
  *= require_tree .
  *= require_tree ../../../vendor/assets/stylesheets
  *= require bootstrap-datepicker
@@ -27,6 +30,10 @@ body {
 
 .h {
     display: none !important;
+}
+
+p {
+    color: #6A4A3C !important;
 }
 
 
