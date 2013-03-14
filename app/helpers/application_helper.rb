@@ -4,7 +4,9 @@ module ApplicationHelper
     #gravatar_image_tag(user.email)
   end
 
-
+  def user_icon(user, size = 40, options = {})
+    gravatar_image_tag(user.email, :class => options[:class], :title => user.fio, :gravatar => { :size => size })
+  end
 
   def type_icon number
     unless number
