@@ -13,21 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20130127165939) do
 
-  create_table "active_admin_comments", :force => true do |t|
-    t.string   "resource_id",   :null => false
-    t.string   "resource_type", :null => false
-    t.integer  "author_id"
-    t.string   "author_type"
-    t.text     "body"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.string   "namespace"
-  end
-
-  add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
-
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type"
@@ -89,25 +74,6 @@ ActiveRecord::Schema.define(:version => 20130127165939) do
   end
 
   add_index "discussions", ["project_id"], :name => "index_discussions_on_project_id"
-
-  create_table "minus_transactions", :force => true do |t|
-    t.integer  "target_user"
-    t.integer  "project_id"
-    t.integer  "plus_transaction_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "value"
-  end
-
-  add_index "minus_transactions", ["project_id"], :name => "index_minus_transactions_on_project_id"
-
-  create_table "plus_transactions", :force => true do |t|
-    t.integer  "source_user"
-    t.text     "desc"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "value"
-  end
 
   create_table "project_memberships", :force => true do |t|
     t.integer  "project_id"
