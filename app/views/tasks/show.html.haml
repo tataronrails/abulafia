@@ -133,7 +133,7 @@
           .info.pull-right
             Users to notify:
             -@task.discussion.notificable_users(current_user).each do |u|
-              = gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
+              = user_icon(u, 20, :class => "img-circle")
 
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 

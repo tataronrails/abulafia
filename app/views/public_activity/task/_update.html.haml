@@ -4,8 +4,8 @@
     %i.icon-tasks
     %i.avatar_activites
       -user = User.find(activity.trackable.owner_id)
-      =gravatar_image_tag(user.email)
+      = user_icon(user)
     %small
       = distance_of_time_in_words_to_now(activity.created_at)
       ,
-      =link_to (activity.trackable.title), project_task_path(activity.trackable.project, activity.trackable.id)
+      = link_to (activity.trackable.title), project_task_path(activity.trackable.project, activity.trackable.id)

@@ -1,5 +1,5 @@
 %h2
-  =gravatar_image_tag(current_user.email)
+  = user_icon(current_user)
   Edit my profile
 .gravatar
   = link_to "http://#{I18n.locale.to_s}.gravatar.com/", :target => "_blank" do |l|

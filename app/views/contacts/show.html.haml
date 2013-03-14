@@ -1,10 +1,10 @@
 %ul.breadcrumb
   %li
     %i.icon-home
-    =link_to "Abulafia", root_path
+    = link_to "Abulafia", root_path
     %span.divider /
   %li
-    =link_to "Contacts", contacts_list_path
+    = link_to "Contacts", contacts_list_path
 
 
 =content_for :right_column do
@@ -13,24 +13,24 @@
       .lead
         %i.icon-folder-open-alt
         Notes
-        =link_to "#", :class=> "add_note_to_user_toggle" do
+        = link_to "#", :class=> "add_note_to_user_toggle" do
           %i.icon-plus.green
 
       .form_to_add_note.h
-        =form_tag add_new_comment_to_contact_path(params[:id]), :id => "add_new_comment_to_contact" , :remote => true do |f|
-          =hidden_field_tag "user_id", current_user.id
-          =text_area_tag "user[comment]", "", :class => "span10"
+        = form_tag add_new_comment_to_contact_path(params[:id]), :id => "add_new_comment_to_contact" , :remote => true do |f|
+          = hidden_field_tag "user_id", current_user.id
+          = text_area_tag "user[comment]", "", :class => "span10"
           .row-fluid
-            =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
+            = submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
       #comments_line
         = render :partial => @user.discussion.comments
 
 
 .row
   .span2
-    =gravatar_image_tag(@user.email,  :class => 'img-rounded', :gravatar => { :size => 150 })
+    = user_icon(@user, 150, :class => 'img-rounded')
   .span3
-    =@user.desc
+    = @user.desc
 %p
 
 %table.table.table-striped
@@ -38,37 +38,37 @@
     %td
       Name:
     %td
-      =@user.fio
+      = @user.fio
   %tr
     %td
       E-mail:
     %td
-      =@user.email
+      = @user.email
   %tr
     %td
       Login:
     %td
-      =@user.login
+      = @user.login
   %tr
     %td
       Initials:
     %td
-      =@user.initials
+      = @user.initials
   %tr
     %td
       Cell:
     %td
-      =@user.cell
+      = @user.cell
   %tr
     %td
       IM:
     %td
-      =@user.im
+      = @user.im
   %tr
     %td
       Hip chat user_id:
     %td
-      =@user.hc_user_id
+      = @user.hc_user_id
 
   %tr
     %td
@@ -79,37 +79,37 @@
           Not accepted invitation yet
       - else
         %small
-          =distance_of_time_in_words_to_now(@user.last_sign_in_at)
+          = distance_of_time_in_words_to_now(@user.last_sign_in_at)
           ago
   %tr
     %td
       Strikes
     %td
-      -@user.strikes.count.times do
+      - @user.strikes.count.times do
         %i.icon-bell-alt.orange
-      =link_to "#" do
+      = link_to "#" do
         %i.icon-plus.green.toggle_create_strike
 
   %tr
     %td
       Description:
     %td
-      =@user.desc
+      = @user.desc
 
 
 .new_strike
   %h4 Create strike
-  =form_for @user.strikes.new do |f|
-    =f.text_area :desc, :placeholder => "Skrike reason"
+  = form_for @user.strikes.new do |f|
+    = f.text_area :desc, :placeholder => "Skrike reason"
     %p
-    =f.number_field :task_id, :placeholder => "task id"
+    = f.number_field :task_id, :placeholder => "task id"
     %br
-    =f.hidden_field :assigned_by, :placeholder => "by", :value => current_user.id
-    =f.hidden_field :user_id, :placeholder => "to", :value => @user.id
-    =f.label "when"
-    =f.text_field :date_of_assignment, :placeholder => "date", :value => Time.now.to_s(:db)
+    = f.hidden_field :assigned_by, :placeholder => "by", :value => current_user.id
+    = f.hidden_field :user_id, :placeholder => "to", :value => @user.id
+    = f.label "when"
+    = f.text_field :date_of_assignment, :placeholder => "date", :value => Time.now.to_s(:db)
     %br
-    =f.button :class => "btn btn-success", :html => {:type => "submit"}
+    = f.button :class => "btn btn-success", :html => {:type => "submit"}
 
 
 
