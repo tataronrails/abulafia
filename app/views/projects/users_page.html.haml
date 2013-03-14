@@ -65,9 +65,9 @@
                 %i.icon.icon-remove
           .span2
             .avatar
-              =gravatar_image_tag(u.email)
+              = user_icon(u)
           .span9
-            =truncate u.fio
+            = truncate u.fio
             -#%h4= u.login
             %br
             as

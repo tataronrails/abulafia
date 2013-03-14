@@ -6,11 +6,11 @@
 
       %i.avatar_activites
         -user = activity.trackable.user
-        =gravatar_image_tag(user.email)
+        = user_icon(user)
       %small
         = distance_of_time_in_words_to_now(activity.created_at)
         ,
         - if activity.trackable.commentable.discussable.class.to_s == "Task"
-          =link_to (activity.trackable.comment), project_task_path(activity.trackable.commentable.discussable.project, activity.trackable.commentable.discussable.id)
+          = link_to (activity.trackable.comment), project_task_path(activity.trackable.commentable.discussable.project, activity.trackable.commentable.discussable.id)
         - else
-          =link_to (activity.trackable.comment), discussion_path(activity.trackable.commentable.id)
+          = link_to (activity.trackable.comment), discussion_path(activity.trackable.commentable.id)
