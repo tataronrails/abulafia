@@ -1,0 +1,5 @@
+.project_alone
+  %i.icon-leaf
+  = link_to project.name, project
+  - project.users.each do |user|
+    = user_icon(user, 20, :class => "img-circle opacity40")

@@ -167,7 +167,11 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects.includes(:project_managers)#.includes(:users)
+    @project_managers = @projects
+      .without_departments
+      .map {|project| project.project_manager }
+      .compact!.uniq!
 
     respond_to do |format|
       format.html # index.html.erb
