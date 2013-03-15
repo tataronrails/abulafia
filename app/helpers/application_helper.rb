@@ -8,6 +8,10 @@ module ApplicationHelper
     gravatar_image_tag(user.email, :class => options[:class], :title => user.fio, :gravatar => { :size => size })
   end
 
+  def page_title
+    @page_title ? "#{@page_title} - Abulafia" : "Abulafia"
+  end
+
   def type_icon number
     unless number
       number = 500
