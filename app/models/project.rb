@@ -8,6 +8,9 @@ class Project < ActiveRecord::Base
   has_many :users, :through => :project_memberships
   has_one :account, :as => :owner, :dependent => :destroy
 
+  has_many :task_discussions, :through => :tasks, :source => :discussion
+  has_many :task_comments, :through => :task_discussions, :source => :comments
+
   validates :name, :presence => true, :length => {:minimum => 3}
 
   default_scope order(" created_at DESC")

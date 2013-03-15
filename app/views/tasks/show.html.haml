@@ -82,7 +82,7 @@
 
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
-    =type_icon(@task.task_type) if @task.task_type
+    = type_icon(@task.task_type) if @task.task_type
     &nbsp;
     #{@task.title}
 
