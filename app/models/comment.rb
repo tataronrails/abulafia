@@ -5,7 +5,8 @@ class Comment < ActiveRecord::Base
   attr_accessible :comment, :user_id
 
   belongs_to :commentable, :polymorphic => true
-
+  belongs_to :discussion, :foreign_key => :commentable_id, :conditions => "exists(select 1 from comments c where c.commentable_type = 'Discussion' && c.commentable_id = discussions.id)"
+  has_one :task, :through => :discussion
   after_create :notify
 
   default_scope :order => 'created_at DESC'
@@ -24,7 +25,6 @@ class Comment < ActiveRecord::Base
 
   # NOTE: Comments belong to a user
   belongs_to :user
-
 
   def notify
     Rails.logger.debug "*** notify -> Comment.rb ***"

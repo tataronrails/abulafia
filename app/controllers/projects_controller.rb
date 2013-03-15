@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
 
   def user_stories
     @project = Project.find(params[:project_id])
+    @tasks = @project.tasks.without_sprint
     render :layout => "user_stories"
   end
 
@@ -179,8 +180,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/1
-  # GET /projects/1.json
   def show
 
     @project = Project.find(params[:id])
@@ -188,14 +187,13 @@ class ProjectsController < ApplicationController
     @discussion = @project.discussions.new
     @task = @project.tasks.new
     @project_users = @project.users
-    #.delete_if{|u| u==current_user}
+    @comments = @project.task_comments.order(:created_at).includes(:task, :user).page(params[:page]).per(10)
 
     begin
       @task.discussion
     rescue
-      @task.discussion.create(:title => "some test descussion")
+      @task.discussion.new(:title => "some test descussion")
     end
-
 
     respond_to do |format|
       format.html # show.html.erb
