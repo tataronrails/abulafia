@@ -15,6 +15,7 @@ class Task < ActiveRecord::Base
 
   has_one :discussion, :as => :discussable
   has_many :comments, :through => :discussion
+  has_many :attachments, :as => :attachable
 
   validates :title, :presence => true
 

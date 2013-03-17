@@ -255,7 +255,8 @@ class TasksController < ApplicationController
     comment = params[:task][:comment]
     user = params[:user_id]
 
-    task.discussion.comments.create(:comment => comment, :user_id => user)
+    attrs = (params[:comment].presence || {}).merge(:comment => comment, :user_id => user)
+    task.discussion.comments.create(attrs)
 
     respond_to do |format|
       format.html { redirect_to :back }
@@ -267,6 +268,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @comments = @task.discussion.comments.includes(:user, :attachments)
     @project_users = @task.project.users.map(&:login)
 
     if @task.assigned_to

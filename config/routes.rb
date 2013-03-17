@@ -40,6 +40,7 @@ EOffice::Application.routes.draw do
   post 'contacts/create_virtual_user' => "contacts#create_virtual_user", :as => "contact_create_virtual_user"
   delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
 
+  match 'attachments' => 'home#attachments'
 
   #get 'contacts/:login' => "contacts#show", :as => "contact_login_page"
 
