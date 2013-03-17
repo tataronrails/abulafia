@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127165939) do
+ActiveRecord::Schema.define(:version => 20130317134357) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "title"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -24,6 +34,15 @@ ActiveRecord::Schema.define(:version => 20130127165939) do
     t.string   "recipient_type"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "attachments", :force => true do |t|
+    t.string   "filename"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.integer  "filesize"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "column_orders", :force => true do |t|

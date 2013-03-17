@@ -17,6 +17,7 @@
  *= require bootstrap-datepicker
  *= require select2
  *= require_tree ./pages
+ *= require_tree ./elements
  */
 
 body {

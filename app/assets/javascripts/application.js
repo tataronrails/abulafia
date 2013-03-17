@@ -20,46 +20,40 @@
 
 
 //= require select2
+//= require_tree ./libs
+//= require_tree ./widgets
 
 function hide_removed_task() {
-    $(".alone_comment i.icon-trash").on("click", function () {
-        $(this).parents(".alone_comment").slideUp("slow")
-    })
+  $(".alone_comment i.icon-trash").on("click", function () {
+    $(this).parents(".alone_comment").slideUp("slow");
+  });
 }
 
 
 $(document).on("focus", "[data-behaviour~='datepicker']", function (e) {
-    $(this).datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
+  $(this).datepicker({"format":"yyyy-mm-dd", "weekStart":1, "autoclose":true});
 });
 
 
 function in_duscussion_too_small_length() {
-
-    $("#task_comment").parents("form:first").on("submit", function (e) {
-        text = $(this).find("textarea:first").val();
-        if (text.length < 2) {
-            alert("That's all?");
-            return false;
-        }
-    })
-
-
+  $("#task_comment").parents("form:first").on("submit", function (e) {
+    text = $(this).find("textarea:first").val();
+    if (text.length < 2) {
+      alert("That's all?");
+      return false;
+    }
+  });
 }
 
 $(document).ready(function () {
+  $(".select2_to_mark").select2();
+  $('textarea').autosize({append:"\n"});
 
-    $(".select2_to_mark").select2();
+  if ($("#task_comment").length > 0) {
+    in_duscussion_too_small_length();
+  }
 
-    $('textarea').autosize({append:"\n"});
+  hide_removed_task();
 
-    if ($("#task_comment").length > 0) {
-        in_duscussion_too_small_length();
-    }
-
-    hide_removed_task();
-
-
+  FileUploader.init();
 });
-
-
-

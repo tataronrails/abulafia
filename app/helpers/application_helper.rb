@@ -53,6 +53,16 @@ module ApplicationHelper
     end
   end
 
+  def as_size(s)
+    units = %W(B KiB MiB GiB TiB)
+
+    size, unit = units.reduce(s.to_f) do |(fsize, _), utype|
+      fsize > 512 ? [fsize / 1024, utype] : (break [fsize, utype])
+    end
+
+    "#{size > 9 || size.modulo(1) < 0.1 ? '%d' : '%.1f'} %s" % [size, unit]
+  end
+
   def bootstrap_input(f, label_field, title = nil)
     capture_haml do
       haml_tag :div, :class => "control-group" do
