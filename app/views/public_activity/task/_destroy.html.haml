@@ -1,18 +1,13 @@
-
 .row.activity_alone
-  %i.icon-trash
-  %i.icon-tasks
-  -if activity.trackable.present?
-    %i.avatar_activites
-      -user = User.find(activity.trackable.owner_id)
-      = user_icon(user)
-    %small
-      = distance_of_time_in_words_to_now(activity.created_at)
-      ,
-      = activity.trackable.title
-  -else
-    %small
-      = distance_of_time_in_words_to_now(activity.created_at)
-      ,
-      Task was removed
+  .icons
+    %i.icon-trash
+    %i.icon-tasks
+    - if activity.trackable.present?
+      %i.avatar_activites= user_icon(activity.trackable.owner)
 
+  %small
+    #{distance_of_time_in_words_to_now(activity.created_at)},
+    - if activity.trackable.present?
+      = activity.trackable.title
+    - else
+      Task was removed
