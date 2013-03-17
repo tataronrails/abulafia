@@ -1,14 +1,14 @@
--@projects.each do |p|
+-@projects.each do |project|
   %p
     .lead
       %i.icon-leaf
-      =link_to(p.name, project_path(p))
+      = link_to(project.name, project_path(project))
     %blockquote
       %table.table.span12
-        -p.tasks.where(:assigned_to => current_user).order(:created_at).delete_if{|t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)}.each do |t|
+        - @tasks.select {|t| t.project_id == project.id }.each do |task|
           %tr
             %td.span1
-              = user_icon t.owner, 25, :class => 'img-rounded'
+              = user_icon task.owner, 25, :class => 'img-rounded'
             %td.span1
               %h2
                 -#      a = []
@@ -21,10 +21,9 @@
                 -#      #a[5] = "accept"
                 -#=t.status
                 -#=t.status_via_words
-              =type_icon(t.task_type) if t.task_type
+              = type_icon(task.task_type) if task.task_type
             %td.span10
-              = link_to  project_task_path(t.project, t) do
-                =t.title
+              = link_to task.title, project_task_path(project, task)
             %td.span1
               %i.icon-comment-alt
-              =t.discussion.comments.count
+              = @comments_count[task.id].to_i
