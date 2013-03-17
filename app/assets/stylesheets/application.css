@@ -20,6 +20,24 @@ body {
     background: url(/assets/012-subtle-light-patterns.jpg) !important;
 }
 
+/* Fix sticky responsive header */
+
+.navbar.navbar-fixed-top {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.navbar.navbar-fixed-top .container {
+  max-width: 940px;
+  width: auto;
+}
+
+@media (max-width: 979px) and (min-width: 320px) {
+  .navbar.navbar-fixed-top .container {
+    margin-left: 20px;
+  }
+}
+
 .capitalize {
     text-transform: capitalize !important;
     color: #777 !important;
