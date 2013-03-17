@@ -14,6 +14,9 @@
  *= require bootstrap-datepicker
  *= require_tree .
  *= require_tree ../../../vendor/assets/stylesheets
+ *= require bootstrap-datepicker
+ *= require select2
+ *= require_tree ./pages
  */
 
 body {
@@ -103,13 +106,6 @@ p {
 
 .label-info, .badge-info {
     background-color: #83AF9B !important;
-}
-
-.activity_alone {
-    padding: 5px;
-    border-bottom: 1px dotted #ccc;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
 }
 
 .rotate {

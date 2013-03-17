@@ -31,6 +31,28 @@ module ApplicationHelper
     content_tag(:i, "", :class => "icon-#{a[number.to_i]}")
   end
 
+  def breadcrumbs(hash)
+    links = []
+
+    hash.each do |label, href|
+      if href
+        link_url = href.is_a?(String) ? href : url_for([href])
+      end
+
+      links << (href ? link_to(label, link_url) : label)
+    end
+
+    divider = content_tag(:span, '/', :class => "divider")
+
+    capture_haml do
+      haml_tag :ul, :class => :breadcrumb do
+        links.each do |link|
+          haml_tag :li, link + " " + divider
+        end
+      end
+    end
+  end
+
   def bootstrap_input(f, label_field, title = nil)
     capture_haml do
       haml_tag :div, :class => "control-group" do

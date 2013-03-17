@@ -2,7 +2,11 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def progress
-    @activities = PublicActivity::Activity.where(:recipient_id => [current_user.projects.map(&:id)]).order("created_at DESC")
+    @activities = PublicActivity::Activity
+      .where(:recipient_id => [current_user.projects.map(&:id)])
+      .order("created_at DESC")
+      .includes(:trackable)
+      .page(params[:page]).per(50)
   end
 
   def update_icebox

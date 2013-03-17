@@ -1,0 +1,83 @@
+$main_radius: 3px !default
+
+= border-radius($radius: $main_radius, $y: false, $x: false)
+  @if $x
+    :-moz-border-radius-#{$y}#{$x} $radius
+    :-o-border-radius-#{$y}-#{$x} $radius
+    :-khtml-border-radius-#{$y}-#{$x} $radius
+    :-ms-border-radius-#{$y}-#{$x} $radius
+    :-webkit-border-#{$y}-#{$x}-radius $radius
+    :border-#{$y}-#{$x}-radius $radius
+  @else
+    :-moz-border-radius $radius
+    :-o-border-radius $radius
+    :-ms-border-radius $radius
+    :-khtml-border-radius $radius
+    :-webkit-border-radius $radius
+    :border-radius $radius
+
+= inline-block($align: top)
+  :zoom 1
+  :display inline
+  :display -moz-inline-box
+  :display inline-block
+  :*display inline
+  :vertical-align $align
+
+= children-inline($align: top)
+  > *
+    +inline-block($align)
+
+.activities-page
+  .activity_alone
+    :padding 8px 5px
+    :border-bottom 1px dotted #ccc
+    +border-radius(4px)
+    :margin-left 0px
+    :font-size 13px
+    :position relative
+
+    > .icons
+      +inline-block
+      :position absolute
+      .icon-plus
+        +inline-block
+        :width 14px
+        :text-align center
+      *
+        :margin-right 3px
+
+    > small
+      :font-size 13px
+      +inline-block
+      :padding-left 69px
+      a
+        :color #555
+
+  nav.pagination
+    span
+      +inline-block
+      :padding 0px 0px 3px
+      :margin-right 2px
+      :min-width 17px
+      :min-height 19px
+      :text-align center
+      &.next, &.last, &.first, &.prev
+        a
+          :padding
+            :left 4px
+            :right 4px
+      &, > a
+        :font-size 13px
+        :line-height 19px
+        :min-height 19px
+      > a
+        +inline-block
+        :min-width 19px
+      &:hover
+        :background rgba(0, 20, 0, 0.15)
+      &.current
+        :color #000
+        :font-weight bold
+        :background rgba(0, 0, 0, 0.2)
+      
