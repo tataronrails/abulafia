@@ -71,7 +71,8 @@ EOffice::Application.routes.draw do
   end
 
 
-  devise_for :users, :controllers => {:invitations => 'users/invitations'} do
+  devise_for :users, :controllers => {:invitations => 'users/invitations'}
+  devise_scope :users do
     get 'projects/:project_id/users' => 'projects#users_page', :as => "users_list"
     get 'projects/:project_id/:user_id/kick_out_users' => 'projects#kick_out_users', :as => "kick_out_users"
     get 'projects/:project_id/:user_id/reinvite_user' => 'projects#reinvite_user', :as => "reinvite_user"
