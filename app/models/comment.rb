@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
 
   default_scope :order => 'created_at DESC'
 
-  validates_length_of :comment, :minimum => 2
+  validates :comment, :length => {:minimum => 2}
 
   include PublicActivity::Model
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model|

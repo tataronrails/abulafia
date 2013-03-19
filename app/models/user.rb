@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
 
   with_options :if => :is_virtual_user? do |user|
-    user.validates_uniqueness_of :login
-    user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
+    user.validates :login, :uniqueness => true
+    user.validates :login, :email, :im, :first_name, :second_name, :initials, :presence => true
   end
 
   after_create :assign_discussion_to_user
