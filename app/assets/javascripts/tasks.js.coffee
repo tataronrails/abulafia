@@ -1,7 +1,25 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+@TodoCtrl = ($scope) ->
 
+  $scope.addTodo = ->
+    $scope.todos.push { title: $scope.todoTitle, destroy: 0, edit: false }
+    $scope.todoTitle = ''
+
+  $scope.removeTodo = (index) ->
+    if $scope.todos[index].id
+      $scope.todos[index].destroy = 1
+    else
+      $scope.todos.splice(index, 1)
+
+  $scope.editTodo = (index) ->
+    $scope.todos[index].edit = true
+
+  $scope.saveTodo = (index) ->
+    $scope.todos[index].edit = false
+
+  $scope.isVisible = (index) ->
+    $scope.todos[index].destroy == 1
+
+  false
 
 intruction_select_ends_at = () ->
 #  $("#task_end").hide()

@@ -20,14 +20,16 @@
   display: none;
 }
 
-//.bs-docs-example:hover {
-//  transform:rotate(deg);
-//  -ms-transform:rotate(1deg); /* IE 9 */
-//  -moz-transform:rotate(1deg); /* Firefox */
-//  -webkit-transform:rotate(1deg); /* Safari and Chrome */
-//  -o-transform:rotate(1deg); /* Opera */
-//
-//}
+.todo-list {
+  background-color: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px 4px 4px 4px;
+  padding: 5px;
+
+  a:hover {
+    text-decoration: none;
+  }
+}
 
 .bs-docs-example {
   background-color: #FFFFFF;

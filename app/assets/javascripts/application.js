@@ -18,6 +18,7 @@
 //= require_tree ../../../vendor/assets/javascripts
 //= require bootstrap-datepicker/core
 //= require select2
+//= require angular
 
 function hide_removed_task() {
     $(".alone_comment i.icon-trash").on("click", function () {

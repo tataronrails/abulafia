@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220102914) do
+ActiveRecord::Schema.define(:version => 20130320130406) do
 
   create_table "accounts", :force => true do |t|
     t.string   "title"
@@ -173,6 +173,14 @@ ActiveRecord::Schema.define(:version => 20130220102914) do
   end
 
   add_index "tasks", ["sprint_id"], :name => "index_tasks_on_sprint_id"
+
+  create_table "todos", :force => true do |t|
+    t.string   "title",                         :null => false
+    t.boolean  "checked",    :default => false
+    t.integer  "task_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
 
   create_table "transactions", :force => true do |t|
     t.integer  "value"

@@ -3,7 +3,8 @@ class Task < ActiveRecord::Base
   acts_as_paranoid
   attr_accessible :assigned_to, :end, :owner_id, :start, :status,
                   :title, :estimate, :owner_id, :place, :tagging_list,
-                  :task_type, :behavior, :project_id, :desc, :sprint_id
+                  :task_type, :behavior, :project_id, :desc, :sprint_id,
+                  :todos_attributes
 
   belongs_to :project
   belongs_to :sprint
@@ -13,11 +14,14 @@ class Task < ActiveRecord::Base
   after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
 
   has_one :discussion, :as => :discussable
+  has_many :todos, :dependent => :destroy
 
   validates :title, :presence => true
 
   include PublicActivity::Model
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
+
+  accepts_nested_attributes_for :todos, :allow_destroy => true
 
   scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
   scope :urgent, where(:task_type => "3").order("end")
@@ -28,8 +32,6 @@ class Task < ActiveRecord::Base
   scope :my_work, lambda { |user| where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")}
   scope :without_sprint, where( sprint_id: nil)
 
-  #acts_as_taggable_on :skills
-
   def tagging_list=(tags_list)
     self.tag_list = tags_list
   end
@@ -37,10 +39,6 @@ class Task < ActiveRecord::Base
   def tagging_list
     tag_list
   end
-
-  #def not_finished
-  #
-  #end
 
   def status_via_words
     a = []

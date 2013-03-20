@@ -1,1 +1,1 @@
-rvm use ruby-1.9.3-p374-railsexpress@e-office --create
+rvm use 1.9.3@e-office --create

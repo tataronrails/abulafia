@@ -79,6 +79,7 @@ group :assets do
 
   gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
+  gem 'angularjs-rails'
 end
 
 gem 'jquery-rails'
