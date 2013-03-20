@@ -82,12 +82,12 @@
 
   .avatar= gravatar_image_tag @assigned_to
   %p.lead
-    =type_icon(@task.task_type) if @task.task_type
+    = type_icon(@task.task_type) if @task.task_type
     &nbsp;
     #{@task.title}
 
 
-    =link_to edit_project_task_path(@task.project, @task) do |l|
+    = link_to edit_project_task_path(@task.project, @task) do |l|
       %i.icon-edit
     - if @task.tag_list.present?
       .row-fluid
@@ -115,10 +115,31 @@
             =distance_of_time_in_words_to_now @task.finished_at
 .row-fluid
   .lead Discussion:
-  =form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|
-    =hidden_field_tag "user_id", current_user.id
-    =hidden_field_tag "id", @task.id
-    =text_area_tag "task[comment]", "", :class => "span12"
+  = form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|
+    = hidden_field_tag "user_id", current_user.id
+    = hidden_field_tag "id", @task.id
+    = text_area_tag "task[comment]", "", :class => "span12"
+    %section.pictures{:interaction => 'file-uploader', :attachable_type => "Comment"}
+      .droppable
+        = file_field_tag 'attachments', :multiple => true, :id => 'pictures'
+        %i.icon-paper-clip
+        Drop files here
+
+      %ul.files
+        - for pic in [] #f.object.attachments.select {|p| !p.new_record? }
+          %li
+            %b= pic.filename.to_s.match(/([^\/]*)$/)[1]
+            = hidden_field_tag "comment[attachments_attributes][#{Time.now.to_i}#{(rand * 1000).to_i}][id]", pic.id
+            %a.delete{:onClick => "$(this.parentNode).remove()"}
+              %i.icon-trash
+
+      -#.classic
+      -#  .nested-fields
+      -#    = f.fields_for :pictures do |pic_form|
+      -#      = render 'picture_fields', :f => pic_form
+      -#  .links
+      -#    = link_to_add_association 'Добавить фотографию', f, :pictures, :xhr => false
+
     .row-fluid
       =submit_tag "Say it using Markdown", :class => "btn btn-success", :disable_with => 'loading...'
       .info.pull-right
@@ -127,16 +148,16 @@
     %p
     .row-fluid
       %small
-        %i.icon-paper-clip
-        =link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
+        - #%i.icon-paper-clip
+        = #link_to "upload file via minus.com", "http://minus.com/", :target => "_blank"
         - if @task.discussion.notificable_users(current_user).count > 0
           .info.pull-right
             Users to notify:
             -@task.discussion.notificable_users(current_user).each do |u|
-              = gravatar_image_tag(u.email, :class => "img-circle", :gravatar => { :size => 20 })
+              = user_icon(u, 20, :class => "img-circle")
 
 =hidden_field :mention, :logins, :data => {:logins => @project_users}
 
 #comments_line
-  = render :partial => @task.discussion.comments
+  = render :partial => @comments
 

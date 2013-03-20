@@ -3,7 +3,7 @@
     - if c.comment.present?
       .alone_comment
         .avatar
-          = gravatar_image_tag(c.user.email)
+          = user_icon(c.user)
 
 
         = auto_link(c.comment,:html => { :target => '_blank' })

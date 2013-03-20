@@ -2,9 +2,13 @@ class Comment < ActiveRecord::Base
   acts_as_paranoid
   include ActsAsCommentable::Comment
 
-  attr_accessible :comment, :user_id
+  attr_accessible :comment, :user_id, :attachments_attributes
 
   belongs_to :commentable, :polymorphic => true
+  belongs_to :discussion, :foreign_key => :commentable_id, :conditions => "exists(select 1 from comments c where c.commentable_type = 'Discussion' && c.commentable_id = discussions.id)"
+  has_one :task, :through => :discussion
+  has_many :attachments, :as => :attachable
+  accepts_nested_attributes_for :attachments
 
   after_create :notify
 
@@ -24,7 +28,6 @@ class Comment < ActiveRecord::Base
 
   # NOTE: Comments belong to a user
   belongs_to :user
-
 
   def notify
     Rails.logger.debug "*** notify -> Comment.rb ***"

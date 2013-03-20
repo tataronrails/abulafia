@@ -1,27 +1,29 @@
+- @page_title = @project.name
+
 .row-fluid
   .span10
     %ul.breadcrumb
       %li
-        =link_to "Abulafia", root_path
+        = link_to "Abulafia", root_path
         %span.divider /
       %li
-        =link_to "Projects", projects_path
+        = link_to "Projects", projects_path
         %span.divider /
       %li
         .active
           %i.icon-leaf
           %strong
-            =@project.name
-          =link_to edit_project_path(@project) do |l|
+            = @project.name
+          = link_to edit_project_path(@project) do |l|
             %i.icon-edit
           %span.divider /
       %li
-        =link_to project_user_stories_path(@project), :class => "btn" do
+        = link_to project_user_stories_path(@project), :class => "btn" do
           %i.icon-inbox
           Task boards
   .pull-right
     .span7
-      =link_to users_list_path(@project) do |u|
+      = link_to users_list_path(@project) do |u|
         %nobr
           .badge
             %i.icon-wrench
@@ -31,13 +33,10 @@
   .row-fluid
     .control-group
       .controls
-        -#.input-prepend
-          -#%span.add-on
-            -#%i.icon-tasks.green
         = f.text_area :title, :placeholder => "Enter draft task", :class => "span12", :autocomplete =>  "off"
         = f.hidden_field :project_id, :value => @project.id
         .pull-right
-          =f.button :class => "btn btn-success"
+          = f.button :class => "btn btn-success"
 -#%p
 -#  По умолчанию все задачи создаются в состоянии "Черновик". Во время редактирования можно добавить и исполнителя и один из 7 типов задачи.
 -#
@@ -52,65 +51,69 @@
     = render @project.current_sprint
   = link_to 'All sprints', project_sprints_path(@project)
 .lead
-  =link_to "#", :class => "create_sprint_button" do
+  = link_to "#", :class => "create_sprint_button" do
     %i.icon-plus
     Create sprint
 
   .add_sprint_form.h
-    =form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
-      =f.label :title
-      =f.text_field :title
-      =f.label :start
-      =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
-      =f.label :end
-      =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
-      =f.label :description
-      =f.text_area :desc
+    = form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
+      = f.label :title
+      = f.text_field :title
+      = f.label :start
+      = f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
+      = f.label :end
+      = f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
+      = f.label :description
+      = f.text_area :desc
       %p
-      =f.button :Create,  :class => "btn"
+      = f.button :Create,  :class => "btn"
 
 %hr/
 %ul.nav.nav-pills
   %li.active
-    =link_to "Discussions", "#"
+    = link_to "Discussions", "#"
   %li
-    =link_to "Transaction", "#"
+    = link_to "Transaction", "#"
 %hr/
 .lead
   Discussions
--comments_array = []
-- Comment.order(:created_at).all.each do |c|
-  -begin
-    - if c.commentable.discussable.project == @project
-      - comments_array << c
-  -rescue NoMethodError
+
+-#- comments_array = []
+-#- Comment.order(:created_at).each do |c|
+-#  - begin
+-#    - if c.commentable.discussable.project == @project
+-#      - comments_array << c
+-#  - rescue NoMethodError
 
 
 -#TODO: pagination here
--comments_array.first(10).each do |comm|
+
+- @comments.each do |comm|
   .row-fluid.list_of_discussion_history
     .pull-right
       .row-fluid
         .avatar20.opacity40
-          = gravatar_image_tag comm.user.email if comm.user.present?
+          = user_icon(comm.user) if comm.user.present?
     .span11
       .time.pull-right
         %small
           ,
           = distance_of_time_in_words_to_now comm.created_at
-      -task = comm.commentable.discussable
+      - task = comm.task
       %i.icon-comment-alt
-      =link_to project_task_path(task.project, task) do
-        =truncate(comm.comment, :length => 50)
+      = link_to project_task_path(@project, task) do
+        = truncate(comm.comment, :length => 50)
         .title.pull-right
           %small
-            =type_icon task.task_type
+            = type_icon task.task_type
             = truncate(task.title, :length => 10)
+
+= paginate @comments
 
 #accordion3.accordion.h
   .accordion-group
     .accordion-heading
-      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTask")
+      %a.accordion-toggle{:href => '#collapseTask', :data => {:toggle => 'collapse', :parent => '#accordion3'}}
         %i.icon-plus
         Create
     #collapseTask.accordion-body.collapse
@@ -136,85 +139,4 @@
           .row-fluid
             = f.hidden_field :project_id, :value => @project.id
 
-          =f.submit "Create", {:class => "btn"}
-          -#%label.checkbox
-          -#  =check_box_tag "advanced_settings"
-          -#  %small advanced settings
-
-            -#= f.submit 'ok', :class => "btn btn-info row-right"
-
-  -#-if task.discussion.comments
-  -#  .accordion-group.existed_discussions
-  -#    .accordion-heading
-  -#      %a(class="accordion-toggle add_new_task_link" data-toggle="collapse" data-parent="#accordion3" href="#collapseTaskCreateField")
-  -#        %i.icon-list-alt
-  -#        =pluralize(@project.tasks.count, "task")
-  -#    #collapseTaskCreateField.accordion-body.collapse
-  -#      .accordion-inner
-  -#
-  -#        %table.table.table-striped
-  -#          - @project.tasks.each do |t|
-  -#            -if t.id
-  -#              %tr
-  -#                %td.avatar
-  -#                  -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
-  -#                  %span.label.label-success
-  -#                    =t.status_via_words
-  -#                %td
-  -#                  = link_to t.title, task_path(t)
-  -#                %td
-  -#                  =truncate(t.discussion.comments.first.comment) if t.discussion.comments.present?
-  -#                %td
-  -#                  %i.icon-comment
-  -#                  - if t.discussion.comments.present?
-  -#                    =link_to task_path(t) do |task|
-  -#                      .badge.badge-info
-  -#                        =t.discussion.comments.count
-  -#                %td
-  -#                  %i.icon-remove
-
-
--#.lead
--#  Discussions
--##accordion2.accordion
--#  .accordion-group
--#    .accordion-heading
--#      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
--#        %i.icon-plus
--#        Create
--#    #collapseOne.accordion-body.collapse
--#      .accordion-inner
--#        = form_for @discussion do |f|
--#          - if @discussion.errors.any?
--#            #error_explanation
--#              %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
--#              %ul
--#                - @discussion.errors.full_messages.each do |msg|
--#                  %li= msg
--#          = f.text_field :title, :placeholder => "Enter topic for discussion and press Enter", :autocomplete =>  "off"
--#          .desc_of_descussion
--#            = f.text_area :desc, :placeholder => "Enter description", :autocomplete =>  "off"
--#          = f.hidden_field :project_id, :value => @project.id
--#
--#          = f.submit 'Create discussion', :class => "btn"
--#
--#  -if @project.discussions.exists?
--#    .accordion-group.existed_discussions
--#      .accordion-heading
--#        %a(class="accordion-toggle add_new_discussion_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
--#          %i.icon-list-alt
--#          =pluralize(@project.discussions.count, "discussion")
--#      #collapseTwo.accordion-body.collapse
--#        .accordion-inner
--#          %table.table.table-striped
--#            - @project.discussions.each do |d|
--#              -if d.id
--#                %tr
--#                  %td.avatar
--#                    = gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
--#                  %td
--#                    = link_to d.title, discussion_path(d.id)
--#                  %td
--#                    =truncate(d.comments.first.comment) if d.comments.present?
--#                  %td
--#                    %i.icon-remove
+          = f.submit "Create", {:class => "btn"}
