@@ -3,21 +3,23 @@ class Task < ActiveRecord::Base
   acts_as_paranoid
   attr_accessible :assigned_to, :end, :owner_id, :start, :status,
                   :title, :estimate, :owner_id, :place, :tagging_list,
-                  :task_type, :behavior, :project_id, :desc, :sprint_id
+                  :task_type, :behavior, :project_id, :desc, :sprint_id,
+                  :status_behavior
 
   belongs_to :project
   belongs_to :sprint
 
+  after_initialize :set_status_behavior
   after_create :assign_discussion
   before_create :parse_text_to_add_tags_and_type
-  after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
+  #after_update :notify_assigned_user, :if => Proc.new { |task| task.assigned_to.present? }
 
   has_one :discussion, :as => :discussable
 
   validates :title, :presence => true
 
   include PublicActivity::Model
-  tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
+  #tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
   scope :urgent, where(:task_type => "3").order("end")
@@ -28,7 +30,24 @@ class Task < ActiveRecord::Base
   scope :my_work, lambda { |user| where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")}
   scope :without_sprint, where( sprint_id: nil)
 
-  #acts_as_taggable_on :skills
+  def set_status_behavior
+    @status_behavior = case self.task_type
+      when 2 then ChoreBehavior.new(self)
+      else ChoreBehavior.new(self)
+    end
+  end
+
+  def status_behavior
+    @status_behavior
+  end
+
+  def status_behavior=(value)
+    @status_behavior.fire_state_event(value.to_sym)
+  end
+
+  def status_events
+    @status_behavior.state_events
+  end
 
   def tagging_list=(tags_list)
     self.tag_list = tags_list
@@ -50,7 +69,6 @@ class Task < ActiveRecord::Base
     a[3] = "pushed"
     a[4] = "testing"
     a[5] = "accept/reject"
-    #a[5] = "accept"
 
     a[self.status]
   end

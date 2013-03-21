@@ -2,6 +2,23 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+$ ->
+  $('.bs-docs-example').on 'click', '.status_event', (e) ->
+    $this = $(this)
+    $event = $this.data('event')
+    $url = "#{$this.data('url')}"
+    $.ajax(
+      type: 'post',
+      url: $url,
+      data:
+        task:
+          status_behavior: $event
+        _method: 'put'
+      complete: (data, status) ->
+        console.log status
+        $('.bs-docs-example').html data.responseText
+    )
+    e.preventDefault()
 
 intruction_select_ends_at = () ->
 #  $("#task_end").hide()

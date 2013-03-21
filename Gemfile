@@ -62,6 +62,8 @@ gem 'activeadmin'
 # https://github.com/ernie/squeel
 gem 'squeel'
 
+gem 'state_machine'
+
 # useful development tools
 group :development do
   gem 'sextant' # /rails/routes - view routes fast and in browser
