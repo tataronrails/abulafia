@@ -11,6 +11,10 @@ class EasyBehavior
       transition :estimate => :accepted
     end
 
+    event :loop do
+      transition :accepted => :estimate
+    end
+
     state :estimate, :value => 0
     state :accepted, :value => 6
   end

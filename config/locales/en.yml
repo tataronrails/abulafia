@@ -10,3 +10,14 @@ en:
         admin: "Administrator"
         member: "Member"
         guest: "Guest"
+
+  state_machine:
+    task:
+      event:
+        starting: Start
+        finishing: Finish
+        push: Push
+        accept: Accept
+        reject: Reject
+        restart: Restart
+        loop: Loop

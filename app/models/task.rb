@@ -49,7 +49,9 @@ class Task < ActiveRecord::Base
   end
 
   def status_events
-    @status_behavior.state_events
+    @status_behavior.state_events.collect do |event|
+      { event: event, event_text: I18n.t("state_machine.task.event.#{event}") }
+    end
   end
 
   def tagging_list=(tags_list)

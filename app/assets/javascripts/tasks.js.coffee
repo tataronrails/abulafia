@@ -3,20 +3,22 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-  $('.bs-docs-example').on 'click', '.status_event', (e) ->
+  $('#status_events').on 'click', '.status_event', (e) ->
     $this = $(this)
     $event = $this.data('event')
-    $url = "#{$this.data('url')}"
+    $url = $this.data('url')
     $.ajax(
       type: 'post',
-      url: $url,
+      url: "#{$url}.json",
       data:
         task:
           status_behavior: $event
         _method: 'put'
-      complete: (data, status) ->
-        console.log status
-        $('.bs-docs-example').html data.responseText
+      success: (data, status) ->
+        $html = ''
+        $.each data.status_events, (index, element) ->
+          $html += "<a href='#' class='status_event btn' data-event=#{element.event} data-url=#{$url}>#{element.event_text}</a>"
+        $('#status_events').html($html)
     )
     e.preventDefault()
 

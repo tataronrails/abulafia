@@ -12,12 +12,12 @@ class ChoreBehavior
     end
 
     event :finishing do
-      transition :start => :finish
+      transition :start => :accepted
     end
 
     state :estimate, :value => 0
     state :start,    :value => 1
-    state :finish,   :value => 2
+    state :accepted, :value => 6
   end
 
   private
