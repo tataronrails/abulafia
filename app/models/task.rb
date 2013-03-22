@@ -32,10 +32,10 @@ class Task < ActiveRecord::Base
 
   def set_status_behavior
     @status_behavior = case self.task_type
-      when 0 then FeatureBehavior.new(self)
-      when 1 then BugBehavior.new(self)
-      when 2 then ChoreBehavior.new(self)
-      when 5 then EasyBehavior.new(self)
+      when '0' then FeatureBehavior.new(self)
+      when '1' then BugBehavior.new(self)
+      when '2' then ChoreBehavior.new(self)
+      when '5' then EasyBehavior.new(self)
       else EasyBehavior.new(self)
     end
   end
