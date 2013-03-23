@@ -52,6 +52,9 @@ gem 'enumerize'
 gem 'devise-russian'
 gem 'russian'
 
+gem 'carrierwave'
+gem 'mini_magick'
+
 gem 'xmpp4r'
 gem 'delayed_job_active_record'
 gem 'daemons'

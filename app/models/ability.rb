@@ -31,10 +31,9 @@ class Ability
         task.project.project_managers.include?( user )
     end
 
-
     can :manage, Strike
     can :manage, Sprint
-    can [:create, :update, :read, :add_new_comment], Task
+    can [:create, :update, :read, :add_new_comment, :my], Task
     can :manage, User
 
     can :my, Task

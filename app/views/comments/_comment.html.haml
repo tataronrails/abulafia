@@ -1,22 +1,28 @@
 .alone_comment
   .row-fluid
-    -unless controller_name.eql? "contacts"
+    - unless controller_name.eql? "contacts"
       .span1
         .avatar
-          = gravatar_image_tag(comment.user.email) if comment.user.present?
+          = user_icon(comment.user) if comment.user.present?
     .span11
 
-      -unless controller_name.eql? "contacts"
-        -if current_user.eql? comment.user
+      - unless controller_name.eql? "contacts"
+        - if current_user.eql? comment.user
           .pull-right
-            =link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
+            = link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
               %i.icon-trash
       - else
         .pull-right
-          =link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
+          = link_to comment_path(comment), :method => "delete", :confirm => "Sure?", :remote => true do |l|
             %i.icon-trash
 
       .datetime
         %small= distance_of_time_in_words_to_now(comment.created_at)
       :markdown
         #{auto_link(comment.comment, :html => { :target => '_blank' })}
+      - if attaches = comment.attachments.to_a.presence
+        - attaches.each do |attach|
+          .attachment
+            %i.icon-file-alt
+            = link_to attach.attributes['filename'], attach.url, :target => "_blank"
+            %small= as_size(attach.filesize)

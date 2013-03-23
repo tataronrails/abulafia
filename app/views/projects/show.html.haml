@@ -1,22 +1,24 @@
+- @page_title = @project.name
+
 .row-fluid
   .span10
     %ul.breadcrumb
       %li
-        =link_to "Abulafia", root_path
+        = link_to "Abulafia", root_path
         %span.divider /
       %li
-        =link_to "Projects", projects_path
+        = link_to "Projects", projects_path
         %span.divider /
       %li
         .active
           %i.icon-leaf
           %strong
-            =@project.name
-          =link_to edit_project_path(@project) do |l|
+            = @project.name
+          = link_to edit_project_path(@project) do |l|
             %i.icon-edit
           %span.divider /
       %li
-        =link_to project_user_stories_path(@project), :class => "btn" do
+        = link_to project_user_stories_path(@project), :class => "btn" do
           %i.icon-inbox
           Task boards
   .pull-right
@@ -47,57 +49,61 @@
     = render @project.current_sprint
   = link_to 'All sprints', project_sprints_path(@project)
 .lead
-  =link_to "#", :class => "create_sprint_button" do
+  = link_to "#", :class => "create_sprint_button" do
     %i.icon-plus
     Create sprint
 
   .add_sprint_form.h
-    =form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
-      =f.label :title
-      =f.text_field :title
-      =f.label :start
-      =f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
-      =f.label :end
-      =f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
-      =f.label :description
-      =f.text_area :desc
+    = form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
+      = f.label :title
+      = f.text_field :title
+      = f.label :start
+      = f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
+      = f.label :end
+      = f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
+      = f.label :description
+      = f.text_area :desc
       %p
-      =f.button :Create,  :class => "btn"
+      = f.button :Create,  :class => "btn"
 
 %hr/
 %ul.nav.nav-pills
   %li.active
-    =link_to "Discussions", "#"
+    = link_to "Discussions", "#"
   %li
-    =link_to "Transaction", "#"
+    = link_to "Transaction", "#"
 %hr/
 .lead
   Discussions
--comments_array = []
-- Comment.order(:created_at).all.each do |c|
-  -begin
-    - if c.commentable.discussable.project == @project
-      - comments_array << c
-  -rescue NoMethodError
+
+-#- comments_array = []
+-#- Comment.order(:created_at).each do |c|
+-#  - begin
+-#    - if c.commentable.discussable.project == @project
+-#      - comments_array << c
+-#  - rescue NoMethodError
 
 
 -#TODO: pagination here
--comments_array.first(10).each do |comm|
+
+- @comments.each do |comm|
   .row-fluid.list_of_discussion_history
     .pull-right
       .row-fluid
         .avatar20.opacity40
-          = gravatar_image_tag comm.user.email if comm.user.present?
+          = user_icon(comm.user) if comm.user.present?
     .span11
       .time.pull-right
         %small
           ,
           = distance_of_time_in_words_to_now comm.created_at
-      -task = comm.commentable.discussable
+      - task = comm.task
       %i.icon-comment-alt
-      =link_to project_task_path(task.project, task) do
-        =truncate(comm.comment, :length => 50)
+      = link_to project_task_path(@project, task) do
+        = truncate(comm.comment, :length => 50)
         .title.pull-right
           %small
-            =type_icon task.task_type
+            = type_icon task.task_type
             = truncate(task.title, :length => 10)
+
+= paginate @comments
