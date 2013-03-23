@@ -27,7 +27,7 @@
             %i.icon-wrench
             = @project.users.count
 .row-fluid
-  = form_for [@project, @task], :remote => true do |f|
+  = form_for Task.new, :url => project_tasks_path(@project), :remote => true do |f|
     .control-group
       .controls
         = f.text_area :title, :placeholder => 'Enter draft task', :class => 'span12', :autocomplete => 'off', :rows => 2
@@ -101,34 +101,3 @@
           %small
             =type_icon task.task_type
             = truncate(task.title, :length => 10)
-
-#accordion3.accordion.h
-  .accordion-group
-    .accordion-heading
-      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTask")
-        %i.icon-plus
-        Create
-    #collapseTask.accordion-body.collapse
-      .accordion-inner
-        = form_for [@project, @task] , :remote => true do |f|
-          .row-fluid
-            .control-group
-              .controls
-                .input-prepend
-                  %span.add-on
-                    %i.icon-tasks
-                  = f.text_field :title, :placeholder => "Enter task", :class => "span11", :autocomplete =>  "off"
-
-
-          - if @project_users.present?
-            .row-fluid
-              .control-group
-                .controls
-                  .input-prepend
-                    %span.add-on
-                      %i.icon-user
-                    = collection_select(:task, :assigned_to, @project_users, :id, :login, :prompt => true)
-          .row-fluid
-            = f.hidden_field :project_id, :value => @project.id
-
-          =f.submit "Create", {:class => "btn"}

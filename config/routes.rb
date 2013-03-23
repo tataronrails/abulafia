@@ -24,7 +24,7 @@ EOffice::Application.routes.draw do
   post 'contacts/create_virtual_user' => "contacts#create_virtual_user", :as => "contact_create_virtual_user"
   delete 'contacts/:id' => "contacts#destroy", :as => "contact_destroy"
 
-  resources :projects do
+  resources :projects, :except => [:new] do
     resources :sprints do
       member do
         get 'user_stories'
