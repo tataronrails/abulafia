@@ -1,13 +1,10 @@
 class Task < ActiveRecord::Base
-  acts_as_taggable
-  acts_as_paranoid
-  attr_accessible :assigned_to, :end, :owner_id, :start, :status,
-                  :title, :estimate, :owner_id, :place, :tagging_list,
-                  :task_type, :behavior, :project_id, :desc, :sprint_id,
-                  :status_behavior
+  attr_accessible :assigned_to, :end, :owner_id, :start, :status, :title, :estimate, :place, :tagging_list,
+                  :task_type, :behavior, :project_id, :desc, :sprint_id, :status_behavior, :assigned_user_id
 
   belongs_to :project
   belongs_to :sprint
+  belongs_to :assigned_user, :class_name => User
 
   after_initialize :set_status_behavior
   after_create :assign_discussion
@@ -20,6 +17,9 @@ class Task < ActiveRecord::Base
 
   include PublicActivity::Model
   #tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
+
+  acts_as_taggable
+  acts_as_paranoid
 
   scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
   scope :urgent, where(:task_type => "3").order("end")
@@ -138,20 +138,6 @@ class Task < ActiveRecord::Base
     set_type_to_task self, text, "#feature", 0
     set_type_to_task self, text, "#chore", 2
     set_type_to_task self, text, "#story", 6
-
-
-    #if text.include? "#bug"
-    #  self.title = text.gsub(/^#bug/,"").gsub(/^, /,"").gsub(/^ /,"")
-    #  self.task_type = 1
-    #end
-    ##
-    #
-    #if text.include? "#feature"
-    #  self.title = text.gsub(/^#bug/,"").gsub(/^, /,"").gsub(/^ /,"")
-    #  self.task_type = 1
-    #end
-
-
   end
 
 
@@ -178,23 +164,6 @@ class Task < ActiveRecord::Base
       jb.room_for_task(self)
       jb.sms_for_task(self)
       Rails.logger.info jb.send_message
-
-      #gravatar_image_tag
-
-      #send note to project room
-      #client = HipChat::Client.new("94ecc0337c81806c0d784ab0352ee7")
-      #begin
-      #  client[self.project.name].send('bot', "Task \"#{self.title}\" assigned to user <b>#{ass_user.login}</b> #{gravatar_image_tag(ass_user.login)}", :color => 'yellow', :notify => true)
-      #rescue
-      #  client['abulafia'].send('bot', "No room #{self.project.name}", color: 'red', notify: true)
-      #end
-
-
-      #begin
-      #Rails.logger.info jb.send_message
-      #rescue Exception
-      #  Rails.logger.error "notify_assigned_user problem: #{Exception.to_json}"
-      #end
     end
   end
 

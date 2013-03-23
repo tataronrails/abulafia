@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+  # Функция для изменения кнопок event'ов
   $('#status_events').on 'click', '.status_event', (e) ->
     $this = $(this)
     $event = $this.data('event')
@@ -14,7 +15,7 @@ $ ->
         task:
           status_behavior: $event
         _method: 'put'
-      success: (data, status) ->
+      success: (data) ->
         $html = ''
         $.each data.status_events, (index, element) ->
           $html += "<a href='#' class='status_event btn' data-event=#{element.event} data-url=#{$url}>#{element.event_text}</a>"

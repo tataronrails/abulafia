@@ -26,18 +26,13 @@
           .badge
             %i.icon-wrench
             = @project.users.count
-
-= form_for [@project, @task] , :remote => true do |f|
-  .row-fluid
+.row-fluid
+  = form_for [@project, @task], :remote => true do |f|
     .control-group
       .controls
-        -#.input-prepend
-          -#%span.add-on
-            -#%i.icon-tasks.green
-        = f.text_area :title, :placeholder => "Enter draft task", :class => "span12", :autocomplete =>  "off"
-        = f.hidden_field :project_id, :value => @project.id
+        = f.text_area :title, :placeholder => 'Enter draft task', :class => 'span12', :autocomplete => 'off', :rows => 2
         .pull-right
-          =f.button :class => "btn btn-success"
+          = f.button :class => 'btn btn-success'
 -#%p
 -#  По умолчанию все задачи создаются в состоянии "Черновик". Во время редактирования можно добавить и исполнителя и один из 7 типов задачи.
 -#
@@ -137,84 +132,3 @@
             = f.hidden_field :project_id, :value => @project.id
 
           =f.submit "Create", {:class => "btn"}
-          -#%label.checkbox
-          -#  =check_box_tag "advanced_settings"
-          -#  %small advanced settings
-
-            -#= f.submit 'ok', :class => "btn btn-info row-right"
-
-  -#-if task.discussion.comments
-  -#  .accordion-group.existed_discussions
-  -#    .accordion-heading
-  -#      %a(class="accordion-toggle add_new_task_link" data-toggle="collapse" data-parent="#accordion3" href="#collapseTaskCreateField")
-  -#        %i.icon-list-alt
-  -#        =pluralize(@project.tasks.count, "task")
-  -#    #collapseTaskCreateField.accordion-body.collapse
-  -#      .accordion-inner
-  -#
-  -#        %table.table.table-striped
-  -#          - @project.tasks.each do |t|
-  -#            -if t.id
-  -#              %tr
-  -#                %td.avatar
-  -#                  -#= gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
-  -#                  %span.label.label-success
-  -#                    =t.status_via_words
-  -#                %td
-  -#                  = link_to t.title, task_path(t)
-  -#                %td
-  -#                  =truncate(t.discussion.comments.first.comment) if t.discussion.comments.present?
-  -#                %td
-  -#                  %i.icon-comment
-  -#                  - if t.discussion.comments.present?
-  -#                    =link_to task_path(t) do |task|
-  -#                      .badge.badge-info
-  -#                        =t.discussion.comments.count
-  -#                %td
-  -#                  %i.icon-remove
-
-
--#.lead
--#  Discussions
--##accordion2.accordion
--#  .accordion-group
--#    .accordion-heading
--#      %a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
--#        %i.icon-plus
--#        Create
--#    #collapseOne.accordion-body.collapse
--#      .accordion-inner
--#        = form_for @discussion do |f|
--#          - if @discussion.errors.any?
--#            #error_explanation
--#              %h2= "#{pluralize(@discussion.errors.count, "error")} prohibited this discussion from being saved:"
--#              %ul
--#                - @discussion.errors.full_messages.each do |msg|
--#                  %li= msg
--#          = f.text_field :title, :placeholder => "Enter topic for discussion and press Enter", :autocomplete =>  "off"
--#          .desc_of_descussion
--#            = f.text_area :desc, :placeholder => "Enter description", :autocomplete =>  "off"
--#          = f.hidden_field :project_id, :value => @project.id
--#
--#          = f.submit 'Create discussion', :class => "btn"
--#
--#  -if @project.discussions.exists?
--#    .accordion-group.existed_discussions
--#      .accordion-heading
--#        %a(class="accordion-toggle add_new_discussion_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
--#          %i.icon-list-alt
--#          =pluralize(@project.discussions.count, "discussion")
--#      #collapseTwo.accordion-body.collapse
--#        .accordion-inner
--#          %table.table.table-striped
--#            - @project.discussions.each do |d|
--#              -if d.id
--#                %tr
--#                  %td.avatar
--#                    = gravatar_image_tag(d.comments.first.user.email)  if d.comments.present?
--#                  %td
--#                    = link_to d.title, discussion_path(d.id)
--#                  %td
--#                    =truncate(d.comments.first.comment) if d.comments.present?
--#                  %td
--#                    %i.icon-remove

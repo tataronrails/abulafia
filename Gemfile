@@ -63,6 +63,7 @@ gem 'activeadmin'
 gem 'squeel'
 
 gem 'state_machine'
+gem 'inherited_resources'
 
 # useful development tools
 group :development do
