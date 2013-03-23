@@ -25,7 +25,7 @@
       %td.span4
         -user = User.find(s.user_id)
         .avatar20
-          =gravatar_image_tag user.email
+          = user_icon user
         .fio
           =user.fio
       %td.span3

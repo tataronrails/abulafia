@@ -1,8 +1,11 @@
 - project = project ? project : @project
-- if @tasks.present?
+
+- @page_title = project.name
+
+- if @tasks.to_a.present?
   - tasks = @tasks
 - elsif tasks.present?
   - tasks = tasks
 - else
   - tasks = project.tasks.without_sprint
-=render partial: 'user_stories', locals: { project: project, tasks: tasks}
+= render partial: 'user_stories', locals: { project: project, tasks: tasks}

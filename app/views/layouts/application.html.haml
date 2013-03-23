@@ -2,7 +2,8 @@
 %html(lang="en")
   %head
     %meta(charset="utf-8")
-    %title= content_for?(:title) ? yield(:title) : "Abulafia"
+    -#%title= content_for?(:title) ? yield(:title) : "Abulafia"
+    %title= page_title
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     %meta(name="description" content="")
     %meta(name="author" content="")
@@ -10,74 +11,53 @@
     = yield(:head)
     = stylesheet_link_tag "application", :media => "all"
     %link{:href => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css", :rel => "stylesheet", :type => "text/css"}
-    -#%link(href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css')
 
     /[if lt IE 9]
       %script(src="http://html5shiv.googlecode.com/svn/trunk/html5.js")
-
 
     -#%link(rel="shortcut icon" href="images/favicon.ico")
     -#%link(rel="apple-touch-icon" href="images/apple-touch-icon.png")
     -#%link(rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png")
     -#%link(rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png")
 
-  - papers = []
-  - papers << "012-subtle-light-patterns.jpg"
-  - papers << "background-texture.jpg"
-  - papers << "creampaper.png"
-  - papers << "debut_light.png"
-  - papers << "diagonal_waves.png"
-  - papers << "billie_holiday.png"
-  - papers << "shl.png"
-  - papers << "shl_2X.png"
-  -#%body{:style => "background: url(/assets/#{papers.sample})"}
-  -#%body{:class => (controller_name =="projects" && action_name == "index") ? "body_home" : "body"   }
   %body.body_home
     .navbar.navbar-fixed-top.nav_shadow
       .navbar-inner{:style => "background: url(/assets/debut_light.png)"}
         .container
-          %a.btn.btn-navbar{ :data => { :toggle => "collapse", :target => ".nav-collapse" }}
-          =link_to "Abulafia", root_path, :class => "brand capitalize"
-          .nav-collapse.collapse.navbar-responsive-collapse
-            %ul.nav.capitalize
-              -#- if controller.controller_name == "projects"
-              -#  %li.active
-              -#    = link_to t( :projects), projects_path, :class =>"capitalize"
-              -#- else
-              -#  %li
-              -#    = link_to t( :projects), projects_path, :class =>"capitalize"
+          = link_to "Abulafia", root_path, :class => "brand capitalize"
+          %ul.nav.capitalize
+            %li
+              = link_to progress_path, :class =>"capitalize" do
+                %i.icon-dashboard
+                Progress
+
+            - if current_user && %w{almazomru@gmail.com e.acoolova@gmail.com hama.deev@gmail.com}.include?(current_user.email)
+              %li
+                = link_to contacts_list_path, :class =>"capitalize" do
+                  %i.icon-group
+                  Contacts
 
               %li
-                = link_to progress_path, :class =>"capitalize" do
-                  %i.icon-dashboard
-                  Progress
+                = link_to strikes_path, :class =>"capitalize" do
+                  %i.icon-bell-alt
+                  Strikes
+            - if current_user
+              %li
+                = link_to my_tasks_path, :class =>"capitalize" do
+                  %i.icon-check
+                  My
+                  .label.label-inverse
+                    = current_user.my_tasks.count
 
-              -if current_user && ["almazomru@gmail.com","e.acoolova@gmail.com", "hama.deev@gmail.com"].include?(current_user.email)
-                %li
-                  = link_to contacts_list_path, :class =>"capitalize" do
-                    %i.icon-group
-                    Contacts
-
-                %li
-                  = link_to strikes_path, :class =>"capitalize" do
-                    %i.icon-bell-alt
-                    Strikes
-              - if current_user
-                %li
-                  = link_to my_tasks_path, :class =>"capitalize" do
-                    %i.icon-check
-                    My
-                    .label.label-inverse
-                      =current_user.my_tasks.count
-            %p.navbar-text.pull-right
-              - if user_signed_in?
-                Hello,
-                = link_to current_user.login, edit_user_registration_path, :tile => "Edit profile"
-                = link_to destroy_user_session_path do |l|
-                  %i.icon-signout{:title => "Sign out"}
-              - else
-                = link_to new_user_session_path do |l|
-                  %i.icon-signin{:title => "Sign in"}
+          %p.navbar-text.pull-right
+            - if user_signed_in?
+              Hello,
+              = link_to current_user.login, edit_user_registration_path, :tile => "Edit profile"
+              = link_to destroy_user_session_path do |l|
+                %i.icon-signout{:title => "Sign out"}
+            - else
+              = link_to new_user_session_path do |l|
+                %i.icon-signin{:title => "Sign in"}
 
     .container
       .row
@@ -95,7 +75,7 @@
             - if controller_name == "projects" && action_name == "show"
               .users_stories
                 = render :partial => "projects/stories_all",:locals => {:project => @project, :user => current_user}
-            -else
+            - else
               .span4
                 =yield :right_column
 

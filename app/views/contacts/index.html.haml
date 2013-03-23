@@ -79,7 +79,7 @@
     %tr.span12
       %td.span1
         .avatar
-          =gravatar_image_tag u.email
+          = user_icon(u)
       %td.span3
         =link_to u.fio, contact_page_path(u)
       %td.span3

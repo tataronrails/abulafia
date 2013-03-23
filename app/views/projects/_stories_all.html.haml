@@ -9,10 +9,10 @@
 
 %ul.breadcrumb
   .pull-right
-    -if @project.project_manager
+    - if @project.project_manager
       %span{:title => "project manager of project"}
-        =link_to user_profile_path(@project.project_manager) do |u|
-          =gravatar_image_tag(@project.project_manager.email)
+        = link_to user_profile_path(@project.project_manager) do |u|
+          = user_icon(@project.project_manager)
 
 -if project
   - if tasks.urgent.present?
