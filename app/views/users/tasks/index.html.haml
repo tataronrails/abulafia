@@ -1,0 +1,20 @@
+- @task_projects.each do |project, tasks|
+  %p
+    .lead
+      %i.icon-leaf
+      = link_to(project.name, project_path(project))
+    %blockquote
+      %table.table.span12
+        - tasks.each do |task|
+          %tr
+            %td.span1
+              = gravatar_image_tag task.owner.email, :class => 'img-rounded', :gravatar => { :size => 25 }
+            %td.span1
+              %h2
+              = type_icon(task.task_type) if task.task_type
+            %td.span10
+              = link_to project_task_path(task.project, task) do
+                = task.title
+            %td.span1
+              %i.icon-comment-alt
+              = task.discussion.comments.count

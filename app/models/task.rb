@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   validates :title, :presence => true
 
   include PublicActivity::Model
-  #tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
+  tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   acts_as_taggable
   acts_as_paranoid

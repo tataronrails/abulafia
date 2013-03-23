@@ -2,8 +2,6 @@
 class Projects::TasksController < ItemsController
   belongs_to :project
 
-  skip_authorization_check
-
   load_and_authorize_resource :project
   load_and_authorize_resource :task, :through => :project
 
@@ -43,11 +41,6 @@ class Projects::TasksController < ItemsController
   end
 
   ###################
-  def my
-    tasks = current_user.my_tasks
-    @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).order("name DESC")
-
-  end
 
   def sms_ping
     task = Task.find(params[:task_id])

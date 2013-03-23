@@ -1,42 +1,33 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :cell, :im, :desc,
+                  :initials, :hc_user_id, :login
 
+  devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
+  has_one :discussion, :as => :discussable
   has_one :account, :as => :owner, :dependent => :destroy
-
-  devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :invitable
-
-
-  with_options :if => :is_virtual_user? do |user|
-    user.validates_uniqueness_of :login
-    user.validates_presence_of :login, :email, :im, :first_name, :second_name, :initials
-  end
-
-
-  def to_s
-    fio
-  end
-
-
-  after_create :assign_discussion_to_user
-
-  #before_create :create_login
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :cell, :im, :desc, :initials, :hc_user_id, :login
 
   has_many :project_memberships
   has_many :projects, :through => :project_memberships
   has_many :comments
   has_many :strikes
-  has_one :discussion, :as => :discussable
-
 
   ACTIVITY_INTERVAL = 10.minutes
 
+  with_options :if => :is_virtual_user? do |user|
+    user.validates :login, :uniqueness => true
+    user.validates :login, :email, :im, :first_name, :second_name, :initials, :presence => true
+  end
+
+  after_create :assign_discussion_to_user
+
+  def tasks
+    Task.where('tasks.assigned_user_id = :user_id OR tasks.owner_id = :user_id', :user_id => self.id)
+  end
+
+  def to_s
+    fio
+  end
 
   #TODO: refactor
   def role_in_project project_id
@@ -71,8 +62,8 @@ class User < ActiveRecord::Base
     Task.where(:assigned_to => self.id).order(:created_at).delete_if { |t| (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?) }
   end
 
-
   private
+
   def create_login
     self.login = email.split("@").first
   end

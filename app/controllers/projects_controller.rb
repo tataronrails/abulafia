@@ -24,10 +24,6 @@ class ProjectsController < ItemsController
 
   ######
 
-  def progress
-    @activities = PublicActivity::Activity.where(:recipient_id => [current_user.projects.map(&:id)]).order("created_at DESC")
-  end
-
   def update_icebox
     project = Project.find(params[:project_id])
     render :partial => "projects/story", :locals => {:tasks => project.icebox, :place => "icebox", :updated_task => nil}
@@ -71,19 +67,6 @@ class ProjectsController < ItemsController
 
     ProjectMembership.where(:user_id => params[:user_id], :project_id => params[:project_id]).delete_all
     redirect_to :back, :notice => "User was kicked out from project!"
-  end
-
-
-  def users_page
-    @project = Project.find(params[:project_id])
-    @users = @project.users
-
-    @list_of_roles = ProjectMembership.role.values
-    list_of_all_users_emails = User.all.map(&:email)
-
-    users_still_in_project = @project.users.map(&:email)
-    @list_of_all_users_emails = list_of_all_users_emails.delete_if { |u| users_still_in_project.include?(u) }
-    @invitation_accepted_list = User.invitation_accepted.map(&:email)
   end
 
   def invite_user

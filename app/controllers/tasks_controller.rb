@@ -7,7 +7,6 @@ class TasksController < ApplicationController
   def my
     tasks = current_user.my_tasks
     @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).order("name DESC")
-
   end
 
   def sms_ping
