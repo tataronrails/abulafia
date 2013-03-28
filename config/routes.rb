@@ -1,9 +1,4 @@
 EOffice::Application.routes.draw do
-  resources :accounts
-
-
-  resources :transactions
-
 
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -46,7 +41,10 @@ EOffice::Application.routes.draw do
 
   resources :discussions, :has_many => :comments
 
+  resources :transactions
+
   resources :projects, :has_many => :comments do
+    resources :transactions
     resources :sprints do
       member do
         get 'user_stories'
