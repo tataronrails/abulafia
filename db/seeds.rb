@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Account.where(kind: 'system', title: 'External payments account').first_or_create
+
 if Rails.env == 'development'
   AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')
 end
