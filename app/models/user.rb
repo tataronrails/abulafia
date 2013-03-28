@@ -3,9 +3,6 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
 
-
-  has_one :account, :as => :owner, :dependent => :destroy
-
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
@@ -36,6 +33,8 @@ class User < ActiveRecord::Base
 
 
   ACTIVITY_INTERVAL = 10.minutes
+
+  acts_as_accountable
 
 
   #TODO: refactor
