@@ -1,0 +1,27 @@
+%h1 Listing transactions
+
+%table
+  %tr
+    %th Value
+    %th From
+    %th To
+    %th Desc
+    %th Author
+    %th
+    %th
+    %th
+
+  - @transactions.each do |transaction|
+    %tr
+      %td= transaction.value
+      %td= transaction.from_account.owner_name
+      %td= transaction.to_account.owner_name
+      %td= transaction.desc
+      %td= transaction.author
+      %td= link_to 'Show', transaction
+      %td= link_to 'Edit', edit_transaction_path(transaction)
+      %td= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Transaction', [:new, parent, :transaction].compact
