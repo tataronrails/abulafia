@@ -26,7 +26,7 @@
         .actions
           = f.button 'Save', :class => "btn"
 
-  - if @project_managers.present?
+  - if @project_managers.present? && @project_managers.any?
     - @project_managers.each do |pm|
       .lead
         .avatar

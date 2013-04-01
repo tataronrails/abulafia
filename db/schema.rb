@@ -11,16 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322234000) do
+ActiveRecord::Schema.define(:version => 20130328152106) do
 
   create_table "accounts", :force => true do |t|
     t.string   "title"
     t.integer  "owner_id"
     t.string   "owner_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "kind",       :default => "client"
   end
 
+  add_index "accounts", ["kind"], :name => "index_accounts_on_kind"
   add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
 
   create_table "activities", :force => true do |t|

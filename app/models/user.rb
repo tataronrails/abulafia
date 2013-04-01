@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :strikes
 
+  acts_as_accountable
+
   ACTIVITY_INTERVAL = 10.minutes
 
   with_options :if => :is_virtual_user? do |user|

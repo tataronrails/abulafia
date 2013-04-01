@@ -19,6 +19,7 @@ EOffice::Application.routes.draw do
 
   match "tasks/update_order" => "tasks#update_order"
   get "story/:id" => "tasks#show", :as => "story_to_show"
+  match 'attachments' => 'home#attachments'
 
   match "projects/:id/discussions/add_new_comment" => "discussions#add_new_comment", :as => "add_new_comment_to_discussion", :via => [:post]
   get 'progress' => "projects#progress", :as => "progress"
@@ -47,6 +48,7 @@ EOffice::Application.routes.draw do
         post "finish_work" => "tasks#finish_work", :as => "finish_work"
         get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
       end
+      resources :transactions
       resources :sprints, :except => [:new, :destroy, :edit] do
         member do
           get 'user_stories'

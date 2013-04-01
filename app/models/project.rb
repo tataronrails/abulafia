@@ -6,7 +6,6 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :destroy
   has_many :sprints, :dependent => :destroy
   has_many :users, :through => :project_memberships
-  has_one :account, :as => :owner, :dependent => :destroy
 
   has_many :task_discussions, :through => :tasks, :source => :discussion
   has_many :task_comments, :through => :task_discussions, :source => :comments
@@ -19,6 +18,7 @@ class Project < ActiveRecord::Base
 
   acts_as_paranoid
   acts_as_commentable
+  acts_as_accountable
 
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model })
 

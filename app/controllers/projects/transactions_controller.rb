@@ -1,4 +1,4 @@
-class TransactionsController < InheritedResources::Base
+class Projects::TransactionsController < ItemsController
   load_and_authorize_resource
 
   belongs_to :project, :optional => true
