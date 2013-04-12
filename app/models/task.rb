@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :sprint
+  belongs_to :owner, :class_name => "User"
 
   after_create :assign_discussion
   before_create :parse_text_to_add_tags_and_type
@@ -15,6 +16,8 @@ class Task < ActiveRecord::Base
 
   has_one :discussion, :as => :discussable
   has_many :todos, :dependent => :destroy
+  has_many :comments, :through => :discussion
+  has_many :attachments, :as => :attachable
 
   validates :title, :presence => true
 
@@ -80,11 +83,6 @@ class Task < ActiveRecord::Base
     rescue
       ""
     end
-  end
-
-
-  def owner
-    User.find(self.owner_id)
   end
 
   def assigned_to_user
