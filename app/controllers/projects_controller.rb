@@ -176,7 +176,8 @@ class ProjectsController < ApplicationController
     @project_managers = @projects
       .without_departments
       .map {|project| project.project_manager }
-      .compact!.uniq!
+      .compact!
+    @project_managers.uniq! unless @project_managers.blank?
 
     respond_to do |format|
       format.html # index.html.erb
@@ -185,7 +186,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-
     @project = Project.find(params[:id])
     @sprints = @project.sprints.order("created_at DESC")
     @discussion = @project.discussions.new
