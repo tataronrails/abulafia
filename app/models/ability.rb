@@ -10,8 +10,7 @@ class Ability
     end
 
     can [:add_new_comment, :read], Discussion do |discussion|
-      #discussion.project.users.include?( user )
-      true
+      discussion.project.users.include?( user )
     end
 
     can :create, Discussion do |discussion|
