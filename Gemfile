@@ -66,8 +66,10 @@ gem 'activeadmin'
 gem 'squeel'
 
 group :test do
-  gem 'rspec'
-  gem 'capybara'
+  gem 'capybara', '1.1.2'
+end
+group :test, :development do
+  gem 'rspec-rails'
 end
 
 # useful development tools
