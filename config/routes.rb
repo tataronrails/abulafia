@@ -1,10 +1,13 @@
 EOffice::Application.routes.draw do
 
+<<<<<<< HEAD
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   root :to => 'projects#index'
 
   ActiveAdmin.routes(self)
+=======
+>>>>>>> 84e74b1bc15c79efb7e7003e2a50197117a9a8df
   resources :strikes
 
 
@@ -132,6 +135,10 @@ EOffice::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
 
   # See how all your routes lay out with "rake routes"
 
