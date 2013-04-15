@@ -218,6 +218,14 @@ ActiveRecord::Schema.define(:version => 20130328152106) do
 
   add_index "tasks", ["sprint_id"], :name => "index_tasks_on_sprint_id"
 
+  create_table "todos", :force => true do |t|
+    t.string   "title",                         :null => false
+    t.boolean  "checked",    :default => false
+    t.integer  "task_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
   create_table "transactions", :force => true do |t|
     t.integer  "value"
     t.integer  "from_account_id"
