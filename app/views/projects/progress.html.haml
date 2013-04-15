@@ -1,11 +1,7 @@
 .row-fluid
-  %ul.breadcrumb
-    %li
-      =link_to "Abulafia", root_path
-      %span.divider /
-    %li
-      =link_to "Projects", projects_path
-      %span.divider /
-.row-fluid
-  -for activity in @activities.first(100)
-    =render_activity(activity)
+  = breadcrumbs "Abulafia" => root_path, "Projects" => projects_path
+
+.row-fluid.activities-page
+  - for activity in @activities
+    = render_activity(activity)
+  = paginate @activities

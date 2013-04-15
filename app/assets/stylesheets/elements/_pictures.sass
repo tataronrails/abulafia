@@ -1,0 +1,62 @@
+$main_radius: 3px !default
+
+= border-radius($radius: $main_radius, $y: false, $x: false)
+  @if $x
+    :-moz-border-radius-#{$y}#{$x} $radius
+    :-o-border-radius-#{$y}-#{$x} $radius
+    :-khtml-border-radius-#{$y}-#{$x} $radius
+    :-ms-border-radius-#{$y}-#{$x} $radius
+    :-webkit-border-#{$y}-#{$x}-radius $radius
+    :border-#{$y}-#{$x}-radius $radius
+  @else
+    :-moz-border-radius $radius
+    :-o-border-radius $radius
+    :-ms-border-radius $radius
+    :-khtml-border-radius $radius
+    :-webkit-border-radius $radius
+    :border-radius $radius
+
+= inline-block($align: top)
+  :zoom 1
+  :display inline
+  :display -moz-inline-box
+  :display inline-block
+  :*display inline
+  :vertical-align $align
+
+= children-inline($align: top)
+  > *
+    +inline-block($align)
+
+= opacity($value, $ie: false)
+  :opacity $value
+  :-moz-opacity $value
+  @if $ie
+    :filter progid:DXImageTransform.Microsoft.Alpha(opacity=#{$value * 100})
+    :-ms-filter "progid:DXImageTransform.Microsoft.Alpha(opacity=#{$value * 100})"
+
+section.pictures
+  .droppable
+    :position relative
+    input
+      +opacity(0)
+      :position absolute
+      :left 0
+      :top 0
+    :cursor pointer
+
+  ul.files
+    li
+      :margin-bottom 5px
+      .upload-progress
+        +inline-block
+        :width auto
+        :margin 0 4px 0 4px
+      a
+        :cursor pointer
+
+  &.classic
+    .droppable input
+      :position relative
+      +opacity(1)
+      :display block

@@ -6,8 +6,14 @@ class TasksController < ApplicationController
 
   def my
     tasks = current_user.my_tasks
-    @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).order("name DESC")
-
+    @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).includes(:tasks).order("name DESC")
+    @tasks = Task
+      .where(:assigned_to => current_user, :project_id => @projects.map(&:id))
+      .includes(:owner, :discussion)
+      .order(:created_at).delete_if do |t|
+        (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)
+      end
+    @comments_count = Task.where(:id => @tasks.map(&:id)).joins(:comments).group("tasks.id").count("comments.id")
   end
 
   def sms_ping
@@ -249,7 +255,8 @@ class TasksController < ApplicationController
     comment = params[:task][:comment]
     user = params[:user_id]
 
-    task.discussion.comments.create(:comment => comment, :user_id => user)
+    attrs = (params[:comment].presence || {}).merge(:comment => comment, :user_id => user)
+    task.discussion.comments.create(attrs)
 
     respond_to do |format|
       format.html { redirect_to :back }
@@ -261,6 +268,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @comments = @task.discussion.comments.includes(:user, :attachments)
     @project_users = @task.project.users.map(&:login)
 
     if @task.assigned_to
