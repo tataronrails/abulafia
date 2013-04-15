@@ -2,6 +2,24 @@
   = breadcrumbs "Abulafia" => root_path, "Projects" => projects_path
 
 .row-fluid.activities-page
-  - for activity in @activities
-    = render_activity(activity)
-  = paginate @activities
+  - for day, by_day_hash in @activities
+    .row.activity_alone
+      %h5= "#{day.to_date.strftime('%d %B %Y')} track"
+      - for activity_type, by_type_hash  in by_day_hash
+        .row-fluid
+          .span9.offset1
+            %h6= "#{activity_type.to_s.pluralize} updates"
+            - for name, by_trackable_hash in by_type_hash
+              - trackable = by_trackable_hash[0].trackable
+              .row
+                .span12.offset1.medium
+                  - if activity_type == :Task
+                    = link_to  name, [trackable.project, trackable], :class => "history_link" rescue nil
+                  - if activity_type == :Project
+                    = link_to  name, trackable, :class => "history_link" rescue nil 
+                  - if activity_type == :Comment
+                    = link_to  "On #{name}", [trackable.commentable.discussable.project, trackable.commentable.discussable], :class => "history_link" rescue nil 
+                  - for activity  in by_trackable_hash
+                    .row.offset1
+                      = render_activity(activity)
+

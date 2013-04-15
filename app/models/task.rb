@@ -23,7 +23,7 @@ class Task < ActiveRecord::Base
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model.project })
 
   scope :not_finished, where("`tasks`.`end` > '#{Time.now}'")
-  scope :urgent, where(:task_type => "3").order("end")
+  scope :urgent, where(:task_type => "3").order(:end)             #syntax error if used with quotes 
   scope :draft, where(:task_type => "5").order("finished_at").order("created_at DESC")
   scope :current_work, where("task_type != 5").where("status != 0").where("place != 1").order("status DESC")
   scope :icebox, where(:place => 0).where("task_type IN (0,1,2,6)")
