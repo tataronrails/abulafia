@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130328152106) do
+ActiveRecord::Schema.define(:version => 20130411132536) do
 
   create_table "accounts", :force => true do |t|
     t.string   "title"
@@ -207,7 +207,7 @@ ActiveRecord::Schema.define(:version => 20130328152106) do
     t.integer  "estimate"
     t.text     "desc"
     t.integer  "place",                :default => 0
-    t.string   "task_type"
+    t.integer  "task_type"
     t.text     "behavior"
     t.time     "deleted_at"
     t.datetime "accepted_to_start"
