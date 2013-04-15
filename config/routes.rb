@@ -1,13 +1,10 @@
 EOffice::Application.routes.draw do
 
-<<<<<<< HEAD
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   root :to => 'projects#index'
 
   ActiveAdmin.routes(self)
-=======
->>>>>>> 84e74b1bc15c79efb7e7003e2a50197117a9a8df
   resources :strikes
 
 
