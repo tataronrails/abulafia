@@ -1,12 +1,8 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
 
-  def progress
-    @activities = PublicActivity::Activity
-      .where(:recipient_id => [current_user.projects.map(&:id)])
-      .order("created_at DESC")
-      .includes(:trackable)
-      .page(params[:page]).per(50)
+  def progress     #get all kind of activities, such that at most 4 days old, grouped by days
+    @activities = Project.current_progress (current_user) #TODO refine specs for better nesting track
   end
 
   def update_icebox
@@ -176,9 +172,7 @@ class ProjectsController < ApplicationController
     @project_managers = @projects
       .without_departments
       .map {|project| project.project_manager }
-      .compact!
-    @project_managers.uniq! unless @project_managers.blank?
-
+      .compact!.uniq unless @projects.blank?
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }
