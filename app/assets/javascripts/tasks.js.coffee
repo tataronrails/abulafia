@@ -70,6 +70,13 @@ $ ->
         $.each errors, (index, error) ->
           noty({text: "Error: " + error , type:'error'})
 
+  $('form:first').submit ->
+    if $(@).find('textarea').val()
+      return true
+    else
+      noty({text: "Field can't be blank" , type:'error'})
+      return false
+
 
 
 
