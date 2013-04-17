@@ -20,7 +20,7 @@
     -#%link(rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png")
     -#%link(rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png")
 
-  %body.body_home
+  %body{:class => "body_home #{controller_name}-#{action_name}" }
     .navbar.navbar-fixed-top.nav_shadow
       .navbar-inner{:style => "background: url(/assets/debut_light.png)"}
         .container
