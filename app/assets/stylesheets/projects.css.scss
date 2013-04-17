@@ -9,7 +9,15 @@ h4 {
   }
 }
 
+  #error_explanation{
+    display: none;
+}
 
+
+form .field .field_with_errors input:focus, form .field .field_with_errors textarea:focus{
+  border-color: #E9322D;
+  box-shadow: 0 0 6px #F8B9B7;
+}
 
 .opacity40{
   opacity: .5;

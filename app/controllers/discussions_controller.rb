@@ -19,11 +19,7 @@ class DiscussionsController < ApplicationController
     user = params[:user_id]
     project = Project.find(params[:project_id])
 
-
-
-
-
-    discussion.comments.create(:comment => comment, :user_id => user)
+    lastComment = discussion.comments.new(:comment => comment, :user_id => user)
 
     respond_to do |format|
       format.html { redirect_to :back }

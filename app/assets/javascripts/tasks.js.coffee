@@ -46,7 +46,7 @@ task_type_detection = () ->
 
 $ ->
 
-  $(document).ajaxComplete (xhr, data, status) ->
+  $(document).ajaxSuccess (xhr, data, status) ->
     if status.url.indexOf("accept_to_start") > 0
       $("#accept_me").slideUp("fast").text(data.responseText).slideDown("fast")
     if status.url.indexOf("finish_work") > 0
@@ -57,13 +57,19 @@ $ ->
   $("form textarea:first").focus().select() unless window.location.pathname.indexOf("/edit") > 0
 
   $("form:first")
-    .bind "ajax:complete", (xhr, data, status) ->
+    .bind "ajax:success", (xhr, data, status) ->
       $("form textarea").val("").focus()
 
       $("#comments_line").html(data.responseText)
       object = $(".alone_comment").first()
       $(object).hide()
       $(object).show("highlight", {}, 1300)
+    .bind "ajax:error", (xhr, data, status) ->
+      if status == "error"
+        errors = $.parseJSON(data.responseText)
+        $.each errors, (index, error) ->
+          noty({text: "Error: " + error , type:'error'})
+
 
 
 
