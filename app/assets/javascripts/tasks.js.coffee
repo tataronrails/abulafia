@@ -70,7 +70,7 @@ $ ->
         $.each errors, (index, error) ->
           noty({text: "Error: " + error , type:'error'})
 
-  $('form:first').submit ->
+  $('form#new_task, form#new_comment').submit ->
     if $(@).find('textarea').val()
       return true
     else

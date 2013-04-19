@@ -115,7 +115,7 @@
             =distance_of_time_in_words_to_now @task.finished_at
 .row-fluid
   .lead Discussion:
-  = form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true do |f|
+  = form_tag project_task_add_new_comment_path(@task.project, params[:id]), :remote => true, :id => 'new_comment' do |f|
     = hidden_field_tag "user_id", current_user.id
     = hidden_field_tag "id", @task.id
     = text_area_tag "task[comment]", "", :class => "span12"
