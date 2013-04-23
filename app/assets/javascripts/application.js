@@ -14,11 +14,9 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require jquery-ui
-//= bootstrap-datepicker/core
 //= require_tree .
 //= require_tree ../../../vendor/assets/javascripts
-
-
+//= require bootstrap-datepicker/core
 //= require select2
 //= require_tree ./libs
 //= require_tree ./widgets

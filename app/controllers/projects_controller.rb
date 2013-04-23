@@ -179,6 +179,7 @@ class ProjectsController < ApplicationController
       .map {|project| project.project_manager }
       .compact!
       #.uniq!
+    @project_managers.uniq! unless @project_managers.blank?
 
     respond_to do |format|
       format.html # index.html.erb
