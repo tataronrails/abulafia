@@ -50,7 +50,7 @@ class TasksController < ApplicationController
       message = "Accepted by : \"#{User.find(task.assigned_to).fio}\", Task: \"#{task.title}\""
       client[task.project.name].send('task bot', message, :color => 'green', :notify => false)
 
-      task.create_activity key: 'Task.accept_to_start', owner: User.find(task.assigned_to), params: {message: message}
+      task.create_activity key: 'task.accept_to_start', owner: User.find(task.assigned_to), params: {message: message}
 
       flash[:notice] = "Started"
       respond_to do |format|
