@@ -15,7 +15,7 @@
           =link_to "Templates","#"
 
       -#= f.label :Task
-    = f.text_area :title, :class => "span8"
+    = f.text_area :title, :class => "span8", :rows => 7
 
   .well.well-small
     .row-fluid
@@ -68,7 +68,7 @@
   .field
     %i.icon-edit
     Description
-    =f.text_area :desc, :class => "span8"
+    =f.text_area :desc, :class => "span8", :rows => 7
   .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
     %i.icon-sitemap
     Behavior
