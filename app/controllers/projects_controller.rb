@@ -11,23 +11,23 @@ class ProjectsController < ApplicationController
 
   def update_icebox
     project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.icebox, :place => "icebox", :updated_task => nil}
+    render :partial => "projects/story", :locals => {:tasks => project.tasks.icebox, :place => "icebox", :updated_task => nil}
   end
 
   def update_backlog
     task_id = params[:task_id]
     project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.backlog, :place => "backlog", :updated_task => task_id}
+    render :partial => "projects/story", :locals => {:tasks => project.tasks.backlog, :place => "backlog", :updated_task => task_id}
   end
 
   def update_current_work
     project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.current_work, :place => "current_work", :updated_task => nil}
+    render :partial => "projects/story", :locals => {:tasks => project.tasks.current_work, :place => "current_work", :updated_task => nil}
   end
 
   def update_my_work
     project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.my_work(current_user), :place => "my_work", :updated_task => nil}
+    render :partial => "projects/story", :locals => {:tasks => project.tasks.my_work(current_user), :place => "my_work", :updated_task => nil}
   end
 
   def user_stories

@@ -38,7 +38,7 @@ hide_done_stories = () ->
 window.accept_task = (task_id) ->
   c = confirm("Sure?")
   if c
-    project_id = $('body').data('project_id')
+    project_id = $('body').data('projectId')
 
     $.ajax(
       url: "/projects/"+project_id+"/tasks/" + task_id + "/update_points"
@@ -122,7 +122,7 @@ labels_click_bind = () ->
     #    story_id = $(this).attr("id").replace("estimates_label_","")
     status = $(this).data('status')
     status_text = $(this).text()
-    project_id = $('body').data('project_id')
+    project_id = $('body').data('projectId')
 
 
     task_id = $(this).parents(".accordion-group").data("taskid")
@@ -239,7 +239,7 @@ $ ->
   delete_story()
   focus_on_ready_on_create_task()
   #  task_create_advanced_settings()
-  project_id = $('body').data('project_id')
+  project_id = $('body').data('projectId')
 
   $('.backlog_column').sortable(
     update: (event, ui) ->
@@ -291,7 +291,7 @@ $ ->
 
   update_some_test_smth = (data, column_and_place, url_location) ->
     if url_location.indexOf("/task_boards")
-      project_id = $("body").data("project_id")
+      project_id = $("body").data("projectId")
 
       switch column_and_place
         when 'icebox' then update_icebox_in_us_page(project_id)
