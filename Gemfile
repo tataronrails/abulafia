@@ -20,7 +20,7 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 gem 'bluecloth'
 gem "rvm-capistrano", :group => :development
 gem "capistrano", :group => :development
-gem 'activeadmin'
+gem 'activeadmin', '0.5.0'
 
 gem "select2-rails"
 
@@ -58,8 +58,6 @@ gem 'mini_magick'
 gem 'xmpp4r'
 gem 'delayed_job_active_record'
 gem 'daemons'
-
-gem 'activeadmin'
 
 # more pretty AR query methods in additional to standart
 # https://github.com/ernie/squeel
