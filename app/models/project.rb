@@ -6,7 +6,9 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :destroy
   has_many :sprints, :dependent => :destroy
   has_many :users, :through => :project_memberships
-  has_one :account, :as => :owner, :dependent => :destroy
+
+  has_many :task_discussions, :through => :tasks, :source => :discussion
+  has_many :task_comments, :through => :task_discussions, :source => :comments
 
   validates :name, :presence => true, :length => {:minimum => 3}
 
@@ -14,37 +16,27 @@ class Project < ActiveRecord::Base
   scope :without_departments, where(:is_department => false)
   scope :only_departments, where(:is_department => true)
 
-
   acts_as_paranoid
   acts_as_commentable
+
+  acts_as_accountable
 
   #tracked owner: Proc.new{ |controller, model| controller.current_user }
   tracked(owner: Proc.new { |controller, model| controller.current_user }, recipient: Proc.new { |controller, model| model })
 
 
-  # define project.admins, project.members ... methods
+  # define project.admins, project.members ... associations
   ProjectMembership.role.values.each do |r|
-    send(:define_method, r.underscore.pluralize) do
-      self.project_memberships.where(:role => r.underscore).map(&:user)
-    end
+    relation_name = r.underscore.pluralize.to_sym
+    has_many relation_name, :through => :project_memberships, :source => :user, :conditions => "project_memberships.role = '#{r}'"
   end
-
 
   def to_s
     name
   end
 
-
   def project_manager
-    #self.project_memberships.where(:project_id => project_id).first.role.text
-    pm = nil
-    project = self
-    self.users.each do |u|
-      if u.project_memberships.where(:project_id => project.id).first.role == "project_manager"
-        pm = u
-      end
-    end
-    pm
+    project_managers.to_a.first
   end
 
   def current_sprint

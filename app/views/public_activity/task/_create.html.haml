@@ -1,13 +1,12 @@
--if activity.trackable.present?
+- if activity.trackable.present?
   .row.activity_alone
-    %i.icon-plus
-    %i.icon-tasks
-    %i.avatar_activites
-      -user = User.find(activity.trackable.owner_id)
-      =gravatar_image_tag(user.email)
+    .icons
+      %i.icon-plus
+      %i.icon-tasks
+      %i.avatar_activites= user_icon(activity.trackable.owner)
+
     %small
-      = distance_of_time_in_words_to_now(activity.created_at)
-      ,
+      #{distance_of_time_in_words_to_now(activity.created_at)},
       =link_to (activity.trackable.title), project_task_path(activity.trackable.project, activity.trackable.id)
 
 

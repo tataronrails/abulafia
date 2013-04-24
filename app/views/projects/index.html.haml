@@ -6,6 +6,7 @@
     = link_to "#" do
       %i.icon-plus.green
       %i.icon-leaf.green
+
   .add_new_project_field.h
     = form_for Project.new do |f|
       - if Project.new.errors.any?
@@ -25,55 +26,26 @@
         .actions
           = f.button 'Save', :class => "btn"
 
-  -#-list_of_project_managers = []
-
-  -#-@projects.without_departments.each do |project|
-  -#  -list_of_project_managers << project.project_manager
-
-  -list_of_project_managers = @projects.without_departments.map{|project| project.project_manager}
-  -list_of_project_managers.compact!
-  -#= raise list_of_project_managers.to_json
-  -if list_of_project_managers.any?
-    -#= raise list_of_project_managers.compact!.to_json
-    -list_of_project_managers.uniq!
-    -#list_of_project_managers.compact!
-
-    -list_of_project_managers.each do |pm|
+  - if @project_managers.present? && @project_managers.any?
+    - @project_managers.each do |pm|
       .lead
         .avatar
-          =gravatar_image_tag pm.email
+          = user_icon(pm)
         = pm.fio
 
       %blockquote
-
-        -pm.projects.each do |project|
-          - if project.project_manager && project.is_department == false && project.project_manager == pm &&  project.users.include?(current_user)
-            .project_alone
-              %i.icon-leaf
-              = link_to project.name, project
-              -project.users.each do |u|
-                =gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
-
-
-
+        - # Проекты этого менеджера в которых участвует current_user
+        = render @projects.to_a.select {|p| !p.is_department? && p.project_manager == pm }
 
   - @projects.without_departments.each do |project|
-    - if project.project_manager.nil? && project.users.include?(current_user)
-      .project_alone
-        %i.icon-leaf
-        = link_to project.name, project
-        -project.users.each do |u|
-          =gravatar_image_tag(u.email, :class => "img-circle opacity40", :gravatar => { :size => 20 })
+    - if project.project_manager.nil?
+      = render project
 
 .lead
   Departments
+
 - @projects.only_departments.each do |project|
   %p
     %i.icon-briefcase
     &nbsp;
     = link_to project.name, project
-
-
-
-
-

@@ -2,8 +2,8 @@ class Discussion < ActiveRecord::Base
   belongs_to :project
   #belongs_to :task
   has_many :users, :through => :comments, :uniq => true
-
   belongs_to :discussable, :polymorphic => true
+  belongs_to :task, :foreign_key => :discussable_id, :conditions => "exists(select 1 from discussions d where d.discussable_type = 'Task' && d.discussable_id = tasks.id)"
   attr_accessible :title, :project_id, :desc
 
   ACTUAL_TIME = 3.day

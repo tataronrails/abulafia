@@ -1,7 +1,6 @@
 class Sprint < ActiveRecord::Base
   belongs_to :project
   has_many :tasks
-  has_one :account, :as => :owner, :dependent => :destroy
   attr_accessible :desc, :end_at, :start_at, :title
 
   scope :alive, where{end_at > Time.now}
@@ -10,6 +9,7 @@ class Sprint < ActiveRecord::Base
 
   before_create :assign_iteration_number
 
+  acts_as_accountable
 
 
 
