@@ -15,7 +15,7 @@
           =link_to "Templates","#"
 
       -#= f.label :Task
-    = f.text_area :title, :class => "span8"
+    = f.text_field :title, :class => "span8 task-title"
 
   .well.well-small
     .row-fluid
@@ -66,7 +66,8 @@
   .field
     %i.icon-edit
     Description
-    =f.text_area :desc, :class => "span8"
+  
+    =f.text_area :desc, :class => "span8", :rows => 7
 
   .field.well(ng-controller='TodoCtrl' ng-init="todos = #{@task.todos.to_json(:only => [:id, :title, :checked])}")
     = f.label :todos
@@ -95,11 +96,10 @@
 
       %span(ng-hide='todo.edit') {{todo.title}}
 
-
   .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
     %i.icon-sitemap
     Behavior
-    =f.text_area :behavior, :class => "span8"
+    =f.text_area :behavior, :class => "span8", rows: 7
 
   .field
     =f.label :tags

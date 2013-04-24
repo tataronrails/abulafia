@@ -20,14 +20,22 @@
   display: none;
 }
 
-.todo-list {
-  background-color: #FFFFFF;
-  border: 1px solid #DDDDDD;
-  border-radius: 4px 4px 4px 4px;
-  padding: 5px;
+input.task-title {
+  padding: 10px !important;
+  font-size: 1.7em !important;
+}
 
+.todo-list {
+  margin: 15px 0;
+  line-height: 20px;
+  input {
+    margin: 0 !important;
+  }
   a:hover {
     text-decoration: none;
+  }
+  .pull-right {
+    margin: 0 5px;
   }
 }
 
