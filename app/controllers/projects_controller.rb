@@ -173,10 +173,12 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = current_user.projects.includes(:project_managers)#.includes(:users)
+
     @project_managers = @projects
       .without_departments
       .map {|project| project.project_manager }
       .compact!
+      #.uniq!
     @project_managers.uniq! unless @project_managers.blank?
 
     respond_to do |format|
@@ -227,12 +229,14 @@ class ProjectsController < ApplicationController
     projects_factory = ProjectsFactory.new(user: current_user, project: Project.new(params[:project]))
     projects_factory.create_project!
     @project = projects_factory.project
+
     respond_to do |format|
       if projects_factory.project_saved?
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
-        format.html { render action: "new" }
+        @projects = current_user.projects.includes(:project_managers)           #need to render index
+        format.html { render action: "index" }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

@@ -65,6 +65,13 @@ gem 'activeadmin'
 # https://github.com/ernie/squeel
 gem 'squeel'
 
+group :test do
+  gem 'capybara', '1.1.2'
+end
+group :test, :development do
+  gem 'rspec-rails'
+end
+
 # useful development tools
 group :development do
   gem 'sextant' # /rails/routes - view routes fast and in browser

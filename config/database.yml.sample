@@ -1,9 +1,0 @@
-login: &login
-  adapter: mysql2
-  username: root
-  password:
-  host: localhost
-
-development:
-  <<: *login
-  database: abulafia_development

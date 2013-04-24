@@ -38,10 +38,24 @@ function in_duscussion_too_small_length() {
   $("#task_comment").parents("form:first").on("submit", function (e) {
     text = $(this).find("textarea:first").val();
     if (text.length < 2) {
-      alert("That's all?");
-      return false;
+//      alert("That's all?");
+//      return false;
     }
-  });
+  }).bind("ajax:error", function(evt, xhr, status, error){
+
+      });
+}
+
+function show_error_message(){
+    var $container = $("#error_explanation");
+
+    if($('body').hasClass('projects-create')){
+        $('.add_new_project_field').removeClass('h');
+    }
+
+    $container.find('li').each(function(index, li){
+        noty({text: $(li).text(), type:'error', timeout: false});
+    });
 }
 
 $(document).ready(function () {
@@ -53,6 +67,7 @@ $(document).ready(function () {
   }
 
   hide_removed_task();
+  show_error_message();
 
   FileUploader.init();
 });

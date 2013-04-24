@@ -8,11 +8,11 @@ class TasksController < ApplicationController
     tasks = current_user.my_tasks
     @projects = Project.where(:id => [tasks.map(&:project_id).uniq]).includes(:tasks).order("name DESC")
     @tasks = Task
-      .where(:assigned_to => current_user, :project_id => @projects.map(&:id))
-      .includes(:owner, :discussion)
-      .order(:created_at).delete_if do |t|
-        (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)
-      end
+    .where(:assigned_to => current_user, :project_id => @projects.map(&:id))
+    .includes(:owner, :discussion)
+    .order(:created_at).delete_if do |t|
+      (t.status == 2) || (t.finished_at.present?) || (t.hours_worked_on_task.present?)
+    end
     @comments_count = Task.where(:id => @tasks.map(&:id)).joins(:comments).group("tasks.id").count("comments.id")
   end
 
@@ -256,13 +256,22 @@ class TasksController < ApplicationController
     user = params[:user_id]
 
     attrs = (params[:comment].presence || {}).merge(:comment => comment, :user_id => user)
-    task.discussion.comments.create(attrs)
+    task_comment = task.discussion.comments.create(attrs)
 
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js {
-        render :partial => task.discussion.comments
-      }
+    if task_comment.save
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js {
+          render :partial => task.discussion.comments
+        }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js {
+          render :json => task_comment.errors, :status => 500
+        }
+      end
     end
   end
 
@@ -287,8 +296,6 @@ class TasksController < ApplicationController
     #@task = @project.tasks.new(:title => params[:task][:title], :assigned_to => User.where(:email => params[:assigned_to]).first.id, :owner_id => current_user.id)
 
     if @task.save
-
-
       respond_to do |format|
         format.js {
           #if params[:assigned_to].present?
@@ -301,7 +308,11 @@ class TasksController < ApplicationController
 
       end
     else
-      flash[:notice] = "Error task creating"
+      respond_to do |format|
+        format.js {
+          render :json => @task.errors.messages, :status => 500
+        }
+      end
     end
 
   end

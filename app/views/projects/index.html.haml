@@ -8,8 +8,8 @@
       %i.icon-leaf.green
 
   .add_new_project_field.h
-    = form_for Project.new do |f|
-      - if Project.new.errors.any?
+    = form_for @project||Project.new do |f|
+      - if @project && @project.errors.any?
         #error_explanation
           %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
           %ul

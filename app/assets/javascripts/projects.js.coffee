@@ -215,8 +215,7 @@ labels_click_bind = () ->
 
 
 $(document).ajaxComplete (xhr, data, status) ->
-  unless status.type == "DELETE"
-
+  unless status.type == "DELETE" || data.status == 500
 
     if status.url.indexOf("sprint") > 0
       $(".sprints_show").html(data.responseText)
@@ -325,3 +324,13 @@ $ ->
 
   if location.hash == "#comments"
     $(".accordion-group.existed_discussions #collapseTwo").collapse('show')
+
+
+  renderErorr = () ->
+    if !$('form#new_project').find('#project_name').val()
+      noty({text: 'Project name can\'t be blank' , type:'error'});
+      return false
+    else
+      return true
+
+  $('form#new_project').on('submit', renderErorr)
