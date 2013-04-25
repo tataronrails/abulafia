@@ -6,9 +6,9 @@
 / - else
 - order = tasks.map(&:id)
 
-- if place == "backlog"
-  -order_1 = ColumnOrder.where(:project_id => params[:project_id] ? params[:project_id] : params[:id], :place_id => 1).first
-  =order_1.position_array.to_json
+/ - if place == "backlog"
+/   -order_1 = ColumnOrder.where(:project_id => params[:project_id] ? params[:project_id] : params[:id], :place_id => 1).first
+/   =order_1.position_array.to_json
 -#  - order = tasks.map(&:id)
 
 
