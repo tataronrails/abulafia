@@ -21,6 +21,9 @@
 
   false
 
+TodoCtrl.$inject = ['$scope'];
+
+
 intruction_select_ends_at = () ->
 #  $("#task_end").hide()
   $("ul.dropdown-menu li a").click (e)->
