@@ -21,7 +21,7 @@
           %li= m
 
 
-  =form_for @user, url: contact_create_virtual_user_path do |f|
+  =form_for @user, url: contact_create_virtual_user_path, :html => {:class => 'virtual-user'} do |f|
 
     .input-prepend
       %span.add-on
