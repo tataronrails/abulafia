@@ -129,7 +129,7 @@ class Task < ActiveRecord::Base
 
 
   def make_simple_task
-    self.update_attributes(:task_type => "5") unless self.task_type.present?
+    self.update_attributes(:task_type => "0") unless self.task_type.present?
   end
 
   def assign_discussion
