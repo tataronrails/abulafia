@@ -135,7 +135,14 @@ class Task < ActiveRecord::Base
   def assign_discussion
     self.create_discussion!(:title => self.title)
     #
+    Task.public_activity_off
+
+    if self.sprint.nil? && self.project.present? && self.project.current_sprint.present?
+      self.update_attribute(:sprint_id, self.project.current_sprint.id)
+    end
     make_simple_task
+
+    Task.public_activity_on
   end
 
   def notify_assigned_user

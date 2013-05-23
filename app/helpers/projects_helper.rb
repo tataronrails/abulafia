@@ -1,4 +1,12 @@
 module ProjectsHelper
+  def get_user_stories_path project
+    if project.current_sprint.present?
+      user_stories_project_sprint_path( project, project.current_sprint.iteration_number)
+    else
+      project_user_stories_path(project)
+    end
+  end
+
   def label_color status
     a = []
     a[0] = " "
