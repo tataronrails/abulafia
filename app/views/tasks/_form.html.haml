@@ -5,7 +5,13 @@
       %ul
         - @task.errors.full_messages.each do |msg|
           %li= msg
-
+  .actions
+    = f.submit 'Save', {:class => "btn-success"}
+    Task ID: 
+    %span#copy_id
+      = @task.id
+    %a.copy_task_id
+      %i.icon-copy
   .field
     .tabbable
       %ul.nav.nav-tabs
@@ -96,10 +102,10 @@
 
       %span(ng-hide='todo.edit') {{todo.title}}
 
-  .field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
-    %i.icon-sitemap
-    Behavior
-    =f.text_area :behavior, :class => "span8", rows: 7
+  -#.field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
+  -#  %i.icon-sitemap
+  -#  Behavior
+  -#  =f.text_area :behavior, :class => "span8", rows: 7
 
   .field
     =f.label :tags
@@ -136,4 +142,4 @@
   -#  = f.label :desc
   -#  = f.text_area :desc
   .actions
-    = f.submit 'Save', {:class => "btn"}
+    = f.submit 'Save', {:class => "btn-success"}

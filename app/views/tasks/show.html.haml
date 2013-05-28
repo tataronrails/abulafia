@@ -101,6 +101,18 @@
         %small
           :markdown
             #{@task.desc}
+    - if @task.todos.present?
+      To do:
+      %br
+      - @task.todos.each do |todo|
+        %small
+          %p
+            - if todo.checked==true
+              %i.icon-ok
+            - else
+              %i.icon-minus
+            %span(style='padding: 0px 10px;')
+              = todo.title
     - if @task.accepted_to_start
       %small
         -if @task.accepted_to_start
