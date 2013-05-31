@@ -6,17 +6,17 @@
                               activator: '#edit_start_at'
     %button.btn
       %i.icon-edit{ id: 'edit_start_at'}
-    - else
+  - else
     = @sprint.start_at
 .row
   %strong
     End at
   - if can?(:manage, @sprint)
     = best_in_place @sprint, :end_at, :type => :input, path: project_sprint_path(parent, @sprint.iteration_number),
-                              activator: '#edit_end_at', classes:  'datepicker'
+                              activator: '#edit_end_at'
     %button.btn
       %i.icon-edit{ id: 'edit_end_at'}
-    - else
+  - else
     = @sprint.end_at
 .row
   %strong
