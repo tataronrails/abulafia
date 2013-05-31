@@ -1,6 +1,6 @@
 %ul.unstyled
   %li
-    = link_to user_stories_project_sprint_path( parent, @sprint.iteration_number) do
+    = link_to project_tasks_path( parent, by_sprint: @sprint.id) do
       %i.icon-inbox
       User stories
   %li

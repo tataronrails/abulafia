@@ -35,6 +35,31 @@ class Task < ActiveRecord::Base
   scope :my_work, lambda { |user| where(:assigned_to => user.id).where("task_type != 5").where("task_type != 3")}
   scope :without_sprint, where( sprint_id: nil)
 
+  scope :by_sprint, lambda { |id|
+    if id.to_i == -1
+        self.where('tasks.sprint_id is NULL')
+    elsif id.to_i > 0
+      self.where('tasks.sprint_id = ?', id)
+    else
+      self.scoped
+    end
+  }
+
+  scope :place, lambda { |place, user|
+    if place == 'icebox'
+      self.icebox
+    elsif place == 'backlog'
+      self.backlog
+    elsif place == 'current_work'
+      self.current_work
+    elsif place == 'my_work'
+      self.my_work user
+    else
+      self.scoped
+    end
+  }
+
+
   def tagging_list=(tags_list)
     self.tag_list = tags_list
   end
@@ -146,6 +171,7 @@ class Task < ActiveRecord::Base
   end
 
   def notify_assigned_user
+    return false
     Rails.logger.debug "*** notify_assigned_user -> Task.rb ***"
     unless self.assigned_to_was == self.assigned_to
       assigned_user = []
