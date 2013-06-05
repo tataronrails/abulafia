@@ -334,3 +334,15 @@ $ ->
       return true
 
   $('form#new_project').on('submit', renderErorr)
+
+# Looking for the largest block, that class is .alone_comment_cube
+# Looking for the greatest height
+# Sets max height for the all blocks
+$ ->
+  elements = $(".alone_comment_cube")
+  max = 0
+  elements.each ->
+    height = $(this).height()
+    max = height if height > max
+  elements.each ->
+    $(this).height(max)
