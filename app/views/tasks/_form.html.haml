@@ -102,11 +102,6 @@
 
       %span(ng-hide='todo.edit') {{todo.title}}
 
-  -#.field.behavior_block{:class => @task.task_type == '0' ? "" : "h" }
-  -#  %i.icon-sitemap
-  -#  Behavior
-  -#  =f.text_area :behavior, :class => "span8", rows: 7
-
   .field
     =f.label :tags
     .input-prepend
