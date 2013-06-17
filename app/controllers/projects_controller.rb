@@ -9,33 +9,6 @@ class ProjectsController < ApplicationController
       .page(params[:page]).per(50)
   end
 
-  def update_icebox
-    project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.tasks.icebox, :place => "icebox", :updated_task => nil}
-  end
-
-  def update_backlog
-    task_id = params[:task_id]
-    project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.tasks.backlog, :place => "backlog", :updated_task => task_id}
-  end
-
-  def update_current_work
-    project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.tasks.current_work, :place => "current_work", :updated_task => nil}
-  end
-
-  def update_my_work
-    project = Project.find(params[:project_id])
-    render :partial => "projects/story", :locals => {:tasks => project.tasks.my_work(current_user), :place => "my_work", :updated_task => nil}
-  end
-
-  def user_stories
-    @project = Project.find(params[:project_id])
-    @tasks = @project.tasks.without_sprint
-    render :layout => "user_stories"
-  end
-
   def kick_out_users
     user = User.find(params[:user_id])
     project = Project.find(params[:project_id])

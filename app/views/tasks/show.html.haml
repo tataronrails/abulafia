@@ -13,7 +13,7 @@
     = link_to @task.project.name, project_path(@task.project)
     %span.divider /
   %li
-    =link_to "User stories", get_user_stories_path(@task.project)
+    =link_to "User stories", project_tasks_path(@task.project)
 %small
   Assigned by #{@task.owner.fio}
   - if (["admin", "finance_manager"].include?(current_user.role(@task.project.id))) &&  @task.assigned_to_user
