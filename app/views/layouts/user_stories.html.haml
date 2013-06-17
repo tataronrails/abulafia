@@ -43,7 +43,7 @@
             - sprints = parent.sprints.order('id asc').map {|s| [s.short_desc, s.id]}
             - sprints << ['All Tasks', 0]
             - sprints << ['Without Sprint', -1]
-            - selected = params[:by_sprint].present? ? params[:by_sprint].present? : 0
+            - selected = params[:by_sprint].present? ? params[:by_sprint].to_i : 0
             = select_tag :by_sprint, options_for_select(sprints, selected), onchange: 'this.form.submit();'
         .span3.pull-right
           .list_of_vis_links{:style => "text-align:right"}
