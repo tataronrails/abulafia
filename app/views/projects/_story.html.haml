@@ -107,9 +107,9 @@
                         =number_field_tag :hours_worked_on_task, "", :class => "span10", :title => "How many hours you have been working on task?", :placeholder => "hr"
 
 
-                -unless ["icebox","backlog","current_work"].include?(place)
+                -unless ["backlog","current_work"].include?(place)
                   .pull-right.span1
-                    -if place == "draft"
+                    -if place == "draft" || "icebox"
                       =link_to(edit_project_task_path(t.project, t)) do |l|
                         %i.icon-edit
                     =link_to(project_task_path(t.project, t), :method => "delete", :remote => true) do |l|

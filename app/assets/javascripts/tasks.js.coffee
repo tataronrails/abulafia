@@ -129,3 +129,10 @@ $ ->
 #  $("#task_comment").triggeredAutocomplete
 #    hidden: "#mention_logins"
 #    source: availableTags
+
+# This's code to copy task id
+$ ->
+  clip = new ZeroClipboard( $("a.copy_task_id"), { moviePath: '/assets/ZeroClipboard.swf' } )
+  
+  clip.on 'mousedown', ->
+    clip.setText $('span#copy_id').text().replace(/\s+/g, '')
