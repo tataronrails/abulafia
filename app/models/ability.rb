@@ -33,8 +33,10 @@ class Ability
 
     can :manage, Strike
     can :manage, Sprint
+
     #can [:create, :update, :read, :add_new_comment, :my], Task
     can [:manage, :create, :update, :read, :add_new_comment, :my], Task
+
     can :manage, User
 
 

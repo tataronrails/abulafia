@@ -37,6 +37,14 @@
   %body{:data=>{:project_id => @project.id}, :style => "background: url(/assets/012-subtle-light-patterns.jpg)"}
     .navbar-fixed-top{:style => "padding: 10px;"}
       .row-fluid
+        .span3
+        .span3
+          = form_tag project_tasks_path(parent), :method => :get do
+            - sprints = parent.sprints.order('id asc').map {|s| [s.short_desc, s.id]}
+            - sprints << ['All Tasks', 0]
+            - sprints << ['Without Sprint', -1]
+            - selected = params[:by_sprint].present? ? params[:by_sprint].to_i : 0
+            = select_tag :by_sprint, options_for_select(sprints, selected), onchange: 'this.form.submit();'
         .span3.pull-right
           .list_of_vis_links{:style => "text-align:right"}
             Filter:

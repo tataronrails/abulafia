@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
   attr_accessible :comment, :user_id, :attachments_attributes
 
   belongs_to :commentable, :polymorphic => true
-  belongs_to :discussion, :foreign_key => :commentable_id, :conditions => "exists(select 1 from comments c where c.commentable_type = 'Discussion' && c.commentable_id = discussions.id)"
+  belongs_to :discussion, :foreign_key => :commentable_id, :conditions => "exists(select 1 from comments c where c.commentable_type = 'Discussion' AND c.commentable_id = discussions.id)"
   has_one :task, :through => :discussion
   has_many :attachments, :as => :attachable
   accepts_nested_attributes_for :attachments

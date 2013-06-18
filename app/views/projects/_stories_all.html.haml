@@ -19,27 +19,27 @@
     .lead.yellowgreen
       Urgent
     .accordion{:id => "accordion_id"}
-      = render :partial => "projects/story", :locals => {:tasks => tasks.urgent, :place => "urgent", :updated_task => nil}
+      = render :partial => "tasks/story", :locals => {:tasks => tasks.urgent, :place => "urgent", :updated_task => nil}
 
 
   - if tasks.draft.present?
     .lead
-      =link_to "Draft", project_user_stories_path(project )
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => tasks.draft, :place => "draft", :updated_task => nil}
+      =link_to "Draft", project_tasks_path(project )
+    .accordion{:id => "accordion_id"}= render :partial => "tasks/story", :locals => {:tasks => tasks.draft, :place => "draft", :updated_task => nil}
 
   -#- if tasks.my_work(current_user).present?
   -#  .lead
-  -#    =link_to "My work", project_user_stories_path(project )
+  -#    =link_to "My work", project_tasks_path(project )
   -#  .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => tasks.my_work(current_user).first(3), :place => "my_work", :updated_task => nil}
   -#
   -#- if tasks.backlog.present?
   -#  .lead
-  -#    =link_to "Backlog", project_user_stories_path(project)
+  -#    =link_to "Backlog", project_tasks_path(project)
   -#  .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => tasks.backlog.first(3), :place => "backlog", :updated_task => nil}
 
   - if tasks.icebox.present?
     .lead
-      =link_to "Icebox", project_user_stories_path(project)
-    .accordion{:id => "accordion_id"}= render :partial => "projects/story", :locals => {:tasks => tasks.icebox.first(3), :place => "icebox", :updated_task => nil}
+      =link_to "Icebox", project_tasks_path(project)
+    .accordion{:id => "accordion_id"}= render :partial => "tasks/story", :locals => {:tasks => tasks.icebox.first(3), :place => "icebox", :updated_task => nil}
 
 

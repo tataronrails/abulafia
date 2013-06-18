@@ -8,4 +8,4 @@
   - tasks = tasks
 - else
   - tasks = project.tasks.without_sprint
-= render partial: 'user_stories', locals: { project: project, tasks: tasks}
+= render partial: 'tasks/user_stories', locals: { project: project, tasks: tasks}

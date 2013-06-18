@@ -21,12 +21,18 @@
   %h4
     %em
       sprint:
-    =@sprint.title
+    - if can?(:manage, @sprint)
+      = best_in_place @sprint, :title, :type => :input, path: project_sprint_path(parent, @sprint.iteration_number),
+                                activator: '#edit_title'
+      %button.btn
+        %i.icon-edit{ id: 'edit_title'}
+    - else
+      = @sprint.title
     %em
       №
-    =@sprint.iteration_number
+    = @sprint.iteration_number
 .row-fluid
   .span9
-    =render partial: 'description'
+    = render partial: 'description'
   .span3
     = render partial: 'links'

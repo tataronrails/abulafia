@@ -60,9 +60,9 @@ window.accept_task = (task_id) ->
 
 update_column_in_us_page = (proj_id, column_name, task_id) ->
   $.ajax(
-    url: "/projects/" + proj_id + "/update_" + column_name,
+    url: "/projects/" + proj_id + "/tasks",
     data:
-      { 'task_id': task_id}
+      { 'task_id': task_id, 'place': column_name}
     success: (data) ->
       column_element = $("." + column_name + "_column")
 #      console.log column_element

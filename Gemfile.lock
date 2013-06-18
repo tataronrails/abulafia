@@ -332,8 +332,10 @@ DEPENDENCIES
   gritter (= 1.0.2)
   haml
   haml-rails
+  has_scope
   hipchat
   hipchat-api
+  inherited_resources
   jquery-rails
   less-rails
   meta_search (>= 1.1.0.pre)

@@ -1,8 +1,24 @@
 # encoding: UTF-8
 
-class TasksController < ApplicationController
+class TasksController < ItemsController
+  belongs_to :project
+
+  before_filter :authorize_parent
+
+  has_scope :by_sprint
+  has_scope :place do |controller, scope, value|
+    scope.place value, controller.current_user
+  end
+
   load_and_authorize_resource :task
 
+  def index
+    if params[:place].present?
+      render :partial => "tasks/story", :locals => {:tasks => collection, :place => params[:place], :updated_task => params[:task_id]}
+    else
+      render :user_stories, layout: 'user_stories'
+    end
+  end
 
   def my
     tasks = current_user.my_tasks
@@ -315,5 +331,11 @@ class TasksController < ApplicationController
       end
     end
 
+  end
+
+  private
+
+  def authorize_parent
+    authorize! :read, parent
   end
 end

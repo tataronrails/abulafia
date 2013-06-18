@@ -18,7 +18,8 @@
             %i.icon-edit
           %span.divider /
       %li
-        = link_to project_user_stories_path(@project), :class => "btn" do
+        -# = link_to get_user_stories_path(@project), :class => "btn" do
+        = link_to project_tasks_path(@project), :class => "btn" do
           %i.icon-inbox
           Task boards
   .pull-right
@@ -56,17 +57,7 @@
     Create sprint
 
   .add_sprint_form.h
-    = form_for :sprint, :remote => :true, :url => project_sprints_path(@project)  do |f|
-      = f.label :title
-      = f.text_field :title
-      = f.label :start
-      = f.text_field :start_at, :data => {behaviour: 'datepicker'}, :value => Time.now.to_date
-      = f.label :end
-      = f.text_field :end_at, :data => {behaviour: 'datepicker'}, :value => (Time.now+1.week).to_date
-      = f.label :description
-      = f.text_area :desc
-      %p
-      = f.button :Create,  :class => "btn"
+    = render partial: 'sprints/form'
 
 %hr/
 %ul.nav.nav-pills

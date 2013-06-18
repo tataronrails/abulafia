@@ -31,10 +31,9 @@ class ContactsController < ApplicationController
     #unless params[:user][:login].present?
     #  redirect_to :back, :notice => "Error" and return
     #end
-
-    params[:user][:password] = Devise.friendly_token.first(8)
-    user = User.new(params[:user])
-
+    user_params = params[:user].dup
+    user_params[:password] = Devise.friendly_token.first(8)
+    user = User.new(user_params)
     if user.save
       flash[:notice] = "ok"
     else
