@@ -48,7 +48,7 @@ EOffice::Application.routes.draw do
   resources :projects, :has_many => :comments do
     resources :transactions
     resources :sprints
-    resources :users, :controller => 'projects/users', :only => [:index]
+    #resources :users, :controller => 'projects/users', :only => [:index]
     resources :tasks, :has_many => :comments do
       post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
       post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
