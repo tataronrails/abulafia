@@ -1,9 +1,8 @@
 # encoding: UTF-8
 
 class TasksController < ItemsController
-  belongs_to :project
-
-  before_filter :authorize_parent
+  belongs_to :project, :optional => true
+  before_filter :authorize_parent, :except => :my
 
   has_scope :by_sprint
   has_scope :place do |controller, scope, value|
