@@ -76,6 +76,9 @@ end
 group :development do
   gem 'sextant' # /rails/routes - view routes fast and in browser
   gem 'awesome_print'
+
+  gem 'capistrano-unicorn', :require => false
+
 end
 
 # Gems used only for assets and not required
