@@ -10,8 +10,8 @@ set :scm_username, user
 set :runner, user
 set :deploy_to,     "/home/#{user}/www/apps/#{application}_#{branch}"
 
-set :rvm_type, :system
-set :rvm_ruby_string, "1.9.3"
+#set :rvm_type, :system
+#set :rvm_ruby_string, "1.9.3"
 
 role :app, hostingserver
 role :web, hostingserver

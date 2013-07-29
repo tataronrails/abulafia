@@ -12,9 +12,10 @@ set :rails_env,     :production
 set :deploy_via,    :remote_cache # :checkout
 set :shared_files,  %w(config/database.yml config/keys.yml config/email.yml)
 
-set :rvm_ruby_string, "1.9.3"
-set :use_sudo, false
-set :rvm_type, :system
+#set :rvm_type, :system
+#set :rvm_ruby_string, "1.9.3"
+#set :use_sudo, false
+
 
 set :stages, %w(edge production)
 set :default_stage, 'edge'
