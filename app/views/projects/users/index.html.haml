@@ -13,7 +13,7 @@
     = @project.name
     %small= @project.desc
 
-  =form_tag project_invite_user_url(@project) do |f|
+  =form_tag project_users_path(@project), action: :create do |f|
     .control-group
       .controls
         .input-prepend
@@ -61,7 +61,7 @@
         .row-fluid
           .pull-right.span1
             -unless u == current_user
-              =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
+              =link_to project_user_path(@project, u), method: :delete, :confirm => "Sure?" do |u|
                 %i.icon.icon-remove
           .span2
             .avatar
@@ -85,7 +85,7 @@
             -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
               %small
                 Not accepted invitation yet
-                =link_to :reinvite, reinvite_user_path(@project, u)
+                =link_to :reinvite, project_user_reinvite_path(@project, u)
             - else
               %small
                 Last sign in:
