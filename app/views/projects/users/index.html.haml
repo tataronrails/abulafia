@@ -1,0 +1,92 @@
+%ul.breadcrumb
+  %li
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    = link_to @project.name, project_path(@project)
+    %span.divider /
+  %li
+    Users page
+
+.row-fluid
+  %h3
+    = @project.name
+    %small= @project.desc
+
+  =form_tag project_invite_user_url(@project) do |f|
+    .control-group
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-envelope
+          =email_field :invitation, :email,:placeholder => "Invite by Email",  :requered => 'requered', :autocomplete => "off", :data => {:provide => "typeahead", :source => @list_of_all_users_emails}
+    .control-group
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-eye-open
+          =select_tag(:role,  options_for_select(@list_of_roles))
+    %hr/
+    .control-group
+      Rate
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-money
+          =number_field :project_user, :rate, :class => "span2"
+    .control-group
+      Type of hours calculation
+      .controls
+        .input-prepend
+          %span.add-on
+            %i.icon-money
+          =select(:project_user, :type_of_hours_calculation, [['Hourly', 0], ['Fixed', 1], ['Percentage', 2]])
+    -#.control-group
+    -#  .controls
+    -#    .input-prepend
+    -#      %span.add-on
+    -#        %i.icon-user
+    -#      =text_field(:invitation,:first_name, :placeholder => "First name")
+    -#.control-group
+    -#  .controls
+    -#    .input-prepend
+    -#      %span.add-on
+    -#        %i.icon-user
+    -#      =text_field(:invitation,:second_name, :placeholder => "Second name")
+    =submit_tag(:submit, :value => "Invite", :class => "btn .pull-right")
+
+  .container.users_grid{:style=>"position: relative;"}
+    -@users.each do |u|
+      .alone_comment_cube
+        .row-fluid
+          .pull-right.span1
+            -unless u == current_user
+              =link_to kick_out_users_path(@project, u), :confirm => "Sure?" do |u|
+                %i.icon.icon-remove
+          .span2
+            .avatar
+              = user_icon(u)
+          .span9
+            = truncate u.fio
+            -#%h4= u.login
+            %br
+            as
+            =truncate u.role_in_project(@project)
+            -#=ProjectMembership.where(:user_id => u.id, :project_id => @project_id).count
+            -fin = ProjectMembership.where(:project_id => @project.id, :user_id => u.id).first
+            - unless fin.rate.nil?
+              .fin
+                Rate:
+                %strong
+                  #{fin.rate}$
+                ,
+                =fin.type_to_calculate
+            %p
+            -unless @invitation_accepted_list.include?(u.email) || u.email == current_user.email
+              %small
+                Not accepted invitation yet
+                =link_to :reinvite, reinvite_user_path(@project, u)
+            - else
+              %small
+                Last sign in:
+                =distance_of_time_in_words_to_now(u.last_sign_in_at)

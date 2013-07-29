@@ -48,16 +48,16 @@ EOffice::Application.routes.draw do
   resources :projects, :has_many => :comments do
     resources :transactions
     resources :sprints
-    #resources :users, :controller => 'projects/users', :only => [:index]
-    resources :tasks, :has_many => :comments do
-      post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
-      post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
-      post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
-      post "update_points" => "tasks#update_points", :as => "update_points"
-      post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
-      post "finish_work" => "tasks#finish_work", :as => "finish_work"
-      get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
-    end
+    resources :users, :controller => 'projects/users' #, :only => [:index]
+    #resources :tasks, :has_many => :comments do
+    #  post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+    #  post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
+    #  post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
+    #  post "update_points" => "tasks#update_points", :as => "update_points"
+    #  post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
+    #  post "finish_work" => "tasks#finish_work", :as => "finish_work"
+    #  get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
+    #end
 
     resources :discussions, :has_many => :comments
     post 'invite_user'

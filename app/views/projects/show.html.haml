@@ -22,6 +22,8 @@
         = link_to project_tasks_path(@project), :class => "btn" do
           %i.icon-inbox
           Task boards
+      %li
+        = link_to :users, project_users_path
   .pull-right
     .span7
       = link_to users_list_path(@project) do |u|
