@@ -1,0 +1,22 @@
+%ul.breadcrumb
+  %li
+    %i.icon-home
+    =link_to "Home", root_path
+    %span.divider /
+  %li
+    = link_to @task.project.name, project_path(@task.project)
+    %span.divider /
+
+
+.lead
+  %i.icon-edit
+  Edit task
+  - if current_user == @task.owner
+    =link_to project_task_path(@task.project, @task), :confirm => "Sure?", :method => "delete" do
+      %i.icon-trash
+
+= render 'form'
+
+-#= link_to 'Show', @project
+-#\|
+-#= link_to 'Back', projects_path

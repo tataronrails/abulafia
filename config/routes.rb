@@ -46,20 +46,29 @@ EOffice::Application.routes.draw do
   resources :transactions
 
   resources :projects, has_many: :comments do
-    resources :transactions
-    resources :sprints
     resources :users, controller: 'projects/users', only: [:index, :create, :destroy] do
       get 'reinvite_user' => 'projects/users#reinvite', :as => "reinvite"
     end
-    resources :tasks, :has_many => :comments do
-      post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
-      post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
-      post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
-      post "update_points" => "tasks#update_points", :as => "update_points"
-      post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
-      post "finish_work" => "tasks#finish_work", :as => "finish_work"
-      get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
+    resources :tasks, controller: 'projects/tasks', has_many: :comments do
+      post "add_new_comment" => "projects/tasks#add_new_comment", :as => "add_new_comment"
+      post "to_backlog" => "projects/tasks#to_backlog", :as => "to_backlog"
+      post "update_hours_spend_on_task" => "projects/tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
+      post "update_points" => "projects/tasks#update_points", :as => "update_points"
+      post "accept_to_start" => "projects/tasks#accept_to_start", :as => "accept_to_start"
+      post "finish_work" => "projects/tasks#finish_work", :as => "finish_work"
+      get "sms_ping" => "projects/tasks#sms_ping", :as => "sms_ping"
     end
+    resources :transactions
+    resources :sprints
+    #resources :tasks, :has_many => :comments do
+    #  post "add_new_comment" => "tasks#add_new_comment", :as => "add_new_comment"
+    #  post "to_backlog" => "tasks#to_backlog", :as => "to_backlog"
+    #  post "update_hours_spend_on_task" => "tasks#update_hours_spend_on_task", :as => "update_hours_spend_on_task"
+    #  post "update_points" => "tasks#update_points", :as => "update_points"
+    #  post "accept_to_start" => "tasks#accept_to_start", :as => "accept_to_start"
+    #  post "finish_work" => "tasks#finish_work", :as => "finish_work"
+    #  get "sms_ping" => "tasks#sms_ping", :as => "sms_ping"
+    #end
     resources :discussions, :has_many => :comments
     post 'invite_user'
     get 'update_icebox'
