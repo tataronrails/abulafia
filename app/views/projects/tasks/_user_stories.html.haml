@@ -12,15 +12,15 @@
 
       Current
 
-    .current_work_column= render :partial => "tasks/story", :locals => {:tasks => tasks.current_work, :place => "current_work", :updated_task => nil}
+    .current_work_column= render :partial => "projects/tasks/story", :locals => {:tasks => tasks.current_work, :place => "current_work", :updated_task => nil}
   .span4.us_column{:data => {:column =>"backlog"}}
     .lead
       Backlog
-    .backlog_column= render :partial => "tasks/story", :locals => {:tasks => tasks.backlog, :place => "backlog", :updated_task => nil}
+    .backlog_column= render :partial => "projects/tasks/story", :locals => {:tasks => tasks.backlog, :place => "backlog", :updated_task => nil}
   .span4.us_column{:data => {:column =>"icebox"}}
     .lead
       Icebox
-    .icebox_column= render :partial => "tasks/story", :locals => {:tasks => tasks.icebox, :place => "icebox", :updated_task => nil}
+    .icebox_column= render :partial => "projects/tasks/story", :locals => {:tasks => tasks.icebox, :place => "icebox", :updated_task => nil}
   -#.span3.us_column
   -#  .us_header
   -#    History
